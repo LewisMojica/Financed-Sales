@@ -20,7 +20,40 @@ const apply_for_credit = (frm) => {
 		frappe.msgprint(__('Grand total must be greater than 0'));
 		return;
 	}
-	
+
+	frappe.call({
+		method: 'frappe.client.insert',
+		args: {
+			doc: {
+				doctype: 'Finance Application',
+				quotation: frm.doc.name,
+				customer: frm.doc.party_name,
+				/*customer_name: frm.doc.customer_name,
+				requested_amount: frm.doc.grand_total,
+				application_date: frappe.datetime.now_date(),*/
+				status: 'Draft',
+				// Add any other fields your Finance Approval doctype has
+			}
+		},
+		callback: (response) => {
+			if (response.message) {
+				frappe.show_alert({
+					message: __('Finance Application created successfully'),
+					indicator: 'green'
+				});
+				
+				// Navigate to the newly created Finance Approval
+				frappe.set_route('Form', 'Finance Application', response.message.name);
+			}
+		},
+		error: (error) => {
+			frappe.show_alert({
+				message: __('Error creating Finance Application'),
+				indicator: 'red'
+			});
+			console.error('Finance Application creation error:', error);
+		}
+	});	
 }
 
 const check_customer_credit_status = (frm) => {
