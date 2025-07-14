@@ -68,8 +68,7 @@
   {
    "fieldname": "total_amount_to_finance",
    "fieldtype": "Currency",
-   "label": "Total amount to finance",
-   "read_only": 1
+   "label": "Total amount to finance"
   },
   {
    "default": "5",
@@ -109,7 +108,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-14 02:43:34.422063",
+ "modified": "2025-07-14 03:02:23.681874",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",

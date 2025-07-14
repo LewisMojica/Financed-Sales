@@ -37,17 +37,19 @@ frappe.ui.form.on('Finance Application', {
 });
 
 function generate_installments(frm){
-	if (frm.doc.interest_rate && frm.doc.repayment_term && frm.doc.application_fee && frm.doc.first_installment && frm.doc.down_payment){
+	frm.clear_table('installments');
+	if (frm.doc.total_amount_to_finance && frm.doc.interest_rate && frm.doc.repayment_term && frm.doc.application_fee && frm.doc.first_installment && frm.doc.down_payment){
 		console.log('generating installments');
+		frm.doc.installment = (frm.doc.total_amount_to_finance - frm.doc.down_payment)/frm.doc.repayment_term;
+		console.log(frm.doc);
 		let monthly_payments = frm.doc.repayment_term;
 		for (let i = 0; i < monthly_payments; i++){
 			let row = frm.add_child('installments');
 			row.amount = frm.doc.installment;
 			row.due_date = frm.doc.first_installment;
-			frm.refresh_field('installments');
 		}
-
 	} else {
 		console.log('missing parameters');
 	}
+	frm.refresh_field('installments');
 }
