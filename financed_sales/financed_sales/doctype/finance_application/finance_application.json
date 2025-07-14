@@ -11,6 +11,7 @@
   "repayment_term",
   "down_payment",
   "installment",
+  "first_installment",
   "column_break_patn",
   "application_fee",
   "total_amount_to_finance",
@@ -83,13 +84,18 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "first_installment",
+   "fieldtype": "Date",
+   "label": "First installment"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-13 19:36:34.434819",
+ "modified": "2025-07-13 19:39:54.214173",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
