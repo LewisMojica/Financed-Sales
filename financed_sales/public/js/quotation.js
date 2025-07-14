@@ -28,6 +28,7 @@ const apply_for_credit = (frm) => {
 				doctype: 'Finance Application',
 				quotation: frm.doc.name,
 				customer: frm.doc.party_name,
+				total_amount_to_finance: frm.doc.grand_total,
 				/*customer_name: frm.doc.customer_name,
 				requested_amount: frm.doc.grand_total,
 				application_date: frappe.datetime.now_date(),*/
