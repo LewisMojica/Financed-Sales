@@ -16,7 +16,9 @@
   "application_fee",
   "total_amount_to_finance",
   "interest_rate",
-  "amended_from"
+  "amended_from",
+  "proposed_payment_plan_section",
+  "installments"
  ],
  "fields": [
   {
@@ -41,7 +43,7 @@
   },
   {
    "fieldname": "repayment_term",
-   "fieldtype": "Currency",
+   "fieldtype": "Int",
    "label": "Repayment term (months)"
   },
   {
@@ -52,8 +54,7 @@
   {
    "fieldname": "installment",
    "fieldtype": "Currency",
-   "label": "Monthly installment",
-   "read_only": 1
+   "label": "Monthly installment"
   },
   {
    "fieldname": "column_break_patn",
@@ -71,9 +72,11 @@
    "read_only": 1
   },
   {
+   "default": "5",
    "fieldname": "interest_rate",
    "fieldtype": "Percent",
-   "label": "Interest rate"
+   "label": "Interest rate %",
+   "precision": "2"
   },
   {
    "fieldname": "amended_from",
@@ -88,14 +91,25 @@
   {
    "fieldname": "first_installment",
    "fieldtype": "Date",
-   "label": "First installment"
+   "label": "First installment date"
+  },
+  {
+   "fieldname": "proposed_payment_plan_section",
+   "fieldtype": "Section Break",
+   "label": "Proposed payment plan"
+  },
+  {
+   "fieldname": "installments",
+   "fieldtype": "Table",
+   "label": "Installments",
+   "options": "Financed Sale Installment"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-13 20:30:19.082341",
+ "modified": "2025-07-14 02:43:34.422063",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
