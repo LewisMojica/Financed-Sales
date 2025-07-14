@@ -7,6 +7,15 @@ app_license = "gpl-3.0"
 doctype_js = {
 	"Quotation": "public/js/quotation.js"
 }
+fixtures = [
+    {
+        "doctype": "Workflow",
+        "filters": {"name": "Finance Application Approval"}
+    },
+    {
+        "doctype": "Workflow State" 
+    }
+]
 # Apps
 # ------------------
 
