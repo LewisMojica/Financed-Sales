@@ -1,6 +1,6 @@
 {
  "actions": [],
- "autoname": "format:SAL-PROP-.YYYY.-",
+ "autoname": "format:SAL-PROP-{YYYY}-{#####}",
  "creation": "2025-07-13 18:38:25.503361",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -95,7 +95,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-13 19:39:54.214173",
+ "modified": "2025-07-13 20:30:19.082341",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
@@ -112,6 +112,7 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],
