@@ -1,3 +1,8 @@
+const genFacturaProforma = (doc) => {
+	console.log('generando proforma');
+
+}
+
 frappe.ui.form.on('Finance Application', {
 	refresh: (frm) => {
 		// Only show button if doc is submitted
@@ -68,10 +73,6 @@ function generate_installments(frm){
 }
 
 
-function genFacturaProforma() {
-	console.log('generando proforma');
-
-}
 	
 
 
