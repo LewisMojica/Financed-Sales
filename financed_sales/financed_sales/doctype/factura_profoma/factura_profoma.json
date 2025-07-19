@@ -1,0 +1,148 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-07-19 11:26:53.788280",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_qbbf",
+  "amended_from",
+  "section_break_fdrh",
+  "date",
+  "expiration_date",
+  "column_break_dlqx",
+  "customer",
+  "address",
+  "phone_number",
+  "section_break_fgcj",
+  "table_clhi",
+  "currency_cmpe",
+  "currency_izpa",
+  "currency_vtdn",
+  "currency_bkvt",
+  "currency_iuqn",
+  "link_ptxv"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_qbbf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Factura profoma",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "section_break_fdrh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Fecha de emisi\u00f3n",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "expiration_date",
+   "fieldtype": "Date",
+   "label": "Fecha de vencimiento"
+  },
+  {
+   "fieldname": "column_break_dlqx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Cliente",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Data",
+   "label": "Direcci\u00f3n"
+  },
+  {
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono"
+  },
+  {
+   "fieldname": "section_break_fgcj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "table_clhi",
+   "fieldtype": "Table",
+   "options": "Sales Invoice Item"
+  },
+  {
+   "fieldname": "currency_cmpe",
+   "fieldtype": "Currency",
+   "label": "Subtotal"
+  },
+  {
+   "fieldname": "currency_izpa",
+   "fieldtype": "Currency",
+   "label": "Descuento"
+  },
+  {
+   "fieldname": "currency_vtdn",
+   "fieldtype": "Currency",
+   "label": "Env\u00edo"
+  },
+  {
+   "fieldname": "currency_bkvt",
+   "fieldtype": "Currency",
+   "label": "ITBIS"
+  },
+  {
+   "fieldname": "currency_iuqn",
+   "fieldtype": "Currency",
+   "label": "Total a pagar"
+  },
+  {
+   "fieldname": "link_ptxv",
+   "fieldtype": "Link",
+   "label": "Forma de pago",
+   "options": "POS Payment Method"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-07-19 12:12:00.830338",
+ "modified_by": "Administrator",
+ "module": "Financed Sales",
+ "name": "Factura profoma",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
