@@ -1,7 +1,7 @@
 // Copyright (c) 2025, Lewis Mojica and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("Factura Profoma", {
+// frappe.ui.form.on("Factura Proforma", {
 // 	refresh(frm) {
 
 // 	},
