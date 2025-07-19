@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestFacturaprofoma(FrappeTestCase):
+class TestFacturaProfoma(FrappeTestCase):
 	pass
