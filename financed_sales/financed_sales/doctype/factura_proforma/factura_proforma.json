@@ -1,6 +1,6 @@
 {
  "actions": [],
- "allow_rename": 1,
+ "autoname": "format:INV-PROF-{YYYY}-{#####}",
  "creation": "2025-07-19 11:26:53.788280",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -10,6 +10,7 @@
   "section_break_fdrh",
   "date",
   "expiration_date",
+  "finance_application",
   "column_break_dlqx",
   "customer",
   "address",
@@ -33,7 +34,7 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Factura profoma",
+   "options": "Factura Proforma",
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
@@ -115,16 +116,24 @@
    "fieldtype": "Link",
    "label": "Forma de pago",
    "options": "POS Payment Method"
+  },
+  {
+   "fieldname": "finance_application",
+   "fieldtype": "Link",
+   "label": "Aplicaci\u00f3n de financiamiento",
+   "options": "Finance Application",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-19 12:12:00.830338",
+ "modified": "2025-07-19 15:58:54.046418",
  "modified_by": "Administrator",
  "module": "Financed Sales",
- "name": "Factura Profoma",
+ "name": "Factura Proforma",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

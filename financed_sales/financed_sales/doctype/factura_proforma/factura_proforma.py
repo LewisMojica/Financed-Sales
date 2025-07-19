@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class FacturaProfoma(Document):
+class FacturaProforma(Document):
 	pass
