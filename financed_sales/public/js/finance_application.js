@@ -1,4 +1,15 @@
 frappe.ui.form.on('Finance Application', {
+	refresh: (frm) => {
+		// Only show button if doc is submitted
+		if (frm.doc.docstatus === 0) {
+			frm.add_custom_button(__('Generar Factura Proforma'), () => {
+			   genFacturaProforma(frm);
+			}, __('Create'));
+		}
+	}
+});
+
+frappe.ui.form.on('Finance Application', {
 	repayment_term: function(frm) {
 		if (frm.doc.repayment_term) {
 			console.log('term changed');
@@ -55,3 +66,13 @@ function generate_installments(frm){
 	frm.refresh_field('installment');
 	frm.refresh_field('installments');
 }
+
+
+function genFacturaProforma() {
+	console.log('generando proforma');
+
+}
+	
+
+
+
