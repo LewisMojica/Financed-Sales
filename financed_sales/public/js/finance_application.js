@@ -33,7 +33,7 @@ const genFacturaProforma = (frm) => {
 frappe.ui.form.on('Finance Application', {
 	refresh: (frm) => {
 		// Only show button if doc is submitted
-		if (frm.doc.docstatus === 0) {
+		if (frm.doc.docstatus === 1) {
 			frm.add_custom_button(__('Generar Factura Proforma'), () => {
 			   genFacturaProforma(frm);
 			}, __('Create'));
