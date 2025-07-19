@@ -27,7 +27,8 @@
    "in_list_view": 1,
    "label": "Quotation",
    "options": "Quotation",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "customer",
@@ -110,7 +111,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-14 03:37:37.706799",
+ "modified": "2025-07-19 16:08:19.677253",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
