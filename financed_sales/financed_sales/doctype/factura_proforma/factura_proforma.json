@@ -122,14 +122,16 @@
    "fieldtype": "Link",
    "label": "Aplicaci\u00f3n de financiamiento",
    "options": "Finance Application",
-   "read_only": 1
+   "read_only": 1,
+   "reqd": 1,
+   "unique": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-19 15:58:54.046418",
+ "modified": "2025-07-19 16:07:11.559304",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Factura Proforma",
