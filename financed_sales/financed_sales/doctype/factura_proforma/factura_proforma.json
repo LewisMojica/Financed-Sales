@@ -16,7 +16,7 @@
   "address",
   "phone_number",
   "section_break_fgcj",
-  "table_clhi",
+  "items",
   "currency_cmpe",
   "currency_izpa",
   "currency_vtdn",
@@ -82,11 +82,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "table_clhi",
-   "fieldtype": "Table",
-   "options": "Sales Invoice Item"
-  },
-  {
    "fieldname": "currency_cmpe",
    "fieldtype": "Currency",
    "label": "Subtotal"
@@ -125,13 +120,19 @@
    "read_only": 1,
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "options": "Quotation Item",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-19 16:07:11.559304",
+ "modified": "2025-07-20 10:09:44.975890",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Factura Proforma",
