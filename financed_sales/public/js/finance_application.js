@@ -1,33 +1,19 @@
 const genFacturaProforma = (frm) => {
-	frappe.call({
-		method: 'frappe.client.insert',
-		args: {
-			doc: {
-				doctype: 'Factura Proforma',
-				finance_application: frm.doc.name,
-				customer: frm.doc.customer
-			}
-		},
-		callback: (response) => {
-			if (response.message) {
-				frappe.show_alert({
-					message: __('Factura Proforma created successfully'),
-					indicator: 'green'
-				});
-				
-				// Navigate to the newly created Finance Approval
-				frappe.set_route('Form', 'Factura Proforma', response.message.name);
-			}
-		},
-		error: (error) => {
+	frm.call('create_factura_proforma').then(r => {
+		if (r.message) {
 			frappe.show_alert({
-				message: __('Error creating Factura Proforma'),
-				indicator: 'red'
+				message: __('Factura Proforma created successfully'),
+				indicator: 'green'
 			});
-			console.error('Factura Proforma creation error:', error);
+			frappe.set_route('Form', 'Factura Proforma', r.message);
 		}
-	});	
-
+	}).catch(error => {
+		frappe.show_alert({
+			message: __('Error creating Factura Proforma'),
+			indicator: 'red'
+		});
+		console.error('Error:', error);
+	});
 }
 
 frappe.ui.form.on('Finance Application', {
