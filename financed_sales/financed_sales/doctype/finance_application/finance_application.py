@@ -8,9 +8,6 @@ from frappe.model.document import Document
 class FinanceApplication(Document):
 	@frappe.whitelist()
 	def create_factura_proforma(self):
-		print('########################tamoaqui#########################')
-		print('should be self')
-		print(self)
 		quotation = frappe.get_doc('Quotation', self.quotation)
 		
 		factura = frappe.new_doc('Factura Proforma')
