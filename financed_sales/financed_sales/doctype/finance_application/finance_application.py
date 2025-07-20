@@ -8,6 +8,11 @@ from frappe.model.document import Document
 class FinanceApplication(Document):
 	@frappe.whitelist()
 	def create_factura_proforma(self):
+		sub_total = 0
+		discount = 0
+		delivery_fee = 0
+		itbis = 0
+		grand_total = 0
 		quotation = frappe.get_doc('Quotation', self.quotation)
 		
 		factura = frappe.new_doc('Factura Proforma')
@@ -17,6 +22,7 @@ class FinanceApplication(Document):
 
 		for item in quotation.items:
 			item_doc = frappe.get_doc("Item", item.item_code)
+			sub_total += item.amount
 			
 			factura.append('items', {
 				'item_code': item.item_code,
@@ -29,6 +35,7 @@ class FinanceApplication(Document):
 				'base_rate': item.base_rate,
 				'base_amount': item.base_amount
 			})			
-
+		factura.sub_total = sub_total
+		factura.grand_total = sub_total+delivery_fee+itbis+grand_total-discount
 		factura.insert()
 		return factura.name
