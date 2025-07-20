@@ -17,12 +17,12 @@
   "phone_number",
   "section_break_fgcj",
   "items",
-  "currency_cmpe",
-  "currency_izpa",
-  "currency_vtdn",
-  "currency_bkvt",
-  "currency_iuqn",
-  "link_ptxv"
+  "sub_total",
+  "discount",
+  "delivery_fee",
+  "itbis",
+  "grand_total",
+  "payment_method"
  ],
  "fields": [
   {
@@ -82,37 +82,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "currency_cmpe",
-   "fieldtype": "Currency",
-   "label": "Subtotal"
-  },
-  {
-   "fieldname": "currency_izpa",
-   "fieldtype": "Currency",
-   "label": "Descuento"
-  },
-  {
-   "fieldname": "currency_vtdn",
-   "fieldtype": "Currency",
-   "label": "Env\u00edo"
-  },
-  {
-   "fieldname": "currency_bkvt",
-   "fieldtype": "Currency",
-   "label": "ITBIS"
-  },
-  {
-   "fieldname": "currency_iuqn",
-   "fieldtype": "Currency",
-   "label": "Total a pagar"
-  },
-  {
-   "fieldname": "link_ptxv",
-   "fieldtype": "Link",
-   "label": "Forma de pago",
-   "options": "POS Payment Method"
-  },
-  {
    "fieldname": "finance_application",
    "fieldtype": "Link",
    "label": "Aplicaci\u00f3n de financiamiento",
@@ -126,13 +95,44 @@
    "fieldtype": "Table",
    "options": "Quotation Item",
    "read_only": 1
+  },
+  {
+   "fieldname": "sub_total",
+   "fieldtype": "Currency",
+   "label": "Subtotal"
+  },
+  {
+   "fieldname": "discount",
+   "fieldtype": "Currency",
+   "label": "Descuento"
+  },
+  {
+   "fieldname": "delivery_fee",
+   "fieldtype": "Currency",
+   "label": "Env\u00edo"
+  },
+  {
+   "fieldname": "itbis",
+   "fieldtype": "Currency",
+   "label": "ITBIS"
+  },
+  {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "label": "Total a pagar"
+  },
+  {
+   "fieldname": "payment_method",
+   "fieldtype": "Link",
+   "label": "Forma de pago",
+   "options": "POS Payment Method"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-20 10:09:44.975890",
+ "modified": "2025-07-20 13:36:48.474042",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Factura Proforma",
