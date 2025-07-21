@@ -9,13 +9,17 @@ doctype_js = {
 	"Finance Application": "public/js/finance_application.js"
 }
 fixtures = [
-    {
-        "doctype": "Workflow",
-        "filters": {"name": "Finance Application Approval"}
-    },
-    {
-        "doctype": "Workflow State" 
-    }
+	{
+		"doctype": "Workflow",
+		"filters": {"name": "Finance Application Approval"}
+	},
+	{
+		"doctype": "Workflow State" 
+	},
+	{
+		"doctype": "Print Format",
+		"filters": { "name": 'Factura Proforma' }
+	},
 ]
 # Apps
 # ------------------
