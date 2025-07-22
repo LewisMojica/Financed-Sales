@@ -73,7 +73,7 @@ function generate_installments(frm){
 		for (let i = 0; i < monthly_payments; i++){
 			let row = frm.add_child('installments');
 			row.amount = frm.doc.installment;
-			row.due_date = frm.doc.first_installment;
+			row.due_date = frappe.datetime.add_months(frm.doc.first_installment, i);
 		}
 	} 
 	frm.refresh_field('installment');
