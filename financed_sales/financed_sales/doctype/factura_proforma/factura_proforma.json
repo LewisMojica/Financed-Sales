@@ -18,10 +18,9 @@
   "section_break_fgcj",
   "items",
   "sub_total",
-  "discount",
   "delivery_fee",
   "itbis",
-  "grand_total",
+  "total_credit",
   "payment_method"
  ],
  "fields": [
@@ -102,11 +101,6 @@
    "label": "Subtotal"
   },
   {
-   "fieldname": "discount",
-   "fieldtype": "Currency",
-   "label": "Descuento"
-  },
-  {
    "fieldname": "delivery_fee",
    "fieldtype": "Currency",
    "label": "Env\u00edo"
@@ -117,22 +111,22 @@
    "label": "ITBIS"
   },
   {
-   "fieldname": "grand_total",
-   "fieldtype": "Currency",
-   "label": "Total a pagar"
-  },
-  {
    "fieldname": "payment_method",
    "fieldtype": "Link",
    "label": "Forma de pago",
    "options": "POS Payment Method"
+  },
+  {
+   "fieldname": "total_credit",
+   "fieldtype": "Currency",
+   "label": "Monto total a cr\u00e9dito"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-20 13:36:48.474042",
+ "modified": "2025-07-22 01:07:07.251480",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Factura Proforma",
