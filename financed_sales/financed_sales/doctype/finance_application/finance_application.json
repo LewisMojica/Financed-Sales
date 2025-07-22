@@ -49,17 +49,20 @@
   {
    "fieldname": "repayment_term",
    "fieldtype": "Int",
-   "label": "Repayment term (months)"
+   "label": "Repayment term (months)",
+   "non_negative": 1
   },
   {
    "fieldname": "down_payment",
    "fieldtype": "Currency",
-   "label": "Down payment"
+   "label": "Down payment",
+   "non_negative": 1
   },
   {
    "fieldname": "installment",
    "fieldtype": "Currency",
    "label": "Monthly installment",
+   "non_negative": 1,
    "read_only": 1
   },
   {
@@ -69,12 +72,14 @@
   {
    "fieldname": "application_fee",
    "fieldtype": "Currency",
-   "label": "Application fee"
+   "label": "Application fee",
+   "non_negative": 1
   },
   {
    "fieldname": "total_amount_to_finance",
    "fieldtype": "Currency",
    "label": "Total amount to finance",
+   "non_negative": 1,
    "read_only": 1
   },
   {
@@ -128,14 +133,15 @@
   {
    "fieldname": "credit_expiration_date",
    "fieldtype": "Date",
-   "label": "Fecha de vencimiento de cr\u00e9dito"
+   "label": "Fecha de vencimiento de cr\u00e9dito",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-22 00:03:26.700443",
+ "modified": "2025-07-22 01:40:25.900621",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
