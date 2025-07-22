@@ -30,14 +30,12 @@ frappe.ui.form.on('Finance Application', {
 frappe.ui.form.on('Finance Application', {
 	repayment_term: function(frm) {
 		if (frm.doc.repayment_term) {
-			console.log('term changed');
 			generate_installments(frm);
 		}
 	},
 	
 	down_payment: function(frm) {
 		if (frm.doc.down_payment) {
-			console.log('down payment changed');
 			generate_installments(frm);
 		}
 	},
@@ -45,20 +43,17 @@ frappe.ui.form.on('Finance Application', {
 	first_installment: function(frm) {
 		if (frm.doc.first_installment) {
 			generate_installments(frm);
-			console.log('date changed');
 		}
 	},
 		
 	application_fee: function(frm) {
 		if (frm.doc.application_fee) {
-			console.log('fee changed');
 			generate_installments(frm);
 		}
 	},
 
 	interest_rate: function(frm) {
 		if (frm.doc.interest_rate) {
-			console.log('interest_rate changed');
 			generate_installments(frm);
 		}
 	}
