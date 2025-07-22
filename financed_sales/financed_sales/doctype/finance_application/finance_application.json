@@ -18,7 +18,8 @@
   "interest_rate",
   "amended_from",
   "proposed_payment_plan_section",
-  "installments"
+  "installments",
+  "total_credit"
  ],
  "fields": [
   {
@@ -105,13 +106,20 @@
    "fieldtype": "Table",
    "label": "Installments",
    "options": "Financed Sale Installment"
+  },
+  {
+   "fieldname": "total_credit",
+   "fieldtype": "Currency",
+   "label": "Monto total a cr\u00e9dito",
+   "non_negative": 1,
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-19 16:08:19.677253",
+ "modified": "2025-07-21 23:59:05.823260",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
