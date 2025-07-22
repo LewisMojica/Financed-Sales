@@ -13,6 +13,7 @@ class FinanceApplication(Document):
 		delivery_fee = 0
 		itbis = 0
 		grand_total = 0
+		credit_total = 0
 		quotation = frappe.get_doc('Quotation', self.quotation)
 		
 		factura = frappe.new_doc('Factura Proforma')
@@ -36,6 +37,7 @@ class FinanceApplication(Document):
 				'base_amount': item.base_amount
 			})			
 		factura.sub_total = sub_total
-		factura.grand_total = sub_total+delivery_fee+itbis+grand_total-discount
+		factura.total_credit = self.total_credit
+		factura.expiration_date = self.credit_expiration_date
 		factura.insert()
 		return factura.name
