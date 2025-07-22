@@ -75,6 +75,14 @@ function generate_installments(frm){
 			row.amount = frm.doc.installment;
 			row.due_date = frappe.datetime.add_months(frm.doc.first_installment, i);
 		}
+		frm.set_df_property('credit_expiration_date', 'read_only', 0);
+		frm.set_df_property('total_credit', 'read_only', 0);
+		frm.set_value('credit_expiration_date', frappe.datetime.add_months(frm.doc.first_installment, monthly_payments-1));
+		frm.set_value('total_credit', frm.doc.repayment_term*frm.doc.installment);
+		frm.set_df_property('credit_expiration_date', 'read_only', 1);
+		frm.set_df_property('total_credit', 'read_only', 1);
+
+
 	} 
 	frm.refresh_field('installment');
 	frm.refresh_field('installments');
