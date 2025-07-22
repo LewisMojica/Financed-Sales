@@ -49,18 +49,23 @@
   {
    "fieldname": "repayment_term",
    "fieldtype": "Int",
-   "label": "Repayment term (months)"
+   "label": "Repayment term (months)",
+   "non_negative": 1,
+   "reqd": 1
   },
   {
    "fieldname": "down_payment",
    "fieldtype": "Currency",
-   "label": "Down payment"
+   "label": "Down payment",
+   "non_negative": 1
   },
   {
    "fieldname": "installment",
    "fieldtype": "Currency",
    "label": "Monthly installment",
-   "read_only": 1
+   "non_negative": 1,
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fieldname": "column_break_patn",
@@ -69,20 +74,24 @@
   {
    "fieldname": "application_fee",
    "fieldtype": "Currency",
-   "label": "Application fee"
+   "label": "Application fee",
+   "non_negative": 1
   },
   {
    "fieldname": "total_amount_to_finance",
    "fieldtype": "Currency",
    "label": "Total amount to finance",
-   "read_only": 1
+   "non_negative": 1,
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "default": "5",
    "fieldname": "interest_rate",
    "fieldtype": "Percent",
    "label": "Interest rate %",
-   "precision": "2"
+   "precision": "2",
+   "reqd": 1
   },
   {
    "fieldname": "amended_from",
@@ -97,7 +106,8 @@
   {
    "fieldname": "first_installment",
    "fieldtype": "Date",
-   "label": "First installment date"
+   "label": "First installment date",
+   "reqd": 1
   },
   {
    "fieldname": "proposed_payment_plan_section",
@@ -108,14 +118,16 @@
    "fieldname": "installments",
    "fieldtype": "Table",
    "label": "Installments",
-   "options": "Financed Sale Installment"
+   "options": "Financed Sale Installment",
+   "reqd": 1
   },
   {
    "fieldname": "total_credit",
    "fieldtype": "Currency",
    "label": "Monto total a cr\u00e9dito",
    "non_negative": 1,
-   "read_only": 1
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fieldname": "section_break_jfoi",
@@ -128,14 +140,16 @@
   {
    "fieldname": "credit_expiration_date",
    "fieldtype": "Date",
-   "label": "Fecha de vencimiento de cr\u00e9dito"
+   "label": "Fecha de vencimiento de cr\u00e9dito",
+   "read_only": 1,
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-22 00:03:26.700443",
+ "modified": "2025-07-22 00:44:07.736940",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
