@@ -19,7 +19,10 @@
   "amended_from",
   "proposed_payment_plan_section",
   "installments",
-  "total_credit"
+  "section_break_jfoi",
+  "total_credit",
+  "column_break_kgmm",
+  "credit_expiration_date"
  ],
  "fields": [
   {
@@ -113,13 +116,26 @@
    "label": "Monto total a cr\u00e9dito",
    "non_negative": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_jfoi",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_kgmm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "credit_expiration_date",
+   "fieldtype": "Date",
+   "label": "Fecha de vencimiento de cr\u00e9dito"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-21 23:59:05.823260",
+ "modified": "2025-07-22 00:03:26.700443",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
