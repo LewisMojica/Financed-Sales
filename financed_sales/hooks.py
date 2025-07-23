@@ -4,6 +4,10 @@ app_publisher = "Lewis Mojica"
 app_description = "Financed Sales enables customer financed sales workflows in ERPNext. Creates financing applications from quotations and POS transactions and manages payment plans."
 app_email = "lewismojica3@gmail.com"
 app_license = "gpl-3.0"
+page_js = {
+	"pos": "public/js/point_of_sale.js",
+	"point-of-sale": "public/js/point_of_sale.js",
+}
 doctype_js = {
 	"Quotation": "public/js/quotation.js",
 	"Finance Application": "public/js/finance_application.js"
