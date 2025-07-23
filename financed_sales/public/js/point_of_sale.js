@@ -1,39 +1,63 @@
+// public/js/point_of_sale.js
 frappe.provide("erpnext.pos");
 
 (function() {
-  function addCustomButton() {
-    // only once
-    if (document.getElementById('my-custom-btn')) return;
+	// 1. When clicked, call our whitelisted API to build a Quotation
+	function onMyButtonClick() {
+		const pos = window.cur_pos;
+		const customer = pos.customer_details?.customer;
+		if (!customer) {
+			frappe.msgprint(__("Please select a customer first"));
+			return;
+		}
 
-    // this is the one that works
-    const container = document.querySelector('.cart-container');
-    if (!container) return;
+		const items = (pos.frm?.doc?.items || []).map(i => ({
+			item_code: i.item_code,
+			qty:			 i.qty,
+			rate:			 i.rate
+		}));
+		if (!items.length) {
+			frappe.msgprint(__("Cart is empty"));
+			return;
+		}
 
-    const btn = document.createElement('button');
-    btn.id = 'my-custom-btn';
-    btn.innerText = __('My Button');
-    btn.className = 'btn btn-primary btn-sm';
-    // ensure it sits on top and is clickable
-    btn.style.position      = 'relative';
-    btn.style.zIndex        = '9999';
-    btn.style.pointerEvents = 'auto';
+		frappe.call({
+			method: "retail_misel.retail_misel.api.create_pos_quotation",
+			args: { customer, items },
+			freeze: true,
+			callback: r => {
+				if (r.message?.name) {
+					frappe.msgprint(__(`Quotation {0} created`, [r.message.name]));
+					// Optionally navigate to it:
+					frappe.set_route("Form", "Quotation", r.message.name);
+				}
+			}
+		});
+	}
 
-    btn.onclick = () => {
-      frappe.msgprint(__('You clicked My Button!'));
-      return false;
-    };
+	// 2. Inject “Financiar” button into the cart area
+	function addCustomButton() {
+		if (document.getElementById("my-custom-btn")) return;
 
-    container.appendChild(btn);
-  }
+		const container = document.querySelector(".cart-container");
+		if (!container) return;
 
-  // catch it immediately if already rendered
-  addCustomButton();
+		const btn = document.createElement("button");
+		btn.id = "my-custom-btn";
+		btn.innerText = __("Financiar");
+		btn.className = "btn btn-primary btn-sm";
+		btn.style.position			= "relative";
+		btn.style.zIndex				= "9999";
+		btn.style.pointerEvents = "auto";
 
-  // catch any later re-renders
-  const observer = new MutationObserver(addCustomButton);
-  observer.observe(document.body, { childList: true, subtree: true });
+		btn.onclick = onMyButtonClick;
+		container.appendChild(btn);
+	}
 
-  // safety net after ajax loads
-  frappe.after_ajax(addCustomButton);
+	// 3. Run immediately, on AJAX reloads, and on DOM mutations
+	addCustomButton();
+	frappe.after_ajax(addCustomButton);
+	new MutationObserver(addCustomButton)
+		.observe(document.body, { childList: true, subtree: true });
 })();
 
