@@ -1,0 +1,70 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:FIN-PLAN-{YYYY}-{#####}\t",
+ "creation": "2025-07-22 22:11:40.271709",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_slur",
+  "amended_from",
+  "installments_section",
+  "installments"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_slur",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Payment Plan",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "installments_section",
+   "fieldtype": "Section Break",
+   "label": "Installments"
+  },
+  {
+   "fieldname": "installments",
+   "fieldtype": "Table",
+   "label": "Installments",
+   "options": "Payment Plan Installment"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-07-23 00:41:55.763788",
+ "modified_by": "Administrator",
+ "module": "Financed Sales",
+ "name": "Payment Plan",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
