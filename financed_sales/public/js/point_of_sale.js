@@ -22,7 +22,7 @@ frappe.provide("erpnext.pos");
 		}
 
 		frappe.call({
-			method: "retail_misel.retail_misel.api.create_pos_quotation",
+			method: "financed_sales.financed_sales.api.create_pos_quotation",
 			args: { customer, items },
 			freeze: true,
 			callback: r => {
