@@ -9,6 +9,7 @@ doctype_js = {
 	"Finance Application": "public/js/finance_application.js"
 }
 fixtures = [
+	{"doctype": "Custom Field", "filters": [["fieldname", "like", "custom_%"], ["module", "=", "Financed Sales"]]},
 	{
 		"doctype": "Workflow",
 		"filters": {"name": "Finance Application Approval"}
