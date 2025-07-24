@@ -30,13 +30,20 @@ def create_pos_quotation(customer, items):
 		})
 
 	# 3. Create and insert the Quotation
-	doc = frappe.get_doc({
+	quotation = frappe.get_doc({
 		"doctype":		   "Quotation",
 		"party_name":		   customer,
 		"transaction_date": frappe.utils.today(),
 		"valid_till":	   frappe.utils.add_days(frappe.utils.today(), 30),
 		"items":		   quotation_items
 	}).insert(ignore_permissions=True)
-
-	return {"name": doc.name}
+	quotation.submit()
+	application = frappe.get_doc({
+		'doctype': 'Finance Application',
+		'customer': customer,
+		'quotation': quotation.name,
+		'total_amount_to_finance': quotation.grand_total,
+	}).insert()
+		
+	return {"name": application.name}
 

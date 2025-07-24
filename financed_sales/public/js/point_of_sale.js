@@ -29,7 +29,7 @@ frappe.provide("erpnext.pos");
 				if (r.message?.name) {
 					frappe.msgprint(__(`Quotation {0} created`, [r.message.name]));
 					// Optionally navigate to it:
-					frappe.set_route("Form", "Quotation", r.message.name);
+					frappe.set_route("Form", "Finance Application", r.message.name);
 				}
 			}
 		});
