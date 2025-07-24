@@ -2,6 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
+from frappe import _
 from frappe.model.document import Document
 
 
@@ -36,8 +37,11 @@ class FinanceApplication(Document):
 				'base_rate': item.base_rate,
 				'base_amount': item.base_amount
 			})			
+		interest_item = frappe.get_doc('Item','INTEREST')
+		factura.expiration_date = self.credit_expiration_date
 		factura.sub_total = sub_total
 		factura.total_credit = self.total_credit
 		factura.expiration_date = self.credit_expiration_date
+		factura.itbis = sub_total*0.18
 		factura.insert()
 		return factura.name
