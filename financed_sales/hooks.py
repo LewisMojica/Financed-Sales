@@ -26,6 +26,9 @@ fixtures = [
 		"filters": { "name": 'Factura Proforma' }
 	},
 ]
+doc_events = {
+	"Finance Application": {"on_update_after_submit": ["financed_sales.financed_sales.create_payment_plan.main"]},
+}	
 # Apps
 # ------------------
 
