@@ -21,6 +21,7 @@
   "installments",
   "section_break_jfoi",
   "total_credit",
+  "interests",
   "column_break_kgmm",
   "credit_expiration_date"
  ],
@@ -135,13 +136,19 @@
    "fieldtype": "Date",
    "label": "Fecha de vencimiento de cr\u00e9dito",
    "read_only": 1
+  },
+  {
+   "fieldname": "interests",
+   "fieldtype": "Currency",
+   "label": "Intereses",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-22 01:40:25.900621",
+ "modified": "2025-07-24 15:50:58.330467",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
