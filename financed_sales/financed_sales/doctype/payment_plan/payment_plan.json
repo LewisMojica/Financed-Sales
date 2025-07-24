@@ -8,6 +8,7 @@
  "field_order": [
   "section_break_slur",
   "amended_from",
+  "finance_application",
   "installments_section",
   "installments"
  ],
@@ -36,13 +37,19 @@
    "fieldtype": "Table",
    "label": "Installments",
    "options": "Payment Plan Installment"
+  },
+  {
+   "fieldname": "finance_application",
+   "fieldtype": "Link",
+   "label": "Finance Application",
+   "options": "Finance Application"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-23 00:41:55.763788",
+ "modified": "2025-07-23 21:31:07.880000",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Plan",
