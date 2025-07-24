@@ -7,7 +7,7 @@
 - [ ] Many valitations missing.
 - [ ] some thing shouldn't be done in the client side, like generating the installments in the Finance Proposal form?
 - [ ] One quotation shouldn't be able to create many Finance Application
-
+- [ ] # TODO: Validate that 'INTEREST' item has a proper income account set. If not, show frappe.msgprint and warn user on invoice validation
 ## Medium Priority  
 - [ ] 
 
