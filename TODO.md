@@ -13,7 +13,8 @@
 - [ ] maybe check if dgii compliance is installed an ask if the credit invoice should be with ncf? 
 
 ## Low Priority
-- [ ] 
+- [ ] the button in quotation that creates a finance application does it with a frappe.call of frappe.insert.
+the method int api.py also creates a finace application. Both should do it calling a function in the server side 
 ## ??
 
 - [ ] En que momento se cobra el avance? y como relacionar el payment entry
