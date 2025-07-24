@@ -2,7 +2,6 @@ import frappe
 
 def main(doc,method):
 	if doc.workflow_state == 'Approved':
-		print('$$$$$$$$$$$$$$$initializationg plan%%%%%%%^^^^&&&&&****')
 		plan = frappe.new_doc('Payment Plan')
 		plan.finance_application = doc.name
 		
@@ -14,3 +13,4 @@ def main(doc,method):
 				'pending_amount': 0,
 			})
 		plan.insert()
+		plan.submit()
