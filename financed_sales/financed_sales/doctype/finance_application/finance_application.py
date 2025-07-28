@@ -40,8 +40,8 @@ class FinanceApplication(Document):
 		interest_item = frappe.get_doc('Item','INTEREST')
 		factura.expiration_date = self.credit_expiration_date
 		factura.sub_total = sub_total
-		factura.total_credit = self.total_credit
+		factura.total_credit = self.total_amount_to_finance+self.interests 
 		factura.expiration_date = self.credit_expiration_date
-		factura.itbis = sub_total*0.18
+		#factura.itbis = sub_total*0.18
 		factura.insert()
 		return factura.name
