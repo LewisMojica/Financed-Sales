@@ -114,19 +114,19 @@
    "fieldname": "payment_method",
    "fieldtype": "Link",
    "label": "Forma de pago",
-   "options": "POS Payment Method"
+   "options": "Mode of Payment"
   },
   {
    "fieldname": "total_credit",
    "fieldtype": "Currency",
-   "label": "Monto total a cr\u00e9dito"
+   "label": "Total"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-22 01:07:07.251480",
+ "modified": "2025-07-28 18:55:18.446677",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Factura Proforma",
