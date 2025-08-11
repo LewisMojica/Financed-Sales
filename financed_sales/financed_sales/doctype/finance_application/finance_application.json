@@ -16,6 +16,7 @@
   "application_fee",
   "total_amount_to_finance",
   "interest_rate",
+  "rate_period",
   "amended_from",
   "proposed_payment_plan_section",
   "installments",
@@ -142,14 +143,22 @@
    "fieldtype": "Currency",
    "label": "Intereses",
    "read_only": 1
+  },
+  {
+   "default": "Monthly",
+   "fieldname": "rate_period",
+   "fieldtype": "Select",
+   "label": "Interest rate period",
+   "options": "Monthly\nAnnual",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-24 15:50:58.330467",
- "modified_by": "Administrator",
+ "modified": "2025-08-10 23:34:36.063093",
+ "modified_by": "lewis@gg.com",
  "module": "Financed Sales",
  "name": "Finance Application",
  "naming_rule": "Expression",
