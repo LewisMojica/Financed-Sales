@@ -13,4 +13,5 @@ def main(doc,method):
 				'pending_amount': 0,
 			})
 		plan.insert()
+		doc.payment_plan = plan.name
 		plan.submit()

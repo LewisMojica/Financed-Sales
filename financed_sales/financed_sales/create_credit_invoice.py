@@ -34,3 +34,4 @@ def main(doc,method):
 		
 
 	invoice.insert()
+	doc.credit_invoice = invoice.name
