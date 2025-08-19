@@ -20,6 +20,7 @@
   "sub_total",
   "delivery_fee",
   "itbis",
+  "interests",
   "total_credit",
   "payment_method"
  ],
@@ -120,13 +121,18 @@
    "fieldname": "total_credit",
    "fieldtype": "Currency",
    "label": "Total"
+  },
+  {
+   "fieldname": "interests",
+   "fieldtype": "Currency",
+   "label": "Intereses"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-28 18:55:18.446677",
+ "modified": "2025-08-18 23:51:09.771719",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Factura Proforma",
