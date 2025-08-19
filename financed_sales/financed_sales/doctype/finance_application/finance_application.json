@@ -7,6 +7,9 @@
  "field_order": [
   "quotation",
   "customer",
+  "column_break_mkrh",
+  "payment_plan",
+  "credit_invoice",
   "section_break_ntsh",
   "repayment_term",
   "down_payment",
@@ -151,14 +154,37 @@
    "label": "Interest rate period",
    "options": "Monthly\nAnnual",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_mkrh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.payment_plan",
+   "fieldname": "payment_plan",
+   "fieldtype": "Link",
+   "label": "Payment Plan",
+   "options": "Payment Plan"
+  },
+  {
+   "depends_on": "eval:doc.credit_invoice",
+   "fieldname": "credit_invoice",
+   "fieldtype": "Link",
+   "label": "Credit Invoice",
+   "options": "Sales Invoice"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2025-08-10 23:34:36.063093",
- "modified_by": "lewis@gg.com",
+ "links": [
+  {
+   "link_doctype": "Payment Plan",
+   "link_fieldname": "finance_application"
+  }
+ ],
+ "modified": "2025-08-19 09:58:47.244438",
+ "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
  "naming_rule": "Expression",
