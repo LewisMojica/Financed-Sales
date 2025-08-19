@@ -3,6 +3,7 @@ from frappe import _
 
 def main(doc,method):
 	if doc.workflow_state == 'Approved':
+		settings = frappe.get_single('Financed Sales Settings')
 		invoice = frappe.new_doc('Sales Invoice')
 		quotation = frappe.get_doc('Quotation',doc.quotation)
 
@@ -21,7 +22,13 @@ def main(doc,method):
 		invoice.selling_price_list = quotation.selling_price_list
 		invoice.price_list_currency = quotation.price_list_currency
 		invoice.plc_conversion_rate = quotation.plc_conversion_rate
-		invoice.custom_interests = doc.interests
+		account = settings.interests_account #account for interest
+		invoice.append('taxes', {
+			'charge_type': 'Actual',
+			'account_head': account,
+			'description': 'Intereses',
+			'tax_amount': doc.interests,
+		})
 		
 
 	invoice.insert()
