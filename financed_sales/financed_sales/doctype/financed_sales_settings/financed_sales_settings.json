@@ -5,11 +5,11 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "cuenta_para_intereses"
+  "interests_account"
  ],
  "fields": [
   {
-   "fieldname": "cuenta_para_intereses",
+   "fieldname": "interests_account",
    "fieldtype": "Link",
    "label": "Cuenta para Intereses",
    "options": "Account"
@@ -19,7 +19,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-08-19 00:58:02.937124",
+ "modified": "2025-08-19 01:12:43.451642",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Financed Sales Settings",
