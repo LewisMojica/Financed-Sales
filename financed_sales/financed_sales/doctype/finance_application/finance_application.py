@@ -37,7 +37,7 @@ class FinanceApplication(Document):
 				'base_rate': item.base_rate,
 				'base_amount': item.base_amount
 			})			
-		interest_item = frappe.get_doc('Item','INTEREST')
+		factura.interests = self.interests
 		factura.expiration_date = self.credit_expiration_date
 		factura.sub_total = sub_total
 		factura.total_credit = self.total_amount_to_finance+self.interests 
