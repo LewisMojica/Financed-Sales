@@ -23,6 +23,8 @@ def main(doc,method):
 		invoice.price_list_currency = quotation.price_list_currency
 		invoice.plc_conversion_rate = quotation.plc_conversion_rate
 		account = settings.interests_account #account for interest
+		for tax in quotation.taxes:
+			invoice.append('taxes',tax)
 		invoice.append('taxes', {
 			'charge_type': 'Actual',
 			'account_head': account,
