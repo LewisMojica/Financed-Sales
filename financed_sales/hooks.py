@@ -25,7 +25,6 @@ fixtures = [
 		"doctype": "Print Format",
 		"filters": { "name": 'Factura Proforma' }
 	},
-	{"doctype": "Item", "filters": {"name": "Interest"}},
 ]
 doc_events = {
 	"Finance Application": {"on_update_after_submit": [
