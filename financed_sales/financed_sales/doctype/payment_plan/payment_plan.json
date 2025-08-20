@@ -12,13 +12,13 @@
   "credit_invoice",
   "customer",
   "column_break_lrpb",
-  "gen_down_payment",
-  "gen_installment_payment",
   "down_payment",
   "pending_down_payment_amount",
   "paid_down_payment_amount",
   "down_payment_reference",
   "down_payment_ref_type",
+  "gen_down_payment",
+  "gen_installment_payment",
   "installments_section",
   "installments"
  ],
@@ -102,7 +102,7 @@
   {
    "fieldname": "paid_down_payment_amount",
    "fieldtype": "Currency",
-   "label": "Paid down pament amount",
+   "label": "Paid down payment amount",
    "options": "down_payemtn_type"
   },
   {
@@ -116,7 +116,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-20 14:42:43.338338",
+ "modified": "2025-08-20 14:48:12.259282",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Plan",
