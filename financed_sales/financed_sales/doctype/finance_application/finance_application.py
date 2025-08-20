@@ -7,6 +7,9 @@ from frappe.model.document import Document
 
 
 class FinanceApplication(Document):
+	def validate(self):
+		if len(self.installments) <= 0 and self.docstatus == 1:
+			frappe.throw(_('Not enough data to compute installments'))
 	@frappe.whitelist()
 	def create_factura_proforma(self):
 		sub_total = 0
