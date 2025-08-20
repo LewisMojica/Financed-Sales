@@ -68,7 +68,7 @@ def create_payment_plan(doc, submit = True):
 			'due_date': installment.due_date,
 			'amount': installment.amount,
 			'paid_amount': 0,
-			'pending_amount': 0,
+			'pending_amount': installment.amount,
 		})
 	plan.insert()
 	if submit:
