@@ -61,6 +61,7 @@ def create_credit_inv(doc, submit = True):
 def create_payment_plan(doc, submit = True):
 	plan = frappe.new_doc('Payment Plan')
 	plan.finance_application = doc.name
+	plan.customer = doc.customer
 	
 	for installment in doc.installments:
 		plan.append('installments',{
