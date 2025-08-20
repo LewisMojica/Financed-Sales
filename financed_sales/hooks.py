@@ -28,8 +28,7 @@ fixtures = [
 ]
 doc_events = {
 	"Finance Application": {"on_update_after_submit": [
-									"financed_sales.financed_sales.create_payment_plan.main", 
-									"financed_sales.financed_sales.create_credit_invoice.main"]},
+									"financed_sales.financed_sales.create_docs_on_approval.main"]},
 }	
 # Apps
 # ------------------
