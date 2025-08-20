@@ -6,7 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "interests_account",
-  "monthly_interest_rate",
+  "interest_rate",
   "rate_period",
   "down_payment_percent"
  ],
@@ -16,13 +16,6 @@
    "fieldtype": "Link",
    "label": "Cuenta para Intereses",
    "options": "Account"
-  },
-  {
-   "default": "5",
-   "fieldname": "monthly_interest_rate",
-   "fieldtype": "Percent",
-   "label": "Default insterest rate",
-   "options": "5"
   },
   {
    "default": "40",
@@ -36,13 +29,20 @@
    "fieldtype": "Select",
    "label": "Default interest rate period",
    "options": "Monthly\nAnnual"
+  },
+  {
+   "default": "5",
+   "fieldname": "interest_rate",
+   "fieldtype": "Percent",
+   "label": "Default insterest rate",
+   "options": "5"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-08-20 17:04:30.990199",
+ "modified": "2025-08-20 17:06:33.871362",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Financed Sales Settings",
