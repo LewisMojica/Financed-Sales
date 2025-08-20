@@ -5,10 +5,11 @@ from frappe import _
 @frappe.whitelist()
 def create_pos_quotation(customer, items):
 	"""
-	Create a Sales Quotation from a POS cart.
+	Create a Sales Quotation and Finance Appication 
+	from a POS cart.
 	`customer`: string, Customer name or ID
 	`items`: list of dicts [{ item_code, qty, rate }, …]
-	Returns: { name: <new Quotation name> }
+	Returns: { name: <new Finance Application name> }
 	"""
 	items = json.loads(items)
 	# 1. Validation
@@ -38,12 +39,25 @@ def create_pos_quotation(customer, items):
 		"items":		   quotation_items
 	}).insert(ignore_permissions=True)
 	quotation.submit()
+	
+	return create_finance_application(quotation) 
+
+@frappe.whitelist()
+def create_finance_application(quotation):
+	"""
+	Creates a Finance Application from a Quotation.
+	`quotation`: Quotation from which the Finance 
+	Application will be created.	
+	Returns: {'name': <new Finance Application name>'} 
+	"""
+	
 	application = frappe.get_doc({
 		'doctype': 'Finance Application',
-		'customer': customer,
+		'customer': quotation.customer,
 		'quotation': quotation.name,
 		'total_amount_to_finance': quotation.grand_total,
 	}).insert()
 		
+	print(f'creating application {application.name}')
 	return {"name": application.name}
 
