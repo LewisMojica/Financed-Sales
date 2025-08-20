@@ -160,6 +160,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.credit_invoice",
    "fieldname": "payment_plan",
    "fieldtype": "Link",
    "label": "Payment Plan",
@@ -177,7 +178,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-20 00:39:19.122051",
+ "modified": "2025-08-20 01:56:26.636737",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
