@@ -7,7 +7,7 @@
  "field_order": [
   "interests_account",
   "monthly_interest_rate",
-  "down_payment_"
+  "down_payment_percent"
  ],
  "fields": [
   {
@@ -24,7 +24,7 @@
   },
   {
    "default": "40",
-   "fieldname": "down_payment_",
+   "fieldname": "down_payment_percent",
    "fieldtype": "Percent",
    "label": "Default down payment %"
   }
@@ -33,7 +33,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-08-20 15:01:21.899234",
+ "modified": "2025-08-20 16:40:16.306347",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Financed Sales Settings",
