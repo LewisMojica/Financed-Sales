@@ -35,3 +35,5 @@ def main(doc,method):
 
 	invoice.insert()
 	doc.credit_invoice = invoice.name
+	frappe.db.set_value(doc.doctype,doc.name,'credit_invoice',invoice.name)
+	invoice.submit()
