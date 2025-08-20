@@ -9,6 +9,7 @@
   "section_break_slur",
   "amended_from",
   "finance_application",
+  "credit_invoice",
   "installments_section",
   "installments"
  ],
@@ -43,13 +44,19 @@
    "fieldtype": "Link",
    "label": "Finance Application",
    "options": "Finance Application"
+  },
+  {
+   "fieldname": "credit_invoice",
+   "fieldtype": "Link",
+   "label": "Credit Invoice",
+   "options": "Sales Invoice"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-23 21:31:07.880000",
+ "modified": "2025-08-20 00:59:38.275371",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Plan",
