@@ -13,8 +13,8 @@
   "customer",
   "column_break_lrpb",
   "down_payment",
-  "pending_down_payment_amount",
   "paid_down_payment_amount",
+  "pending_down_payment_amount",
   "down_payment_reference",
   "down_payment_ref_type",
   "gen_down_payment",
@@ -72,6 +72,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "{\n    eval:pending_down_payment_amount != 0\n}",
    "fieldname": "gen_down_payment",
    "fieldtype": "Button",
    "label": "Create down payment"
@@ -116,7 +117,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-20 14:48:12.259282",
+ "modified": "2025-08-20 14:54:46.057317",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Plan",
