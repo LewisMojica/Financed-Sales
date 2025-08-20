@@ -14,6 +14,13 @@ def main(doc,method):
 	doc.payment_plan = plan_name
 	frappe.db.set_value(doc.doctype,doc.name,'payment_plan',plan_name)
 	
+	#add references to credit inv and payment plan:
+	frappe.db.set_value('Payment Plan',plan_name,'credit_invoice',inv_name)
+	frappe.db.set_value('Sales Invoice',inv_name,'custom_payment_plan',plan_name)
+	frappe.db.set_value('Sales Invoice',inv_name,'custom_finance_application',doc.name)
+	
+	
+	
 	
 	
 def create_credit_inv(doc, submit = True):
