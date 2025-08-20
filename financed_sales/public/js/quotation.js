@@ -22,19 +22,9 @@ const apply_for_credit = (frm) => {
 	}
 
 	frappe.call({
-		method: 'frappe.client.insert',
+		method: 'financed_sales.financed_sales.api.create_finance_application',
 		args: {
-			doc: {
-				doctype: 'Finance Application',
-				quotation: frm.doc.name,
-				customer: frm.doc.party_name,
-				total_amount_to_finance: frm.doc.total,
-				/*customer_name: frm.doc.customer_name,
-				requested_amount: frm.doc.grand_total,
-				application_date: frappe.datetime.now_date(),*/
-				status: 'Draft',
-				// Add any other fields your Finance Approval doctype has
-			}
+			quotation_name: frm.doc.name 
 		},
 		callback: (response) => {
 			if (response.message) {
