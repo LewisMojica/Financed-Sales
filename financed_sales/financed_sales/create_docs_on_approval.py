@@ -1,10 +1,27 @@
 import frappe
 from frappe import _
+from erpnext.selling.doctype.quotation.quotation import make_sales_order
+
 
 def main(doc,method):
-	"""Creates corresponding (credit) Sales Invoice and Payment Plan if Finance Application is approved"""
-	if doc.workflow_state != 'Approved':
-		return
+	if doc.workflow_state == 'Approved':
+		on_approval(doc)
+	elif doc.workflow_state == 'Pending':
+		create_sales_invoice(doc)
+	
+	
+	
+def create_sales_invoice(doc):
+	sales_order_dict = make_sales_order(doc.quotation)
+
+	# The method returns a dictionary, convert to doc and save
+	sales_order = frappe.get_doc(sales_order_dict)
+	sales_order.delivery_date = doc.first_installment
+	sales_order.insert()
+	sales_order.submit()  
+
+def on_approval(doc):
+	"""Creates corresponding (credit) Sales Invoice and Payment Plan"""
 	inv_name = create_credit_inv(doc)				#Create the credit inv and put the link in the application                              	
 	doc.credit_invoice = inv_name						#Note: this does not add the link to the database as the application is already submited)	
 																#In the next line the value is acctually inserted in the DB                             	
@@ -18,9 +35,6 @@ def main(doc,method):
 	frappe.db.set_value('Payment Plan',plan_name,'credit_invoice',inv_name)
 	frappe.db.set_value('Sales Invoice',inv_name,'custom_payment_plan',plan_name)
 	frappe.db.set_value('Sales Invoice',inv_name,'custom_finance_application',doc.name)
-	
-	
-	
 	
 	
 def create_credit_inv(doc, submit = True):
