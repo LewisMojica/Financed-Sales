@@ -59,6 +59,9 @@ def create_finance_application(quotation_name):
 		'quotation': quotation.name,
 		'total_amount_to_finance': quotation.grand_total,
 		'down_payment': (settings.down_payment_percent or 0)*quotation.grand_total/100,
+		'interest_rate': settings.interest_rate,
+		'application_fee': settings.application_fee,
+		'rate_period': settings.rate_period or 'Monthly',
 	}).insert()
 		
 	print(f'creating application {application.name}')
