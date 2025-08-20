@@ -8,7 +8,8 @@
   "interests_account",
   "interest_rate",
   "rate_period",
-  "down_payment_percent"
+  "down_payment_percent",
+  "application_fee"
  ],
  "fields": [
   {
@@ -36,13 +37,18 @@
    "fieldtype": "Percent",
    "label": "Default insterest rate",
    "options": "5"
+  },
+  {
+   "fieldname": "application_fee",
+   "fieldtype": "Currency",
+   "label": "Default application fee"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-08-20 17:06:33.871362",
+ "modified": "2025-08-20 17:10:35.936721",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Financed Sales Settings",
