@@ -3,7 +3,7 @@ import frappe
 from frappe import _
 
 @frappe.whitelist()
-def create_pos_quotation(customer, items):
+def create_finance_app_from_pos_cart(customer, items):
 	"""
 	Create a Sales Quotation and Finance Appication 
 	from a POS cart.
