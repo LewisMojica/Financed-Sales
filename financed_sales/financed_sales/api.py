@@ -51,12 +51,14 @@ def create_finance_application(quotation_name):
 	Application will be created.	
 	Returns: {'name': <new Finance Application name>'} 
 	"""
+	settings = frappe.get_single('Financed Sales Settings')
 	quotation = frappe.get_doc('Quotation', quotation_name)	
 	application = frappe.get_doc({
 		'doctype': 'Finance Application',
 		'customer': quotation.party_name,
 		'quotation': quotation.name,
 		'total_amount_to_finance': quotation.grand_total,
+		'down_payment': settings.down_payment_percent*quotation.grand_total/100,
 	}).insert()
 		
 	print(f'creating application {application.name}')
