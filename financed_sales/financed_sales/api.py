@@ -40,20 +40,21 @@ def create_finance_app_from_pos_cart(customer, items):
 	}).insert(ignore_permissions=True)
 	quotation.submit()
 	
-	return create_finance_application(quotation) 
+	return create_finance_application(quotation.name) 
+
 
 @frappe.whitelist()
-def create_finance_application(quotation):
+def create_finance_application(quotation_name):
 	"""
 	Creates a Finance Application from a Quotation.
-	`quotation`: Quotation from which the Finance 
+	`quotation_name`: Quotation name from which the Finance 
 	Application will be created.	
 	Returns: {'name': <new Finance Application name>'} 
 	"""
-	
+	quotation = frappe.get_doc('Quotation', quotation_name)	
 	application = frappe.get_doc({
 		'doctype': 'Finance Application',
-		'customer': quotation.customer,
+		'customer': quotation.party_name,
 		'quotation': quotation.name,
 		'total_amount_to_finance': quotation.grand_total,
 	}).insert()
