@@ -82,7 +82,9 @@ def create_down_payment_from_fin_app(fin_app_name):
 	Returns: <new Payment Entry name>
 	"""
 	fin_app = frappe.get_doc('Finance Application', fin_app_name)
-	return get_payment_entry("Sales Order", fin_app.sales_order, party_amount=fin_app.down_payment)	
+	pe = get_payment_entry("Sales Order", fin_app.sales_order, party_amount=fin_app.down_payment)	
+	pe.custom_is_finance_down_payment = 1
+	return pe
 
 
 
