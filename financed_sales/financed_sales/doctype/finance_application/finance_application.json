@@ -10,6 +10,7 @@
   "customer",
   "gen_down_payment",
   "paid_down_payment_percent",
+  "paid_down_payment",
   "column_break_mkrh",
   "payment_plan",
   "credit_invoice",
@@ -189,25 +190,28 @@
    "read_only": 1
   },
   {
-   "depends_on": "{\n    eval:doc.paid_down_payment_percent < 100\n\n}",
+   "depends_on": "eval:doc.paid_down_payment < doc.down_payment",
    "fieldname": "gen_down_payment",
    "fieldtype": "Button",
    "label": "Pay down payment"
   },
   {
    "default": "0",
-   "depends_on": "{\n    \"depends_on\": \"eval:doc.other_field_name == 100\"\n\n}",
    "fieldname": "paid_down_payment_percent",
    "fieldtype": "Percent",
-   "label": "Paid down payment %",
-   "read_only": 1
+   "label": "Paid down payment %"
+  },
+  {
+   "fieldname": "paid_down_payment",
+   "fieldtype": "Currency",
+   "label": "Paid down payment"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-21 15:14:03.813581",
+ "modified": "2025-08-21 15:33:04.672466",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
