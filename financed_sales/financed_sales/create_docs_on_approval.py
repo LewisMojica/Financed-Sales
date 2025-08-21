@@ -7,19 +7,22 @@ def main(doc,method):
 	if doc.workflow_state == 'Approved':
 		on_approval(doc)
 	elif doc.workflow_state == 'Pending':
-		create_sales_invoice(doc)
+		create_sales_order(doc)
 	
 	
 	
-def create_sales_invoice(doc):
+def create_sales_order(doc):
 	sales_order_dict = make_sales_order(doc.quotation)
 
 	# The method returns a dictionary, convert to doc and save
 	sales_order = frappe.get_doc(sales_order_dict)
 	sales_order.delivery_date = doc.first_installment
 	sales_order.custom_finance_application = doc.name
+	sales_order.payment_schedule[0].due_date = doc.installments[-1].due_date
 	sales_order.insert()
-	sales_order.submit()  
+	sales_order.submit()
+	doc.sales_order = sales_order.name
+	frappe.db.set_value(doc.doctype, doc.name, 'sales_order', sales_order.name)
 
 def on_approval(doc):
 	"""Creates corresponding (credit) Sales Invoice and Payment Plan"""
