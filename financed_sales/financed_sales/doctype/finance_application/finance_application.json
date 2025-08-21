@@ -8,7 +8,7 @@
   "links_section",
   "quotation",
   "customer",
-  "get_down_payment",
+  "gen_down_payment",
   "column_break_mkrh",
   "payment_plan",
   "credit_invoice",
@@ -188,7 +188,7 @@
    "read_only": 1
   },
   {
-   "fieldname": "get_down_payment",
+   "fieldname": "gen_down_payment",
    "fieldtype": "Button",
    "label": "Pay down payment"
   }
@@ -197,7 +197,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-20 22:42:01.174046",
+ "modified": "2025-08-20 23:06:14.029793",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
