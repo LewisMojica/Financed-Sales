@@ -17,6 +17,7 @@ def create_sales_invoice(doc):
 	# The method returns a dictionary, convert to doc and save
 	sales_order = frappe.get_doc(sales_order_dict)
 	sales_order.delivery_date = doc.first_installment
+	sales_order.custom_finance_application = doc.name
 	sales_order.insert()
 	sales_order.submit()  
 
