@@ -1,6 +1,7 @@
 import json
 import frappe
 from frappe import _
+from erpnext.accounts.doctype.payment_entry.payment_entry import get_payment_entry
 
 @frappe.whitelist()
 def create_finance_app_from_pos_cart(customer, items):
@@ -66,4 +67,23 @@ def create_finance_application(quotation_name):
 		
 	print(f'creating application {application.name}')
 	return {"name": application.name}
+
+
+@frappe.whitelist()
+def create_down_payment_from_fin_app(fin_app_name):
+	"""
+	Creates a payment entry for the down payment amount specified
+	in the `fin_app_name` param.
+	The created payment entry is linked to the Sales Order or 
+	(credit) Sales Invoice (if it already created) referenced in
+	param `fin_app_name`.
+	`fin_app_name`: Fiance Application from which the Sales Order or
+	(credit) Sales invoice will be taken to link in the payment entry
+	Returns: <new Payment Entry name>
+	"""
+	fin_app = frappe.get_doc('Finance Application', fin_app_name)
+	return get_payment_entry("Sales Order", fin_app.sales_order, party_amount=fin_app.down_payment)	
+
+
+
 
