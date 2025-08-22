@@ -20,7 +20,9 @@
   "gen_down_payment",
   "gen_installment_payment",
   "installments_section",
-  "installments"
+  "installments",
+  "section_break_wzux",
+  "payment_refs"
  ],
  "fields": [
   {
@@ -111,13 +113,23 @@
    "fieldtype": "Dynamic Link",
    "label": "Down payment reference",
    "options": "down_payment_ref_type"
+  },
+  {
+   "fieldname": "section_break_wzux",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "payment_refs",
+   "fieldtype": "Table",
+   "options": "Financed Payment Ref"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-20 14:54:46.057317",
+ "modified": "2025-08-22 17:07:18.843986",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Plan",
