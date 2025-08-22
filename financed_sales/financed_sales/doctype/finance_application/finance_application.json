@@ -6,15 +6,17 @@
  "engine": "InnoDB",
  "field_order": [
   "links_section",
-  "quotation",
   "customer",
-  "gen_down_payment",
   "paid_down_payment_percent",
   "paid_down_payment",
+  "gen_down_payment",
   "column_break_mkrh",
+  "quotation",
   "payment_plan",
   "credit_invoice",
   "sales_order",
+  "down_payment_payments_section",
+  "down_payments",
   "section_break_ntsh",
   "repayment_term",
   "down_payment",
@@ -196,22 +198,38 @@
    "label": "Pay down payment"
   },
   {
+   "allow_on_submit": 1,
    "default": "0",
    "fieldname": "paid_down_payment_percent",
    "fieldtype": "Percent",
-   "label": "Paid down payment %"
+   "label": "Paid down payment %",
+   "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "paid_down_payment",
    "fieldtype": "Currency",
-   "label": "Paid down payment"
+   "label": "Paid down payment",
+   "read_only": 1
+  },
+  {
+   "fieldname": "down_payment_payments_section",
+   "fieldtype": "Section Break",
+   "label": "Down payment payments"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "down_payments",
+   "fieldtype": "Table",
+   "options": "Financed Payment Ref",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-21 15:33:04.672466",
+ "modified": "2025-08-22 16:16:57.813788",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
