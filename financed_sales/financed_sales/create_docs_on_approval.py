@@ -6,7 +6,7 @@ from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice
 def main(doc,method):
 	if doc.workflow_state == 'Approved':
 		on_approval(doc)
-	elif doc.workflow_state == 'Pending':
+	elif doc.workflow_state == 'Pending' and not doc.sales_order:
 		create_sales_order(doc)
 	
 	
