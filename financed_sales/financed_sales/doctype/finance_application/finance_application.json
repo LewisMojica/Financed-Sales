@@ -9,6 +9,7 @@
   "customer",
   "paid_down_payment_percent",
   "paid_down_payment",
+  "pending_down_payment",
   "gen_down_payment",
   "column_break_mkrh",
   "quotation",
@@ -223,13 +224,18 @@
    "fieldtype": "Table",
    "options": "Financed Payment Ref",
    "read_only": 1
+  },
+  {
+   "fieldname": "pending_down_payment",
+   "fieldtype": "Currency",
+   "label": "Pending down payment "
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-22 16:16:57.813788",
+ "modified": "2025-08-22 16:33:42.769051",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
