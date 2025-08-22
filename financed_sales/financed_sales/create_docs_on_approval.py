@@ -76,6 +76,9 @@ def create_payment_plan(doc, submit = True):
 	plan = frappe.new_doc('Payment Plan')
 	plan.finance_application = doc.name
 	plan.customer = doc.customer
+	plan.down_payment = doc.down_payment
+	plan.paid_down_payment_amount = doc.paid_down_payment
+	plan.pending_down_payment_amount = doc.pending_down_payment
 	
 	for installment in doc.installments:
 		plan.append('installments',{
@@ -84,6 +87,13 @@ def create_payment_plan(doc, submit = True):
 			'paid_amount': 0,
 			'pending_amount': installment.amount,
 		})
+
+	#copy payments made against Finance Application:
+	for payment in doc.down_payments:
+		plan.append('payment_refs',payment.as_dict())
+		
+		
+
 	plan.insert()
 	if submit:
 		plan.submit()
