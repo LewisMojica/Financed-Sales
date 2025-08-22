@@ -51,12 +51,14 @@ def on_approval(doc):
 	
 def create_credit_inv(doc, submit = True):
 	settings = frappe.get_single('Financed Sales Settings')
+	account = settings.interests_account #account for interest
 	invoice = make_sales_invoice(doc.sales_order)
 	quotation = frappe.get_doc('Quotation',doc.quotation)
 
 	invoice.custom_is_credit_invoice = True
 	invoice.due_date = doc.installments[-1].due_date
-	account = settings.interests_account #account for interest
+	invoice.allocate_advances_automatically = 1
+	invoice.only_include_allocated_payments = 1
 
 	invoice.append('taxes', {
 		'charge_type': 'Actual',
