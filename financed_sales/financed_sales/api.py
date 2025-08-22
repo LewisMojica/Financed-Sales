@@ -88,4 +88,7 @@ def create_down_payment_from_fin_app(fin_app_name):
 
 
 
+@frappe.whitelist()
+def create_payment_from_pay_plan(payment_plan_name):
+	raise NotImplementedError('Function empty')
 
