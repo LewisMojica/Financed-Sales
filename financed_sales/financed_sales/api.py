@@ -89,6 +89,13 @@ def create_down_payment_from_fin_app(fin_app_name):
 
 
 @frappe.whitelist()
-def create_payment_from_pay_plan(payment_plan_name):
-	raise NotImplementedError('Function empty')
+def create_payment_entry_from_payment_plan(payment_plan_name, paid_amount, mode_of_payment, submit = False):
+	paid_amount = float(paid_amount)
+	si = frappe.db.get_value('Payment Plan', payment_plan_name, 'credit_invoice')
+	pe = get_payment_entry('Sales Invoice', si, party_amount = paid_amount)
+	pe.mode_of_payment = mode_of_payment
+	pe.save()
+	if submit:
+		pe.submit()
+	return pe.name
 
