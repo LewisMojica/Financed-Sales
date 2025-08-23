@@ -43,17 +43,17 @@ return new frappe.ui.Dialog({
 			args: { payment_plan_name:pp_name, paid_amount: values.paid_amount, mode_of_payment: values.mode_of_payment, submit: true},
 			callback: function(response) {
 				if (response.message) {
-				// Open the payment entry form
-					var doclist = frappe.model.sync(response.message);
-					frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
+					frappe.show_alert({                                        				
+                  message: __('Payment Entry created successfully'),
+                  indicator: 'green'
+               });
+					frappe.set_route('Form', 'Payment Entry', response.message);
 				} else {
 					frappe.msgprint("Error creating payment entry");
 				}
 			}
 		});
-		console.log(values);
 	 }
 });
 
 }
-
