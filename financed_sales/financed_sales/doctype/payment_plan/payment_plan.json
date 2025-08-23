@@ -12,7 +12,7 @@
   "credit_invoice",
   "customer",
   "column_break_lrpb",
-  "down_payment",
+  "down_payment_amount",
   "paid_down_payment_amount",
   "pending_down_payment_amount",
   "down_payment_reference",
@@ -86,34 +86,35 @@
    "label": "Pay Next Installment"
   },
   {
-   "fieldname": "down_payment",
-   "fieldtype": "Currency",
-   "label": "Down payment amount"
-  },
-  {
    "default": "Payment Entry",
    "fieldname": "down_payment_ref_type",
    "fieldtype": "Link",
    "hidden": 1,
    "label": "Payment ref type",
-   "options": "DocType"
+   "options": "DocType",
+   "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "pending_down_payment_amount",
    "fieldtype": "Currency",
-   "label": "Pending down payment amount"
+   "label": "Pending down payment amount",
+   "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "paid_down_payment_amount",
    "fieldtype": "Currency",
    "label": "Paid down payment amount",
-   "options": "down_payemtn_type"
+   "options": "down_payemtn_type",
+   "read_only": 1
   },
   {
    "fieldname": "down_payment_reference",
    "fieldtype": "Dynamic Link",
    "label": "Down payment reference",
-   "options": "down_payment_ref_type"
+   "options": "down_payment_ref_type",
+   "read_only": 1
   },
   {
    "fieldname": "section_break_wzux",
@@ -124,13 +125,18 @@
    "fieldname": "payment_refs",
    "fieldtype": "Table",
    "options": "Financed Payment Ref"
+  },
+  {
+   "fieldname": "down_payment_amount",
+   "fieldtype": "Currency",
+   "label": "Down payment amount"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-23 00:03:12.885234",
+ "modified": "2025-08-23 12:54:23.700573",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Plan",
