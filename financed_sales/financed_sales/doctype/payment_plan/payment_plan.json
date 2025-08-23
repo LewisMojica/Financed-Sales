@@ -74,12 +74,13 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "{\n    eval:pending_down_payment_amount != 0\n}",
+   "depends_on": "eval:doc.pending_down_payment_amount > 0",
    "fieldname": "gen_down_payment",
    "fieldtype": "Button",
    "label": "Create down payment"
   },
   {
+   "depends_on": "eval:doc.pending_down_payment_amount == 0",
    "fieldname": "gen_installment_payment",
    "fieldtype": "Button",
    "label": "Pay Next Installment"
@@ -129,7 +130,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-22 17:07:18.843986",
+ "modified": "2025-08-23 00:03:12.885234",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Plan",
