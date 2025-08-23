@@ -56,12 +56,14 @@ def create_finance_application(quotation_name):
 	"""
 	settings = frappe.get_single('Financed Sales Settings')
 	quotation = frappe.get_doc('Quotation', quotation_name)	
+	down_payment = (settings.down_payment_percent or 0)*quotation.grand_total/100
 	application = frappe.get_doc({
 		'doctype': 'Finance Application',
 		'customer': quotation.party_name,
 		'quotation': quotation.name,
 		'total_amount_to_finance': quotation.grand_total,
-		'down_payment': (settings.down_payment_percent or 0)*quotation.grand_total/100,
+		'down_payment':down_payment, 
+		'pending_down_payment_amount': down_payment,
 		'interest_rate': settings.interest_rate,
 		'application_fee': settings.application_fee,
 		'rate_period': settings.rate_period or 'Monthly',
