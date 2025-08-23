@@ -17,10 +17,10 @@
   "credit_invoice",
   "sales_order",
   "down_payment_payments_section",
-  "payments_refs",
+  "payment_refs",
   "section_break_ntsh",
   "repayment_term",
-  "down_payment",
+  "down_payment_amount",
   "installment",
   "first_installment",
   "column_break_patn",
@@ -63,12 +63,6 @@
    "fieldname": "repayment_term",
    "fieldtype": "Int",
    "label": "Repayment term (months)",
-   "non_negative": 1
-  },
-  {
-   "fieldname": "down_payment",
-   "fieldtype": "Currency",
-   "label": "Down payment",
    "non_negative": 1
   },
   {
@@ -193,7 +187,7 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval:doc.paid_down_payment < doc.down_payment",
+   "depends_on": "eval:doc.workflow_state === 'Pending' && doc.pending_down_payment_amount > 0",
    "fieldname": "gen_down_payment",
    "fieldtype": "Button",
    "label": "Pay down payment"
@@ -213,13 +207,6 @@
   },
   {
    "allow_on_submit": 1,
-   "fieldname": "payments_refs",
-   "fieldtype": "Table",
-   "options": "Financed Payment Ref",
-   "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
    "fieldname": "paid_down_payment_amount",
    "fieldtype": "Currency",
    "label": "Paid down payment",
@@ -231,13 +218,26 @@
    "fieldtype": "Currency",
    "label": "Pending down payment ",
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "payment_refs",
+   "fieldtype": "Table",
+   "options": "Financed Payment Ref",
+   "read_only": 1
+  },
+  {
+   "fieldname": "down_payment_amount",
+   "fieldtype": "Currency",
+   "label": "Down payment",
+   "non_negative": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-23 12:47:33.250059",
+ "modified": "2025-08-23 13:29:41.165470",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
