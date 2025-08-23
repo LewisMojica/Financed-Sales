@@ -110,6 +110,7 @@ def create_payment_entry(doc, paid_amount, mode_of_payment, submit = False):
 	pe.mode_of_payment = mode_of_payment
 	account = frappe.get_doc('Mode of Payment', mode_of_payment).accounts[0].default_account
 	pe.paid_to = account
+	pe.custom_is_finance_payment = 1
 	pe.save()
 	if submit:
 		pe.submit()
