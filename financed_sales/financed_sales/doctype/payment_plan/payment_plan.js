@@ -2,24 +2,38 @@
 // For license information, please see license.txt
 
 // frappe.ui.form.on("Payment Plan", {
-// 	refresh(frm) {
+//	refresh(frm) {
 
-// 	},
+//	},
 // });
 frappe.ui.form.on('Payment Plan', {
-    gen_installment_payment: function(frm) {
-        frappe.call({
-            method: "financed_sales.financed_sales.api.create_payment_from_pay_plan",
-            args: { payment_plan_name: frm.doc.name, },
-            callback: function(response) {
-                if (response.message) {
-                    // Open the payment entry form
-                    var doclist = frappe.model.sync(response.message);
-                    frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
-                } else {
-                    frappe.msgprint("Error creating payment entry");
-                }
-            }
-        });
-    }
+	 gen_installment_payment: function(frm) {
+			d = get_dialog().show(); 
+			d.hide();
+	 }
 });
+
+function get_dialog(){
+return new frappe.ui.Dialog({
+	title: 'Payment details',
+	fields: [
+			{
+				label: 'Amount to pay',
+				fieldname: 'amount',
+				fieldtype: 'Currency',
+			},
+			{
+				label: 'Payment method',
+				fiendname: 'payment_method',
+				fieldtype: 'Link',
+				options: 'Mode of Payment',
+			},
+	 ],
+	 size: 'small', // small, large, extra-large 
+	 primary_action_label: 'Submit payment',
+	 primary_action(values) {
+			console.log(values);
+	 }
+});
+
+}
