@@ -2,6 +2,8 @@ import json
 import frappe
 from frappe import _
 from erpnext.accounts.doctype.payment_entry.payment_entry import get_payment_entry
+from types import SimpleNamespace
+
 
 @frappe.whitelist()
 def create_finance_app_from_pos_cart(customer, items):
@@ -91,8 +93,20 @@ def create_down_payment_from_fin_app(fin_app_name):
 @frappe.whitelist()
 def create_payment_entry_from_payment_plan(payment_plan_name, paid_amount, mode_of_payment, submit = False):
 	paid_amount = float(paid_amount)
-	si = frappe.db.get_value('Payment Plan', payment_plan_name, 'credit_invoice')
-	pe = get_payment_entry('Sales Invoice', si, party_amount = paid_amount)
+	si_name = frappe.db.get_value('Payment Plan', payment_plan_name, 'credit_invoice')
+	si = SimpleNamespace(doctype='Sales Invoice', name=si_name)
+	return create_payment_entry(si, paid_amount,mode_of_payment,submit)	
+
+@frappe.whitelist()
+def create_payment_entry_from_finance_application(finance_application_name, paid_amount, mode_of_payment, submit = False):
+	paid_amount = float(paid_amount)
+	so_name = frappe.db.get_value('Finance Application', finance_application_name, 'sales_order')
+	so = SimpleNamespace(doctype='Sales Order', name=so_name)
+	return create_payment_entry(so, paid_amount,mode_of_payment,submit)	
+
+
+def create_payment_entry(doc, paid_amount, mode_of_payment, submit = False):
+	pe = get_payment_entry(doc.doctype, doc.name, party_amount = paid_amount)
 	pe.mode_of_payment = mode_of_payment
 	account = frappe.get_doc('Mode of Payment', mode_of_payment).accounts[0].default_account
 	pe.paid_to = account
