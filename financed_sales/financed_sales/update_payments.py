@@ -40,8 +40,11 @@ def update_payments(fa, pe, save=False):
 	for payment in doc.payment_refs:
 		paid_down_payment += payment.amount
 	
-	doc.paid_down_payment_amount = paid_down_payment
-	doc.paid_down_payment_percent = 100*paid_down_payment/doc.down_payment_amount if doc.down_payment_amount else 100
-	doc.pending_down_payment_amount = doc.down_payment_amount - paid_down_payment
+	doc.paid_down_payment_amount = paid_down_payment if paid_down_payment < doc.down_payment_amount else doc.down_payment_amount
+	doc.pending_down_payment_amount = max(0,doc.down_payment_amount - paid_down_payment)
+	if doc.down_payment_amount and doc.pending_down_payment_amount:
+		doc.paid_down_payment_percent = 100*paid_down_payment/doc.down_payment_amount 
+	else:
+		doc.paid_down_payment_percent = 100	
 	if save:	
 		doc.save()
