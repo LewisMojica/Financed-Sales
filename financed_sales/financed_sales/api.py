@@ -94,6 +94,8 @@ def create_payment_entry_from_payment_plan(payment_plan_name, paid_amount, mode_
 	si = frappe.db.get_value('Payment Plan', payment_plan_name, 'credit_invoice')
 	pe = get_payment_entry('Sales Invoice', si, party_amount = paid_amount)
 	pe.mode_of_payment = mode_of_payment
+	account = frappe.get_doc('Mode of Payment', mode_of_payment).accounts[0].default_account
+	pe.paid_to = account
 	pe.save()
 	if submit:
 		pe.submit()
