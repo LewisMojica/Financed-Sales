@@ -25,20 +25,23 @@ def main(pe, method):
 	update_payments(fa, pe, save=True)
 	
 
-def update_payments(doc, pe, save=False):
+def update_payments(fa, pe, save=False):
+	"""Update payment records. If fa has payment_plan, updates Payment Plan doc instead."""
+
+	doc = frappe.get_doc('Payment Plan', fa.payment_plan) if fa.payment_plan else fa
 	# Add payment to table
-	doc.append('down_payments',{
+	doc.append('payment_refs',{
 		'payment_entry': pe.name,
 		'amount': pe.paid_amount,
 		'date': pe.posting_date,
 	})
 	#update down payment fields
 	paid_down_payment = 0
-	for payment in doc.down_payments:
+	for payment in doc.payment_refs:
 		paid_down_payment += payment.amount
 	
-	doc.paid_down_payment = paid_down_payment
-	doc.paid_down_payment_percent = 100*paid_down_payment/doc.down_payment
-	doc.pending_down_payment = doc.down_payment - paid_down_payment
+	doc.paid_down_payment_amount = paid_down_payment
+	doc.paid_down_payment_percent = 100*paid_down_payment/doc.down_payment_amount if doc.down_payment_amount else 100
+	doc.pending_down_payment_amount = doc.down_payment_amount - paid_down_payment
 	if save:	
 		doc.save()
