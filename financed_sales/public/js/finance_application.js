@@ -34,8 +34,8 @@ frappe.ui.form.on('Finance Application', {
 		}
 	},
 	
-	down_payment: function(frm) {
-		if (frm.doc.down_payment) {
+	down_payment_amount: function(frm) {
+		if (frm.doc.down_payment_amount) {
 			generate_installments(frm);
 		}
 	},
@@ -64,8 +64,8 @@ frappe.ui.form.on('Finance Application', {
 
 function generate_installments(frm){
 	frm.clear_table('installments');
-	if (frm.doc.total_amount_to_finance && frm.doc.interest_rate && frm.doc.repayment_term && frm.doc.application_fee && frm.doc.first_installment && frm.doc.down_payment){
-		let owed_amount = frm.doc.total_amount_to_finance - frm.doc.down_payment;
+	if (frm.doc.total_amount_to_finance && frm.doc.interest_rate && frm.doc.repayment_term && frm.doc.application_fee && frm.doc.first_installment && frm.doc.down_payment_amount){
+		let owed_amount = frm.doc.total_amount_to_finance - frm.doc.down_payment_amount;
 		let monthly_pays = frm.doc.repayment_term;
 		let monthly_rate = frm.doc.interest_rate / (frm.doc.rate_period === "Monthly" ? 100 : 1200);
 		frm.set_df_property('installment', 'read_only', 0);
@@ -82,7 +82,7 @@ function generate_installments(frm){
 		frm.set_df_property('interests', 'read_only', 0);
 		frm.set_value('credit_expiration_date', frappe.datetime.add_months(frm.doc.first_installment, monthly_payments-1));
 		frm.set_value('total_credit', frm.doc.repayment_term*frm.doc.installment);
-		frm.set_value('interests',frm.doc.repayment_term*frm.doc.installment-(frm.doc.total_amount_to_finance-frm.doc.down_payment))
+		frm.set_value('interests',frm.doc.repayment_term*frm.doc.installment-(frm.doc.total_amount_to_finance-frm.doc.down_payment_amount))
 		frm.set_df_property('credit_expiration_date', 'read_only', 1);
 		frm.set_df_property('total_credit', 'read_only', 1);
 		frm.set_df_property('interests', 'read_only', 1);

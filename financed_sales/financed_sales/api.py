@@ -62,7 +62,7 @@ def create_finance_application(quotation_name):
 		'customer': quotation.party_name,
 		'quotation': quotation.name,
 		'total_amount_to_finance': quotation.grand_total,
-		'down_payment':down_payment, 
+		'down_payment_amount':down_payment, 
 		'pending_down_payment_amount': down_payment,
 		'interest_rate': settings.interest_rate,
 		'application_fee': settings.application_fee,

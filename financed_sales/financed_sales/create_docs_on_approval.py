@@ -89,7 +89,7 @@ def create_payment_plan(doc, submit = True):
 		})
 
 	#copy payments made against Finance Application:
-	for payment in doc.down_payments:
+	for payment in doc.payment_refs:
 		plan.append('payment_refs',payment.as_dict())
 		
 		
