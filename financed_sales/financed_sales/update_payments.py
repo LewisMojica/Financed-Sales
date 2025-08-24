@@ -49,7 +49,10 @@ def update_payments(fa, pe, save=False):
 
 	#update installments payments
 	if doc.doctype == 'Payment Plan':
-		print(auto_alloc_payments(doc.down_payment_amount, doc.installments, doc.payment_refs))
+		print(doc.installments[0].amount)
+		new_installments_state = auto_alloc_payments(doc.down_payment_amount, doc.installments, doc.payment_refs)
+		apply_installments_state(doc, new_installments_state)
+		print(new_installments_state)
 	
 	
 	if save:	
@@ -57,16 +60,12 @@ def update_payments(fa, pe, save=False):
 
 def auto_alloc_payments(down_payment, installments, payments):
 	def to_cents(amount):
-		return int(round(amount*100,2))
+		return int(round(amount*100))
 
 	installments = [{'amount': to_cents(installment.amount), 'payment_refs': []} for installment in installments]
 	installments.insert(0, {'amount': to_cents(down_payment), 'payment_refs': []})
 	payments = [{'payment_entry': payment.payment_entry, 'amount': to_cents(payment.amount), 'allocated': 0} for payment in payments] 
 
-	print(down_payment)
-	print(payments)
-	print(installments)
-	
 	for installment in installments:
 		installment_allocated = 0
 		for payment in payments:
@@ -89,3 +88,27 @@ def auto_alloc_payments(down_payment, installments, payments):
 				payment['allocated'] += added_amount
 
 	return installments
+
+def get_current_installments_state(installments):
+	pass
+
+def installments_refs_empty(installments, down_payment):
+	return True	
+def apply_installments_state(pp, new_installments_state):
+	new_installments_state.pop(0) #remove down payment	
+	if installments_refs_empty(pp.installments, pp.down_payment_amount):
+		for new_inst, actual_inst in zip(new_installments_state, pp.installments):
+			no_refs = len(new_inst['payment_refs']) 
+			if no_refs == 0:
+				break
+			elif no_refs == 1:
+				actual_inst.payment_doctype = 'Payment Entry'
+				actual_inst.payment_ref = new_inst['payment_refs'][0]['payment_entry']
+				
+			else:
+				pass
+
+			
+		
+
+
