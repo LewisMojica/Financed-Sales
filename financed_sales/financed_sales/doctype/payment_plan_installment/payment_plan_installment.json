@@ -12,7 +12,7 @@
   "paid_amount",
   "pending_amount",
   "payment_doctype",
-  "payment_entry_or_list",
+  "payment_ref",
   "penalty"
  ],
  "fields": [
@@ -44,14 +44,6 @@
   },
   {
    "allow_on_submit": 1,
-   "fieldname": "payment_entry_or_list",
-   "fieldtype": "Dynamic Link",
-   "in_list_view": 1,
-   "label": "Payment Reference",
-   "options": "payment_doctype"
-  },
-  {
-   "allow_on_submit": 1,
    "default": "Payment Entry",
    "fieldname": "payment_doctype",
    "fieldtype": "Link",
@@ -65,13 +57,21 @@
    "in_list_view": 1,
    "label": "Penalty",
    "options": "Dunning"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "payment_ref",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Payment Reference",
+   "options": "payment_doctype"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-08-20 13:59:40.397050",
+ "modified": "2025-08-24 01:11:10.246036",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Plan Installment",
