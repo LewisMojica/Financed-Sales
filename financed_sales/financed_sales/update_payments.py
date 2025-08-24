@@ -46,5 +46,42 @@ def update_payments(fa, pe, save=False):
 		doc.paid_down_payment_percent = 100*paid_down_payment/doc.down_payment_amount 
 	else:
 		doc.paid_down_payment_percent = 100	
+
+	#update installments payments
+	if doc.doctype == 'Payment Plan':
+		print(auto_alloc_payments(doc.down_payment_amount, doc.installments, doc.payment_refs))
+	
+	
 	if save:	
 		doc.save()
+
+def auto_alloc_payments(down_payment, installments, payments):
+	installments = [{'amount': installment.amount, 'payment_refs': []} for installment in installments]
+	installments.insert(0, {'amount': down_payment, 'payment_refs': []})
+	payments = [{'payment_entry': payment.payment_entry, 'amount': payment.amount, 'allocated': 0.00} for payment in payments] 
+
+	print(down_payment)
+	print(payments)
+	print(installments)
+	
+	for installment in installments:
+		installment_allocated = 0
+		for payment in payments:
+			if payment['allocated'] == payment['amount']:
+				continue	
+			elif payment['allocated'] > payment['amount']:
+				raise ValueError(f'allocated > amount: {payment}')
+			payment_to_allocate = payment['amount'] - payment['allocated']
+			if installment_allocated >= installment['amount']:
+				break
+			elif payment_to_allocate <= installment['amount'] - installment_allocated:
+				installment['payment_refs'].append({'payment_entry': payment['payment_entry'], 'amount': payment_to_allocate})	
+				installment_allocated += payment_to_allocate
+				payment['allocated'] = payment['amount']
+			else:
+				installment['payment_refs'].append({'payment_entry': payment['payment_entry'], 'amount': installment['amount'] - installment_allocated})	
+				added_amount = installment['amount'] - installment_allocated
+				installment_allocated += added_amount
+				payment['allocated'] += added_amount
+
+	return installments
