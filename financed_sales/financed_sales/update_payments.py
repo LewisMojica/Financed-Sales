@@ -56,9 +56,12 @@ def update_payments(fa, pe, save=False):
 		doc.save()
 
 def auto_alloc_payments(down_payment, installments, payments):
-	installments = [{'amount': installment.amount, 'payment_refs': []} for installment in installments]
-	installments.insert(0, {'amount': down_payment, 'payment_refs': []})
-	payments = [{'payment_entry': payment.payment_entry, 'amount': payment.amount, 'allocated': 0.00} for payment in payments] 
+	def to_cents(amount):
+		return int(round(amount*100,2))
+
+	installments = [{'amount': to_cents(installment.amount), 'payment_refs': []} for installment in installments]
+	installments.insert(0, {'amount': to_cents(down_payment), 'payment_refs': []})
+	payments = [{'payment_entry': payment.payment_entry, 'amount': to_cents(payment.amount), 'allocated': 0} for payment in payments] 
 
 	print(down_payment)
 	print(payments)
@@ -78,6 +81,7 @@ def auto_alloc_payments(down_payment, installments, payments):
 				installment['payment_refs'].append({'payment_entry': payment['payment_entry'], 'amount': payment_to_allocate})	
 				installment_allocated += payment_to_allocate
 				payment['allocated'] = payment['amount']
+				
 			else:
 				installment['payment_refs'].append({'payment_entry': payment['payment_entry'], 'amount': installment['amount'] - installment_allocated})	
 				added_amount = installment['amount'] - installment_allocated
