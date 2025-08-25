@@ -5,11 +5,11 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "payment_list"
+  "refs"
  ],
  "fields": [
   {
-   "fieldname": "payment_list",
+   "fieldname": "refs",
    "fieldtype": "Table",
    "options": "Payment Entry List Row"
   }
@@ -17,7 +17,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-23 00:49:07.715039",
+ "modified": "2025-08-25 00:33:09.647740",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Entry List",
