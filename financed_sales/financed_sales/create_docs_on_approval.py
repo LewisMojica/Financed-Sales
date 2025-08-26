@@ -20,12 +20,6 @@ def create_sales_order(doc):
 	sales_order.delivery_date = doc.first_installment
 	sales_order.custom_finance_application = doc.name
 	sales_order.payment_schedule[0].due_date = doc.installments[-1].due_date
-	sales_order.append('taxes', {
-	'charge_type': 'Actual',
-	'account_head': settings.interests_account,
-	'description': 'Intereses',
-	'tax_amount': doc.interests,
-	})
 	
 	sales_order.insert()
 	sales_order.submit()
