@@ -50,6 +50,7 @@ def update_payments(fa, pe, save=False):
 
 	#update installments payments
 	if doc.doctype == 'Payment Plan':
+		print(get_payment_refs_from_downp(doc))
 		old_installments_state = convert_fa_installments_to_alloc_format(doc)
 		print(f' ~~~~~~ init old inst state ~~~~~\n {old_installments_state}\n  ~~~~~~ end old inst state ~~~~~~ ')
 		new_installments_state = auto_alloc_payments(doc.down_payment_amount, doc.installments, doc.payment_refs)
@@ -106,7 +107,7 @@ def get_payment_refs_from_downp(pp):
 		return []
 	if pp.down_payment_ref_type == 'Payment Entry':
 		return [{'payment_entry': pp.down_payment_reference, 'amount': to_cents(pp.paid_down_payment_amount)}]
-	if pp.down_payment_reference == 'Payment Entry List':
+	if pp.down_payment_ref_type == 'Payment Entry List':
 		pay_list = frappe.get_doc('Payment Entry List', pp.down_payment_reference)              	
 		if len(pay_list.refs) == 0:
 			return []
@@ -114,7 +115,7 @@ def get_payment_refs_from_downp(pp):
 		for ref in pay_list.refs:
 			refs.append({'payment_entry': ref.payment_entry, 'amount': ref.paid_amount})
 		return refs
-	raise ValueError(f'Unknown payment_doctype: {inst.payment_doctype}')
+	raise ValueError(f'Unknown payment_doctype: {pp.down_payment_ref_type}')
 
 
 def get_payment_refs(inst):
@@ -133,7 +134,7 @@ def get_payment_refs(inst):
 	raise ValueError(f'Unknown payment_doctype: {inst.payment_doctype}')
 
 def convert_fa_installments_to_alloc_format(pp):
-	installments = pp.installments
+	installments_table = pp.installments
 	output = [{'amount': to_cents(installment.amount), 'payment_refs': []} for installment in installments_table]
 	for output_inst,inst in zip(output, installments_table):
 		output_inst['payment_refs'] = get_payment_refs(inst)
