@@ -121,7 +121,8 @@ def convert_fa_installments_to_alloc_format(installments_table):
 	for output_inst,inst in zip(output, installments_table):
 		output_inst['payment_refs'] = get_payment_refs(inst)
 	return output	
-def apply_installments_state(pp, new_installments_state):
+def apply_installments_state(pp, _new_installments_state):
+	new_installments_state = deepcopy(_new_installments_state
 	new_installments_state.pop(0) #remove down payment	
 	if installments_refs_empty(pp.installments, pp.down_payment_amount):
 		for new_inst, actual_inst in zip(new_installments_state, pp.installments):
