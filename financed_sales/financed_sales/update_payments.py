@@ -101,6 +101,22 @@ def get_current_installments_state(installments):
 def installments_refs_empty(installments, down_payment):
 	return True
 
+def get_payment_refs_from_downp(pp):
+	if not pp.down_payment_reference:
+		return []
+	if pp.down_payment_ref_type == 'Payment Entry':
+		return [{'payment_entry': pp.down_payment_reference, 'amount': to_cents(pp.paid_down_payment_amount)}]
+	if pp.down_payment_reference == 'Payment Entry List':
+		pay_list = frappe.get_doc('Payment Entry List', pp.down_payment_reference)              	
+		if len(pay_list.refs) == 0:
+			return []
+		refs = []
+		for ref in pay_list.refs:
+			refs.append({'payment_entry': ref.payment_entry, 'amount': ref.paid_amount})
+		return refs
+	raise ValueError(f'Unknown payment_doctype: {inst.payment_doctype}')
+
+
 def get_payment_refs(inst):
 	if not inst.payment_ref:
 		return []
