@@ -122,8 +122,25 @@ def convert_fa_installments_to_alloc_format(installments_table):
 		output_inst['payment_refs'] = get_payment_refs(inst)
 	return output	
 def apply_installments_state(pp, _new_installments_state):
-	new_installments_state = deepcopy(_new_installments_state
-	new_installments_state.pop(0) #remove down payment	
+	new_installments_state = deepcopy(_new_installments_state)
+	downp_state = new_installments_state.pop(0) #remove down payment	
+	downp_refs_no = len(downp_state['payment_refs'])
+	print(downp_refs_no)
+	if downp_refs_no == 1:
+		pp.down_payment_ref_type = 'Payment Entry'
+		pp.down_payment_reference = downp_state['payment_refs'][0]['payment_entry']
+		print(f'{pp.down_payment_ref_type}---{pp.down_payment_reference}')
+	elif downp_refs_no > 1:
+		pp.down_payment_ref_type = 'Payment Entry List'
+		pel = frappe.new_doc('Payment Entry List')
+		for ref in downp_state['payment_refs']:
+			pel.append('refs',{
+				'payment_entry': ref['payment_entry'],
+				'paid_amount': ref['amount'],
+			})
+		pel.save()
+		pp.down_payment_reference = pel.name
+		
 	if installments_refs_empty(pp.installments, pp.down_payment_amount):
 		for new_inst, actual_inst in zip(new_installments_state, pp.installments):
 			no_refs = len(new_inst['payment_refs']) 
