@@ -202,7 +202,7 @@ def validate_states_continuity(_long_state,_short_state):
 	if refs_min_index > len(long_state[min_index]['payment_refs'])-1:
 		return -3
 
-	if short_state[min_index]['payment_refs'][0:refs_min_index] != long_state[min_index]['payment_rerfs'][0:refs_min_index]:
+	if short_state[min_index]['payment_refs'][0:refs_min_index] != long_state[min_index]['payment_refs'][0:refs_min_index]:
 		return -4
 
 	if short_state[min_index] != long_state[min_index]:
