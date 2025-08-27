@@ -1,4 +1,5 @@
 import frappe
+from copy import deepcopy 
 def main(pe, method):
 	if not pe.custom_is_finance_payment:
 		return	
@@ -49,8 +50,11 @@ def update_payments(fa, pe, save=False):
 
 	#update installments payments
 	if doc.doctype == 'Payment Plan':
-		print(f' ~~~~~~ init old inst state ~~~~~\n {convert_fa_installments_to_alloc_format(doc.installments)}\n  ~~~~~~ end old inst state ~~~~~~ ')
+		old_installments_state = convert_fa_installments_to_alloc_format(doc.installments)
+		print(f' ~~~~~~ init old inst state ~~~~~\n {old_installments_state}\n  ~~~~~~ end old inst state ~~~~~~ ')
 		new_installments_state = auto_alloc_payments(doc.down_payment_amount, doc.installments, doc.payment_refs)
+		ok = validate_states_continuity(new_installments_state,old_installments_state) 
+		print(f'Validation Result <{ok}>')
 		apply_installments_state(doc, new_installments_state)
 		print(f' ~~~~~~ init new inst state ~~~~~\n {new_installments_state}\n~~~~~~~~~~~~~~~ end new inst state~~~~~~~')
 		
@@ -122,7 +126,6 @@ def apply_installments_state(pp, new_installments_state):
 	if installments_refs_empty(pp.installments, pp.down_payment_amount):
 		for new_inst, actual_inst in zip(new_installments_state, pp.installments):
 			no_refs = len(new_inst['payment_refs']) 
-			print(f'actual inst is <{actual_inst.payment_ref}>')
 			if no_refs == 0:
 				break
 			elif no_refs == 1:
@@ -143,4 +146,48 @@ def apply_installments_state(pp, new_installments_state):
 			
 		
 
+def validate_states_continuity(_long_state,_short_state):
+	def trim_state(state):
+		print(state)
+		trimmed_state = []
+		found_empty_refs = False
+		for inst in state:
+			if len(inst['payment_refs']) != 0 and not found_empty_refs:
+				trimmed_state.append(inst)
+			elif not found_empty_refs:
+				found_empty_refs = True
+			elif len(inst['payment_refs']) != 0:
+				frappe.throw('Found non empty refs after an empty refs, this means that an installment was paid befored paying the previus one')	
+		return trimmed_state
 
+	#trim states (remove installments that have empty payment_refs
+	long_state = deepcopy(_long_state)
+	short_state = deepcopy(_short_state)
+	long_state = trim_state(long_state)
+	short_state = trim_state(short_state)
+	print(f'trimmed states: \n {long_state} \n \n {short_state}')	
+	if short_state == long_state:
+		return 1
+	if short_state == []:
+		return 0
+
+	min_index = len(short_state) -1
+	print(f'min in = {min_index} \n {short_state}')
+	if min_index > len(long_state):
+		return -1
+	
+	if short_state[0:min_index -1] != long_state[0:min_index -1]:
+		print(f'{short_state[0:min_index -1]} != {long_state[0:min_index -1]}')
+		return -2
+	
+	refs_min_index = len(short_state[min_index]['payment_refs'])-1	
+	if refs_min_index > len(long_state[min_index]['payment_refs'])-1:
+		return -3
+
+	if short_state[min_index]['payment_refs'][0:refs_min_index] != long_state[min_index]['payment_rerfs'][0:refs_min_index]:
+		return -4
+
+	if short_state[min_index] != long_state[min_index]:
+		return min_index
+	else:
+		return min_index + 1
