@@ -85,8 +85,23 @@ def create_payment_plan(doc, submit = True):
 	#copy payments made against Finance Application:
 	for payment in doc.payment_refs:
 		plan.append('payment_refs',payment.as_dict())
-		
-		
+	
+	payments_no = len(doc.payment_refs)	
+	if payments_no == 1:
+		plan.down_payment_ref_type = 'Payment Entry'
+		plan.down_payment_reference = doc.payment_refs[0].payment_entry
+	elif payments_no > 1:
+		plan.down_payment_ref_type = 'Payment Entry List'
+		pel = frappe.new_doc('Payment Entry List')
+		for payment in doc.payment_refs:
+			pel.append('refs',{
+				'payment_entry': payment.payment_entry,
+				'paid_amount': payment.amount,
+				'date': payment.date,	
+			})	
+		pel.save()
+		plan.down_payment_reference = pel.name
+			
 
 	plan.insert()
 	if submit:
