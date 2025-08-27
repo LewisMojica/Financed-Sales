@@ -50,7 +50,7 @@ def update_payments(fa, pe, save=False):
 
 	#update installments payments
 	if doc.doctype == 'Payment Plan':
-		old_installments_state = convert_fa_installments_to_alloc_format(doc.installments)
+		old_installments_state = convert_fa_installments_to_alloc_format(doc)
 		print(f' ~~~~~~ init old inst state ~~~~~\n {old_installments_state}\n  ~~~~~~ end old inst state ~~~~~~ ')
 		new_installments_state = auto_alloc_payments(doc.down_payment_amount, doc.installments, doc.payment_refs)
 		ok = validate_states_continuity(new_installments_state,old_installments_state) 
@@ -116,7 +116,8 @@ def get_payment_refs(inst):
 		return refs
 	raise ValueError(f'Unknown payment_doctype: {inst.payment_doctype}')
 
-def convert_fa_installments_to_alloc_format(installments_table):
+def convert_fa_installments_to_alloc_format(pp):
+	installments = pp.installments
 	output = [{'amount': to_cents(installment.amount), 'payment_refs': []} for installment in installments_table]
 	for output_inst,inst in zip(output, installments_table):
 		output_inst['payment_refs'] = get_payment_refs(inst)
