@@ -99,9 +99,6 @@ def auto_alloc_payments(down_payment, installments_table, payments_table):
 
 	return installments
 
-def get_current_installments_state(installments):
-	pass
-
 def installments_refs_empty(installments, down_payment):
 	return True
 
