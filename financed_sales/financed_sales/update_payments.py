@@ -99,9 +99,6 @@ def auto_alloc_payments(down_payment, installments_table, payments_table):
 
 	return installments
 
-def installments_refs_empty(installments, down_payment):
-	return True
-
 def get_payment_refs_from_downp(pp):
 	if not pp.down_payment_reference:
 		return []
@@ -159,25 +156,24 @@ def apply_installments_state(pp, _new_installments_state):
 		pel.save()
 		pp.down_payment_reference = pel.name
 		
-	if installments_refs_empty(pp.installments, pp.down_payment_amount):
-		for new_inst, actual_inst in zip(new_payment_state, pp.installments):
-			no_refs = len(new_inst['payment_refs']) 
-			if no_refs == 0:
-				break
-			elif no_refs == 1:
-				actual_inst.payment_doctype = 'Payment Entry'
-				actual_inst.payment_ref = new_inst['payment_refs'][0]['payment_entry']
-			else:
-				actual_inst.payment_doctype = 'Payment Entry List'
-				pel = frappe.new_doc('Payment Entry List')
-				for pay_ref in new_inst['payment_refs']:
-					pel.append('refs', {
-						'payment_entry': pay_ref['payment_entry'],
-						'paid_amount': pay_ref['amount'],
-						
-					})
-				pel.save()
-				actual_inst.payment_ref = pel.name
+	for new_inst, actual_inst in zip(new_payment_state, pp.installments):
+		no_refs = len(new_inst['payment_refs']) 
+		if no_refs == 0:
+			break
+		elif no_refs == 1:
+			actual_inst.payment_doctype = 'Payment Entry'
+			actual_inst.payment_ref = new_inst['payment_refs'][0]['payment_entry']
+		else:
+			actual_inst.payment_doctype = 'Payment Entry List'
+			pel = frappe.new_doc('Payment Entry List')
+			for pay_ref in new_inst['payment_refs']:
+				pel.append('refs', {
+					'payment_entry': pay_ref['payment_entry'],
+					'paid_amount': pay_ref['amount'],
+					
+				})
+			pel.save()
+			actual_inst.payment_ref = pel.name
 
 			
 		
