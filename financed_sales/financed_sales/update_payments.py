@@ -146,15 +146,26 @@ def apply_installments_state(pp, _new_installments_state):
 		pp.down_payment_reference = downp_state['payment_refs'][0]['payment_entry']
 		print(f'{pp.down_payment_ref_type}---{pp.down_payment_reference}')
 	elif downp_refs_no > 1:
-		pp.down_payment_ref_type = 'Payment Entry List'
-		pel = frappe.new_doc('Payment Entry List')
-		for ref in downp_state['payment_refs']:
-			pel.append('refs',{
-				'payment_entry': ref['payment_entry'],
-				'paid_amount': ref['amount'],
-			})
-		pel.save()
-		pp.down_payment_reference = pel.name
+		#if there is a payment entry list don't create a new one, just add the refs to the pel
+		if pp.down_payment_ref_type == 'Payment Entry List' and pp.down_payment_reference:
+			pel = frappe.get_doc('Payment Entry List', pp.down_payment_reference)
+			pel.refs.clear()
+			for ref in downp_state['payment_refs']:     		
+				pel.append('refs',{
+					'payment_entry': ref['payment_entry'],
+					'paid_amount': ref['amount'],
+				})
+			pel.save()
+		else:
+			pp.down_payment_ref_type = 'Payment Entry List'
+			pel = frappe.new_doc('Payment Entry List')
+			for ref in downp_state['payment_refs']:
+				pel.append('refs',{
+					'payment_entry': ref['payment_entry'],
+					'paid_amount': ref['amount'],
+				})
+			pel.save()
+			pp.down_payment_reference = pel.name
 		
 	for new_inst, actual_inst in zip(new_payment_state, pp.installments):
 		no_refs = len(new_inst['payment_refs']) 
