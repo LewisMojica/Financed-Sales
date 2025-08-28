@@ -27,8 +27,11 @@ def main(pe, method):
 	
 
 def update_payments(fa, pe, save=False):
-	"""Update payment records. If fa has payment_plan, updates Payment Plan doc instead."""
+	"""
+	Update payment records. If Finance Aplication has a Payment Plan it 
+	updates the Payment Plan doc, if not, it update the Finance Applicatio.
 
+	"""
 	doc = frappe.get_doc('Payment Plan', fa.payment_plan) if fa.payment_plan else fa
 	# Add payment to table
 	doc.append('payment_refs',{
