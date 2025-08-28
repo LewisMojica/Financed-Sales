@@ -54,13 +54,13 @@ def update_payments(fa, pe, save=False):
 	#update installments payments
 	if doc.doctype == 'Payment Plan':
 		print(get_payment_refs_from_downp(doc))
-		old_installments_state = convert_fa_installments_to_alloc_format(doc)
-		print(f' ~~~~~~ init old inst state ~~~~~\n {old_installments_state}\n  ~~~~~~ end old inst state ~~~~~~ ')
-		new_installments_state = auto_alloc_payments(doc.down_payment_amount, doc.installments, doc.payment_refs)
-		ok = validate_states_continuity(new_installments_state,old_installments_state) 
+		current_payment_state = convert_fa_installments_to_alloc_format(doc)
+		print(f' ~~~~~~ init old inst state ~~~~~\n {current_payment_state}\n  ~~~~~~ end old inst state ~~~~~~ ')
+		new_payment_state = auto_alloc_payments(doc.down_payment_amount, doc.installments, doc.payment_refs)
+		ok = validate_states_continuity(new_payment_state,current_payment_state) 
 		print(f'Validation Result <{ok}>')
-		apply_installments_state(doc, new_installments_state)
-		print(f' ~~~~~~ init new inst state ~~~~~\n {new_installments_state}\n~~~~~~~~~~~~~~~ end new inst state~~~~~~~')
+		apply_installments_state(doc, new_payment_state)
+		print(f' ~~~~~~ init new inst state ~~~~~\n {new_payment_state}\n~~~~~~~~~~~~~~~ end new inst state~~~~~~~')
 		
 	
 	
@@ -70,11 +70,11 @@ def update_payments(fa, pe, save=False):
 def to_cents(amount):
 		return int(round(amount*100))
 
-def auto_alloc_payments(down_payment, installments, payments):
+def auto_alloc_payments(down_payment, installments_table, payments_table):
 	
-	installments = [{'amount': to_cents(installment.amount), 'payment_refs': []} for installment in installments]
+	installments = [{'amount': to_cents(installment.amount), 'payment_refs': []} for installment in installments_table]
 	installments.insert(0, {'amount': to_cents(down_payment), 'payment_refs': []})
-	payments = [{'payment_entry': payment.payment_entry, 'amount': to_cents(payment.amount), 'allocated': 0} for payment in payments] 
+	payments = [{'payment_entry': payment.payment_entry, 'amount': to_cents(payment.amount), 'allocated': 0} for payment in payments_table] 
 
 	for installment in installments:
 		installment_allocated = 0
@@ -143,8 +143,8 @@ def convert_fa_installments_to_alloc_format(pp):
 		output_inst['payment_refs'] = get_payment_refs(inst)
 	return output	
 def apply_installments_state(pp, _new_installments_state):
-	new_installments_state = deepcopy(_new_installments_state)
-	downp_state = new_installments_state.pop(0) #remove down payment	
+	new_payment_state = deepcopy(_new_installments_state)
+	downp_state = new_payment_state.pop(0) #remove down payment	
 	downp_refs_no = len(downp_state['payment_refs'])
 	print(downp_refs_no)
 	if downp_refs_no == 1:
@@ -163,7 +163,7 @@ def apply_installments_state(pp, _new_installments_state):
 		pp.down_payment_reference = pel.name
 		
 	if installments_refs_empty(pp.installments, pp.down_payment_amount):
-		for new_inst, actual_inst in zip(new_installments_state, pp.installments):
+		for new_inst, actual_inst in zip(new_payment_state, pp.installments):
 			no_refs = len(new_inst['payment_refs']) 
 			if no_refs == 0:
 				break
