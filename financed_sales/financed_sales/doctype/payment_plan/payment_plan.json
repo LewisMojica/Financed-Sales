@@ -90,8 +90,10 @@
    "default": "Payment Entry",
    "fieldname": "down_payment_ref_type",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Payment ref type",
-   "options": "DocType"
+   "options": "DocType",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -113,7 +115,8 @@
    "fieldname": "down_payment_reference",
    "fieldtype": "Dynamic Link",
    "label": "Down payment reference",
-   "options": "down_payment_ref_type"
+   "options": "down_payment_ref_type",
+   "read_only": 1
   },
   {
    "fieldname": "section_break_wzux",
@@ -123,7 +126,8 @@
    "allow_on_submit": 1,
    "fieldname": "payment_refs",
    "fieldtype": "Table",
-   "options": "Financed Payment Ref"
+   "options": "Financed Payment Ref",
+   "read_only": 1
   },
   {
    "fieldname": "down_payment_amount",
@@ -135,7 +139,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-27 12:58:30.317631",
+ "modified": "2025-08-28 22:57:36.705273",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Plan",
