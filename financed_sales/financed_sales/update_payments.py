@@ -175,16 +175,26 @@ def apply_installments_state(pp, _new_installments_state):
 			actual_inst.payment_doctype = 'Payment Entry'
 			actual_inst.payment_ref = new_inst['payment_refs'][0]['payment_entry']
 		else:
-			actual_inst.payment_doctype = 'Payment Entry List'
-			pel = frappe.new_doc('Payment Entry List')
-			for pay_ref in new_inst['payment_refs']:
-				pel.append('refs', {
-					'payment_entry': pay_ref['payment_entry'],
-					'paid_amount': pay_ref['amount'],
-					
-				})
-			pel.save()
-			actual_inst.payment_ref = pel.name
+			if actual_inst.payment_doctype == 'Payment Entry List' and actual_inst.payment_ref:
+				pel = frappe.get_doc('Payment Entry List', actual_inst.payment_ref)
+				pel.refs.clear()
+				for ref in new_inst['payment_refs']:
+					pel.append('refs',{
+						'payment_entry': ref['payment_entry'],
+						'paid_amount': ref['amount'],
+					})
+				pel.save()
+			else:
+				actual_inst.payment_doctype = 'Payment Entry List'
+				pel = frappe.new_doc('Payment Entry List')
+				for pay_ref in new_inst['payment_refs']:
+					pel.append('refs', {
+						'payment_entry': pay_ref['payment_entry'],
+						'paid_amount': pay_ref['amount'],
+						
+					})
+				pel.save()
+				actual_inst.payment_ref = pel.name
 
 			
 		
