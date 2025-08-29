@@ -99,14 +99,14 @@
    "allow_on_submit": 1,
    "fieldname": "pending_down_payment_amount",
    "fieldtype": "Currency",
-   "label": "Pending down payment amount",
+   "label": "Pending down payment",
    "read_only": 1
   },
   {
    "allow_on_submit": 1,
    "fieldname": "paid_down_payment_amount",
    "fieldtype": "Currency",
-   "label": "Paid down payment amount",
+   "label": "Paid down payment",
    "options": "down_payemtn_type",
    "read_only": 1
   },
@@ -132,14 +132,14 @@
   {
    "fieldname": "down_payment_amount",
    "fieldtype": "Currency",
-   "label": "Down payment amount"
+   "label": "Down payment"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-28 22:57:36.705273",
+ "modified": "2025-08-28 23:26:44.783871",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Plan",
