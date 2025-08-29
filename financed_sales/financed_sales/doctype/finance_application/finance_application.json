@@ -216,7 +216,7 @@
    "allow_on_submit": 1,
    "fieldname": "pending_down_payment_amount",
    "fieldtype": "Currency",
-   "label": "Pending down payment ",
+   "label": "Pending down payment",
    "read_only": 1
   },
   {
@@ -237,7 +237,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-23 13:29:41.165470",
+ "modified": "2025-08-28 23:19:14.426292",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
