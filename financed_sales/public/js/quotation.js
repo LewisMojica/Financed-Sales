@@ -2,7 +2,7 @@ frappe.ui.form.on('Quotation', {
 	refresh: (frm) => {
 		// Only show button if quotation is submitted
 		if (frm.doc.docstatus === 1) {
-			frm.add_custom_button(__('Appply for Financing'), () => {
+			frm.add_custom_button(__('Apply for Financing'), () => {
 			   apply_for_credit(frm);
 			}, __('Create'));
 		}
