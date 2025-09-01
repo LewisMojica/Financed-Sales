@@ -37,6 +37,9 @@ frappe.ui.form.on('Finance Application', {
 	down_payment_amount: function(frm) {
 		if (frm.doc.down_payment_amount) {
 			generate_installments(frm);
+			frm.set_df_property('pending_down_payment_amount', 'read_only', 0);
+			frm.doc.pending_down_payment_amount = frm.doc.down_payment_amount
+			frm.set_df_property('pending_down_payment_amount', 'read_only', 1);
 		}
 	},
 	
