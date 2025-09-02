@@ -81,10 +81,17 @@ function generate_installments(frm){
 		frm.set_df_property('credit_expiration_date', 'read_only', 1);
 		frm.set_df_property('total_credit', 'read_only', 1);
 		frm.set_df_property('interests', 'read_only', 1);
+		frm.set_df_property('installment', 'read_only', 0); //since the installments table is populated allow the user to midify the installment amount
 		
 
 
-	} 
+	} else {
+		frm.set_df_property('installment', 'read_only', 1); 
+		frm.set_value('installment', 0.00);
+
+	}
+
+	 
 	frm.refresh_field('installment');
 	frm.refresh_field('installments');
 }
