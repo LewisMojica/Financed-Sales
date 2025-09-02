@@ -29,24 +29,18 @@ frappe.ui.form.on('Finance Application', {
 
 frappe.ui.form.on('Finance Application', {
 	repayment_term: function(frm) {
-		if (frm.doc.repayment_term) {
-			generate_installments(frm);
-		}
+		generate_installments(frm);
 	},
 	
 	down_payment_amount: function(frm) {
-		if (frm.doc.down_payment_amount) {
-			generate_installments(frm);
-			frm.set_df_property('pending_down_payment_amount', 'read_only', 0);
-			frm.doc.pending_down_payment_amount = frm.doc.down_payment_amount
-			frm.set_df_property('pending_down_payment_amount', 'read_only', 1);
-		}
+		generate_installments(frm);
+		frm.set_df_property('pending_down_payment_amount', 'read_only', 0);
+		frm.doc.pending_down_payment_amount = frm.doc.down_payment_amount
+		frm.set_df_property('pending_down_payment_amount', 'read_only', 1);
 	},
 	
 	first_installment: function(frm) {
-		if (frm.doc.first_installment) {
-			generate_installments(frm);
-		}
+		generate_installments(frm);
 	},
 		
 	application_fee: function(frm) {
@@ -56,9 +50,7 @@ frappe.ui.form.on('Finance Application', {
 	},
 
 	interest_rate: function(frm) {
-		if (frm.doc.interest_rate) {
-			generate_installments(frm);
-		}
+		generate_installments(frm);
 	},
 	rate_period: function(frm) {
 		generate_installments(frm);
