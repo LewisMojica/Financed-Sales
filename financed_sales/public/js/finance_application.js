@@ -54,17 +54,20 @@ frappe.ui.form.on('Finance Application', {
 	},
 	rate_period: function(frm) {
 		generate_installments(frm);
+	},
+	installment: function(frm) {
+		generate_installments(frm, user_installment=true);
 	}
 });
 
-function generate_installments(frm){
+function generate_installments(frm, user_installment=false){
 	frm.clear_table('installments');
 	if (frm.doc.total_amount_to_finance && frm.doc.interest_rate && frm.doc.repayment_term && frm.doc.application_fee && frm.doc.first_installment && frm.doc.down_payment_amount){
 		let owed_amount = frm.doc.total_amount_to_finance - frm.doc.down_payment_amount;
 		let monthly_pays = frm.doc.repayment_term;
 		let monthly_rate = frm.doc.interest_rate / (frm.doc.rate_period === "Monthly" ? 100 : 1200);
 		frm.set_df_property('installment', 'read_only', 0);
-		frm.doc.installment = owed_amount/monthly_pays + owed_amount*monthly_rate;
+		if (!user_installment) frm.doc.installment = owed_amount/monthly_pays + owed_amount*monthly_rate;
 		frm.set_df_property('installment', 'read_only', 1);
 		let monthly_payments = frm.doc.repayment_term;
 		for (let i = 0; i < monthly_payments; i++){
