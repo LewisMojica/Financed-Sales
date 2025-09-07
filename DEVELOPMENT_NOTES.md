@@ -10,7 +10,8 @@ bench --site [site-name] clear-cache
 
 **Requirements:**
 - Always set `"module": "Financed Sales"` in custom field JSON
-- Use `custom_items_with_interest` field name for financed items tables
+- Use `custom_financed_items` field name for financed items tables
+- Set `"modified"` to current date/time for easy identification in UI (use: `date '+%Y-%m-%d %H:%M:%S.%6N'`)
 
 ## Interest Implementation
 - **Factura Proforma**: Modify existing `items` table with financed rates
