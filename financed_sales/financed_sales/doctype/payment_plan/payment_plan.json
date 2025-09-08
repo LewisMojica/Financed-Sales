@@ -11,6 +11,7 @@
   "finance_application",
   "credit_invoice",
   "customer",
+  "status",
   "column_break_lrpb",
   "down_payment_amount",
   "paid_down_payment_amount",
@@ -68,6 +69,16 @@
    "in_list_view": 1,
    "label": "Customer",
    "options": "Customer"
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nActive\nCompleted\nOverdue\nRenegotiated\nCancelled",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_lrpb",
