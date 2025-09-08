@@ -60,3 +60,39 @@ def distribute_interest_to_items(original_items, total_interest):
 		})
 	
 	return financed_items
+
+
+def validate_financed_items_total(financed_items, original_total, interest_amount):
+	"""Validate that financed items total equals original total plus interest.
+	
+	Args:
+		financed_items (list): List of financed item dictionaries.
+		original_total (float): Original items total before interest.
+		interest_amount (float): Total interest amount distributed.
+	
+	Raises:
+		frappe.ValidationError: If totals don't match within tolerance.
+	"""
+	if not financed_items:
+		frappe.throw("Financed items table is empty")
+	
+	financed_total = sum(Decimal(str(item['amount'])) for item in financed_items)
+	expected_total = Decimal(str(original_total)) + Decimal(str(interest_amount))
+	tolerance = Decimal('0.01')
+	
+	if abs(financed_total - expected_total) > tolerance:
+		frappe.throw(f"Financed items total ({financed_total}) does not match expected total ({expected_total})")
+
+
+def validate_financed_sales_document(doc):
+	"""Validate financed sales document has required financed items table.
+	
+	Args:
+		doc: Document object (Sales Order or Sales Invoice) to validate.
+	
+	Raises:
+		frappe.ValidationError: If financed items missing for financed sales.
+	"""
+	if hasattr(doc, 'custom_finance_application') and doc.custom_finance_application:
+		if not hasattr(doc, 'custom_financed_items') or not doc.custom_financed_items:
+			frappe.throw(f"Financed items table is required for financed sales document {doc.name}")
