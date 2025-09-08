@@ -74,7 +74,7 @@ def auto_alloc_payments(down_payment, installments_table, payments_table):
 	
 	installments = [{'amount': to_cents(installment.amount), 'payment_refs': []} for installment in installments_table]
 	installments.insert(0, {'amount': to_cents(down_payment), 'payment_refs': []})
-	payments = [{'payment_entry': payment.payment_entry, 'amount': to_cents(payment.amount), 'allocated': 0} for payment in payments_table] 
+	payments = [{'payment_entry': payment.payment_entry, 'amount': to_cents(payment.amount), 'date': payment.date, 'allocated': 0} for payment in payments_table] 
 
 	for installment in installments:
 		installment_allocated = 0
@@ -87,12 +87,12 @@ def auto_alloc_payments(down_payment, installments_table, payments_table):
 			if installment_allocated >= installment['amount']:
 				break
 			elif payment_to_allocate <= installment['amount'] - installment_allocated:
-				installment['payment_refs'].append({'payment_entry': payment['payment_entry'], 'amount': payment_to_allocate})	
+				installment['payment_refs'].append({'payment_entry': payment['payment_entry'], 'amount': payment_to_allocate, 'date': payment['date']})	
 				installment_allocated += payment_to_allocate
 				payment['allocated'] = payment['amount']
 				
 			else:
-				installment['payment_refs'].append({'payment_entry': payment['payment_entry'], 'amount': installment['amount'] - installment_allocated})	
+				installment['payment_refs'].append({'payment_entry': payment['payment_entry'], 'amount': installment['amount'] - installment_allocated, 'date': payment['date']})	
 				added_amount = installment['amount'] - installment_allocated
 				installment_allocated += added_amount
 				payment['allocated'] += added_amount
@@ -154,6 +154,7 @@ def apply_installments_state(pp, _new_installments_state):
 				pel.append('refs',{
 					'payment_entry': ref['payment_entry'],
 					'paid_amount': ref['amount'],
+					'date': ref.get('date'),
 				})
 			pel.save()
 		else:
@@ -163,6 +164,7 @@ def apply_installments_state(pp, _new_installments_state):
 				pel.append('refs',{
 					'payment_entry': ref['payment_entry'],
 					'paid_amount': ref['amount'],
+					'date': ref.get('date'),
 				})
 			pel.save()
 			pp.down_payment_reference = pel.name
@@ -182,6 +184,7 @@ def apply_installments_state(pp, _new_installments_state):
 					pel.append('refs',{
 						'payment_entry': ref['payment_entry'],
 						'paid_amount': ref['amount'],
+						'date': ref.get('date'),
 					})
 				pel.save()
 			else:
@@ -191,7 +194,7 @@ def apply_installments_state(pp, _new_installments_state):
 					pel.append('refs', {
 						'payment_entry': pay_ref['payment_entry'],
 						'paid_amount': pay_ref['amount'],
-						
+						'date': pay_ref.get('date'),
 					})
 				pel.save()
 				actual_inst.payment_ref = pel.name
