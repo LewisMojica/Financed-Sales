@@ -3,10 +3,12 @@
 ## Custom Fields
 ```bash
 # Import custom fields
-source [frappe-env-path]/bin/activate
+source ~/frappe-env/bin/activate
 bench --site [site-name] import-doc apps/financed_sales/financed_sales/fixtures/custom_field.json
 bench --site [site-name] clear-cache
 ```
+
+**IMPORTANT**: Always use `source ~/frappe-env/bin/activate` (NOT `source env/bin/activate` or `source frappe-env/bin/activate`). The virtual environment is located at `~/frappe-env/bin/activate`.
 
 **Requirements:**
 - Always set `"module": "Financed Sales"` in custom field JSON
