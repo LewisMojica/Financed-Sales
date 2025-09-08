@@ -19,7 +19,7 @@ bench --site [site-name] clear-cache
 - **Verify Changes**: Always check `git diff` before committing to ensure commit message accurately describes actual changes
 - **Version Bumping**: Bug fixes should automatically bump patch version (e.g. 0.21.0 → 0.21.1) without explicit request
 - **Commit Messages**: When making commits, only show the commit message. Do not display "commit details" or "summary" sections - the commit message should be sufficient
-- **Frontend Build**: After making JavaScript changes, build the app frontend with: `source [frappe-env-path]/bin/activate && bench --site [site-name] build --app financed_sales`
+- **Frontend Build**: **MANDATORY** - After EVERY JavaScript change, immediately build the app frontend with: `source [frappe-env-path]/bin/activate && bench --site [site-name] build --app financed_sales`. Changes are NOT visible without building!
 
 ## Interest Implementation
 - **Factura Proforma**: Modify existing `items` table with financed rates
