@@ -122,10 +122,10 @@ def create_payment_entry(doc, paid_amount, mode_of_payment, submit = False, refe
 	pe.paid_to = account
 	pe.custom_is_finance_payment = 1
 	
-	# Set reference number and date for Wire Transfer
-	if mode_of_payment == "Wire Transfer" and reference_number:
+	# Set reference number and date for Wire Transfer and Credit Card
+	if mode_of_payment in ["Wire Transfer", "Credit Card"] and reference_number:
 		pe.reference_no = reference_number
-	if mode_of_payment == "Wire Transfer" and reference_date:
+	if mode_of_payment in ["Wire Transfer", "Credit Card"] and reference_date:
 		pe.reference_date = reference_date
 	
 	pe.save()

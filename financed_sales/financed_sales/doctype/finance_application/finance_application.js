@@ -48,7 +48,7 @@ return new frappe.ui.Dialog({
                                      const mode_of_payment = this.get_value();
                                      const dialog = window.cur_dialog;
                                     
-                                     if (mode_of_payment === 'Wire Transfer') {
+                                     if (mode_of_payment === 'Wire Transfer' || mode_of_payment === 'Credit Card') {
                                          dialog.set_df_property('reference_number', 'hidden', false);
                                          dialog.set_df_property('reference_date', 'hidden', false);
                                      } else {
@@ -81,7 +81,7 @@ return new frappe.ui.Dialog({
 					submit: true
 				};
 				
-				if (values.mode_of_payment === 'Wire Transfer') {
+				if (values.mode_of_payment === 'Wire Transfer' || values.mode_of_payment === 'Credit Card') {
 					args.reference_number = values.reference_number;
 					args.reference_date = values.reference_date;
 				}
