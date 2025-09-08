@@ -4,6 +4,7 @@
 import frappe
 from frappe import _
 from frappe.model.document import Document
+from financed_sales.financed_sales.utils import distribute_interest_to_items
 
 
 class FinanceApplication(Document):
@@ -25,20 +26,22 @@ class FinanceApplication(Document):
 		factura.customer = self.customer
 
 
-		for item in quotation.items:
-			item_doc = frappe.get_doc("Item", item.item_code)
-			sub_total += item.amount
+		financed_items = distribute_interest_to_items(quotation.items, self.interests)
+		
+		for item in financed_items:
+			item_doc = frappe.get_doc("Item", item['item_code'])
+			sub_total += item['amount']
 			
 			factura.append('items', {
-				'item_code': item.item_code,
-				'item_name': item.item_name or item_doc.item_name,
-				'qty': item.qty,
-				'uom': item.uom or item_doc.stock_uom,
-				'conversion_factor': item.conversion_factor or 1,
-				'rate': item.rate,
-				'amount': item.amount,
-				'base_rate': item.base_rate,
-				'base_amount': item.base_amount
+				'item_code': item['item_code'],
+				'item_name': item['item_name'] or item_doc.item_name,
+				'qty': item['qty'],
+				'uom': item['uom'] or item_doc.stock_uom,
+				'conversion_factor': 1,
+				'rate': item['rate'],
+				'amount': item['amount'],
+				'base_rate': item['base_rate'],
+				'base_amount': item['base_amount']
 			})			
 		factura.interests = self.interests
 		factura.expiration_date = self.credit_expiration_date
