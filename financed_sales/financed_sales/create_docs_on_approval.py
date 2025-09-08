@@ -54,12 +54,11 @@ def on_approval(doc):
 																#In the next line the value is acctually inserted in the DB                             	
 	frappe.db.set_value(doc.doctype,doc.name,'credit_invoice',inv_name)
 	#same pattern:
-	plan_name = create_payment_plan(doc)
+	plan_name = create_payment_plan(doc, inv_name)
 	doc.payment_plan = plan_name
 	frappe.db.set_value(doc.doctype,doc.name,'payment_plan',plan_name)
 	
 	#add references to credit inv and payment plan:
-	frappe.db.set_value('Payment Plan',plan_name,'credit_invoice',inv_name)
 	frappe.db.set_value('Sales Invoice',inv_name,'custom_payment_plan',plan_name)
 	frappe.db.set_value('Sales Invoice',inv_name,'custom_finance_application',doc.name)
 	
@@ -81,10 +80,11 @@ def create_credit_inv(doc, submit = True):
 		invoice.submit()
 	return invoice.name
 
-def create_payment_plan(doc, submit = True):
+def create_payment_plan(doc, credit_invoice_name, submit = True):
 	plan = frappe.new_doc('Payment Plan')
 	plan.finance_application = doc.name
 	plan.customer = doc.customer
+	plan.credit_invoice = credit_invoice_name
 	plan.down_payment_amount = doc.down_payment_amount
 	plan.paid_down_payment_amount = doc.paid_down_payment_amount
 	plan.pending_down_payment_amount = doc.pending_down_payment_amount
