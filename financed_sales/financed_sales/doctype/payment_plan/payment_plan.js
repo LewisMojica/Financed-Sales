@@ -7,6 +7,19 @@
 //	},
 // });
 frappe.ui.form.on('Payment Plan', {
+	refresh: function(frm) {
+		// Ensure credit invoice field is marked as required
+		frm.set_df_property('credit_invoice', 'reqd', 1);
+	},
+	
+	validate: function(frm) {
+		// Client-side validation for credit invoice
+		if (!frm.doc.credit_invoice) {
+			frappe.msgprint(__('Credit Invoice is mandatory. Please select a credit invoice.'));
+			frappe.validated = false;
+		}
+	},
+	
 	 gen_installment_payment: function(frm) {
 		d = get_payment_dialog(frm.doc.name); 
 		d.show();
