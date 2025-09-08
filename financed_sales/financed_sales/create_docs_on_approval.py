@@ -75,6 +75,16 @@ def create_credit_inv(doc, submit = True):
 	invoice.allocate_advances_automatically = 1
 	invoice.only_include_allocated_payments = 1
 
+	# Calculate financed total from existing financed items
+	financed_total = 0
+	if invoice.custom_financed_items:
+		for item in invoice.custom_financed_items:
+			if item.amount:
+				financed_total += item.amount
+	
+	# Set the financed total
+	invoice.custom_financed_total = financed_total
+
 	invoice.insert()
 	if submit:
 		invoice.submit()
