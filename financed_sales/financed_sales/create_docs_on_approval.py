@@ -71,6 +71,7 @@ def create_credit_inv(doc, submit = True):
 	quotation = frappe.get_doc('Quotation', doc.quotation)
 
 	invoice.custom_is_credit_invoice = True
+	invoice.custom_factura_de_valor_fiscal = False
 	invoice.due_date = doc.installments[-1].due_date
 	invoice.allocate_advances_automatically = 1
 	invoice.only_include_allocated_payments = 1
