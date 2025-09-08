@@ -15,6 +15,7 @@ bench --site [site-name] clear-cache
 - Use conventional commit messages: `type(scope): description` (e.g. `feat: add custom fields`, `docs: update notes`)
 - Commit changes before starting unrelated work or when convenient to break into multiple commits
 - Update version in `financed_sales/__init__.py` - Frappe uses this for production version tracking
+- **Data Preservation**: When transforming data, preserve original field values instead of hardcoding defaults (avoid silent data corruption)
 
 ## Interest Implementation
 - **Factura Proforma**: Modify existing `items` table with financed rates
