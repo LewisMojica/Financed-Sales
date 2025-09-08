@@ -54,6 +54,7 @@ return new frappe.ui.Dialog({
                                 label: 'Reference Date',
                                 fieldname: 'reference_date',
                                 fieldtype: 'Date',
+                                default: frappe.datetime.get_today(),
                         },
         ],
         size: 'small', // small, large, extra-large
