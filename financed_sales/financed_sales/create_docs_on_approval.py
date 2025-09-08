@@ -68,7 +68,7 @@ def create_credit_inv(doc, submit = True):
 	settings = frappe.get_single('Financed Sales Settings')
 	account = settings.interests_account #account for interest
 	invoice = make_sales_invoice(doc.sales_order)
-	quotation = frappe.get_doc('Quotation',doc.quotation)
+	quotation = frappe.get_doc('Quotation', doc.quotation)
 
 	invoice.custom_is_credit_invoice = True
 	invoice.due_date = doc.installments[-1].due_date
