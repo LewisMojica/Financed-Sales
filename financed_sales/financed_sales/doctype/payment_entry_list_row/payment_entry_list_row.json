@@ -16,12 +16,14 @@
   {
    "fieldname": "payment_entry",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Payment Entry",
    "options": "Payment Entry"
   },
   {
    "fieldname": "paid_amount",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Paid amount"
   },
   {
@@ -37,6 +39,7 @@
   {
    "fieldname": "date",
    "fieldtype": "Date",
+   "in_list_view": 1,
    "label": "Date"
   }
  ],
