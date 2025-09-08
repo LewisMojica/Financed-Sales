@@ -1,0 +1,61 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"JyX_bNfNoN\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Financed Sales</span>\",\"col\":12}},{\"id\":\"R0hPYLmrqS\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Finance Application list\",\"col\":3}},{\"id\":\"c5vDkLmQxg\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Payment Plan list\",\"col\":3}},{\"id\":\"n7X4UbFCnu\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New Quotation (to create Finance Application)\",\"col\":3}},{\"id\":\"zYVxxLc1Cw\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"qBnRsCxQ_l\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Settings\",\"col\":3}}]",
+ "creation": "2025-09-08 12:35:10.622115",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "money-coins-1",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Financed Sales",
+ "links": [],
+ "modified": "2025-09-08 12:40:08.034327",
+ "modified_by": "Administrator",
+ "module": "Financed Sales",
+ "name": "Financed Sales",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 28.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "New Quotation (to create Finance Application)",
+   "link_to": "Quotation",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Finance Application list",
+   "link_to": "Finance Application",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Payment Plan list",
+   "link_to": "Payment Plan",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Settings",
+   "link_to": "Financed Sales Settings",
+   "type": "DocType"
+  }
+ ],
+ "title": "Financed Sales"
+}
