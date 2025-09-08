@@ -110,7 +110,15 @@ def create_payment_entry_from_finance_application(finance_application_name, paid
 def create_payment_entry(doc, paid_amount, mode_of_payment, submit = False):
 	pe = get_payment_entry(doc.doctype, doc.name, party_amount = paid_amount)
 	pe.mode_of_payment = mode_of_payment
-	account = frappe.get_doc('Mode of Payment', mode_of_payment).accounts[0].default_account
+	
+	mode_of_payment_doc = frappe.get_doc('Mode of Payment', mode_of_payment)
+	if not mode_of_payment_doc.accounts:
+		frappe.throw(f"No accounts configured for Mode of Payment '{mode_of_payment}'. Please configure at least one account.")
+	
+	account = mode_of_payment_doc.accounts[0].default_account
+	if not account:
+		frappe.throw(f"Default account not set for Mode of Payment '{mode_of_payment}'. Please configure the default account.")
+	
 	pe.paid_to = account
 	pe.custom_is_finance_payment = 1
 	pe.save()
