@@ -23,6 +23,33 @@ bench --site [site-name] clear-cache
 - **User Experience**: Always help users by pre-filling fields with likely values (e.g. reference_date with today's date, common defaults). Reduce user effort and improve data accuracy.
 - **Frappe/ERPNext Documentation Gap**: Frappe/ERPNext documentation is often incomplete or unclear. When encountering issues or unclear behavior, **ALWAYS check the source code** in `/home/slart/frappe-env/dev-env/apps/frappe/` and `/home/slart/frappe-env/dev-env/apps/erpnext/`. Examples: dialog field events, API patterns, field properties. The source code is the most reliable documentation.
 
+## AI Development Guidelines
+
+### Table/List View Column Visibility
+**❌ WRONG**: Using `default_columns` property on parent doctype
+```json
+{
+  "default_columns": ["field1", "field2"]
+}
+```
+
+**✅ CORRECT**: Using `in_list_view` property on child doctype fields
+```json
+{
+  "fieldname": "field1",
+  "fieldtype": "Text", 
+  "in_list_view": 1,
+  "label": "Field 1"
+}
+```
+
+**Important**: In Frappe/ERPNext, table columns are controlled by the `in_list_view` property on individual fields in the child doctype, NOT by a `default_columns` property on the parent doctype.
+
+### Common Mistakes to Avoid
+1. **Table Column Visibility**: Always set `"in_list_view": 1` on fields in the child doctype, not `default_columns` on the parent doctype
+2. **Database Queries**: Avoid unnecessary database queries when data is already available in memory (e.g., from related tables)
+3. **Field Configuration**: Always check existing field configurations before adding new ones
+
 ## Interest Implementation
 - **Factura Proforma**: Modify existing `items` table with financed rates
 - **Sales Order/Invoice**: Add `custom_items_with_interest` table, keep original items + tax
