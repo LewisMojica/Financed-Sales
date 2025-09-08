@@ -44,17 +44,31 @@ return new frappe.ui.Dialog({
                                 fieldname: 'mode_of_payment',
                                 fieldtype: 'Link',
                                 options: 'Mode of Payment',
+                                onchange: function() {
+                                     const mode_of_payment = this.get_value();
+                                     const dialog = window.cur_dialog;
+                                    
+                                     if (mode_of_payment === 'Wire Transfer') {
+                                         dialog.set_df_property('reference_number', 'hidden', false);
+                                         dialog.set_df_property('reference_date', 'hidden', false);
+                                     } else {
+                                         dialog.set_df_property('reference_number', 'hidden', true);
+                                         dialog.set_df_property('reference_date', 'hidden', true);
+                                     }
+                                }
                         },
                         {
                                 label: 'Reference Number',
                                 fieldname: 'reference_number',
                                 fieldtype: 'Data',
+                                hidden: 1,
                         },
                         {
                                 label: 'Reference Date',
                                 fieldname: 'reference_date',
                                 fieldtype: 'Date',
                                 default: frappe.datetime.get_today(),
+                                hidden: 1,
                         },
         ],
         size: 'small', // small, large, extra-large

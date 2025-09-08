@@ -21,6 +21,7 @@ bench --site [site-name] clear-cache
 - **Commit Messages**: When making commits, only show the commit message. Do not display "commit details" or "summary" sections - the commit message should be sufficient
 - **Frontend Build**: **MANDATORY** - After EVERY JavaScript change, immediately build the app frontend with: `source [frappe-env-path]/bin/activate && bench --site [site-name] build --app financed_sales`. Changes are NOT visible without building!
 - **User Experience**: Always help users by pre-filling fields with likely values (e.g. reference_date with today's date, common defaults). Reduce user effort and improve data accuracy.
+- **Frappe/ERPNext Documentation Gap**: Frappe/ERPNext documentation is often incomplete or unclear. When encountering issues or unclear behavior, **ALWAYS check the source code** in `/home/slart/frappe-env/dev-env/apps/frappe/` and `/home/slart/frappe-env/dev-env/apps/erpnext/`. Examples: dialog field events, API patterns, field properties. The source code is the most reliable documentation.
 
 ## Interest Implementation
 - **Factura Proforma**: Modify existing `items` table with financed rates
