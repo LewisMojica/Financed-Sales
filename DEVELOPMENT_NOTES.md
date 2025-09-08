@@ -18,6 +18,7 @@ bench --site [site-name] clear-cache
 - **Data Preservation**: When transforming data, preserve original field values instead of hardcoding defaults (avoid silent data corruption)
 - **Verify Changes**: Always check `git diff` before committing to ensure commit message accurately describes actual changes
 - **Version Bumping**: Bug fixes should automatically bump patch version (e.g. 0.21.0 → 0.21.1) without explicit request
+- **Commit Messages**: When making commits, only show the commit message. Do not display "commit details" or "summary" sections - the commit message should be sufficient
 
 ## Interest Implementation
 - **Factura Proforma**: Modify existing `items` table with financed rates
