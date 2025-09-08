@@ -17,7 +17,7 @@ bench --site [site-name] clear-cache
 - Update version in `financed_sales/__init__.py` - Frappe uses this for production version tracking
 - **Data Preservation**: When transforming data, preserve original field values instead of hardcoding defaults (avoid silent data corruption)
 - **Verify Changes**: Always check `git diff` before committing to ensure commit message accurately describes actual changes
-- **Version Bumping**: Bug fixes should automatically bump patch version (e.g. 0.21.0 → 0.21.1) without explicit request. New features should bump minor version (e.g. 0.21.0 → 0.22.0). Always bump version when adding functionality across multiple components.
+- **Version Bumping**: Bug fixes should automatically bump patch version (e.g. 0.21.0 → 0.21.1) without explicit request. New features should bump minor version (e.g. 0.21.0 → 0.22.0). Always bump version when adding functionality across multiple components. **ALWAYS bump version immediately after implementing new features - don't wait for user to ask!**
 - **Commit Messages**: When making commits, only show the commit message. Do not display "commit details" or "summary" sections - the commit message should be sufficient
 - **Frontend Build**: **MANDATORY** - After EVERY JavaScript change, immediately build the app frontend with: `source [frappe-env-path]/bin/activate && bench --site [site-name] build --app financed_sales`. Changes are NOT visible without building!
 - **User Experience**: Always help users by pre-filling fields with likely values (e.g. reference_date with today's date, common defaults). Reduce user effort and improve data accuracy.
