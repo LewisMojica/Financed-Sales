@@ -16,6 +16,7 @@ bench --site [site-name] clear-cache
 - Commit changes before starting unrelated work or when convenient to break into multiple commits
 - Update version in `financed_sales/__init__.py` - Frappe uses this for production version tracking
 - **Data Preservation**: When transforming data, preserve original field values instead of hardcoding defaults (avoid silent data corruption)
+- **Verify Changes**: Always check `git diff` before committing to ensure commit message accurately describes actual changes
 
 ## Interest Implementation
 - **Factura Proforma**: Modify existing `items` table with financed rates
