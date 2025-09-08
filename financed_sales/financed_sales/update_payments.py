@@ -68,7 +68,10 @@ def update_payments(fa, pe, save=False):
 		doc.save()
 
 def to_cents(amount):
-		return int(round(amount*100))
+	return int(round(amount*100))
+
+def from_cents(amount_in_cents):
+	return amount_in_cents / 100
 
 def auto_alloc_payments(down_payment, installments_table, payments_table):
 	
@@ -153,7 +156,7 @@ def apply_installments_state(pp, _new_installments_state):
 			for ref in downp_state['payment_refs']:     		
 				pel.append('refs',{
 					'payment_entry': ref['payment_entry'],
-					'paid_amount': ref['amount'],
+					'paid_amount': from_cents(ref['amount']),
 					'date': ref.get('date'),
 				})
 			pel.save()
@@ -163,7 +166,7 @@ def apply_installments_state(pp, _new_installments_state):
 			for ref in downp_state['payment_refs']:
 				pel.append('refs',{
 					'payment_entry': ref['payment_entry'],
-					'paid_amount': ref['amount'],
+					'paid_amount': from_cents(ref['amount']),
 					'date': ref.get('date'),
 				})
 			pel.save()
@@ -172,10 +175,16 @@ def apply_installments_state(pp, _new_installments_state):
 	for new_inst, actual_inst in zip(new_payment_state, pp.installments):
 		no_refs = len(new_inst['payment_refs']) 
 		if no_refs == 0:
+			# No payments for this installment
+			actual_inst.paid_amount = 0
+			actual_inst.pending_amount = actual_inst.amount
 			break
 		elif no_refs == 1:
 			actual_inst.payment_doctype = 'Payment Entry'
 			actual_inst.payment_ref = new_inst['payment_refs'][0]['payment_entry']
+			# Calculate paid amount from single payment
+			actual_inst.paid_amount = from_cents(new_inst['payment_refs'][0]['amount'])
+			actual_inst.pending_amount = actual_inst.amount - actual_inst.paid_amount
 		else:
 			if actual_inst.payment_doctype == 'Payment Entry List' and actual_inst.payment_ref:
 				pel = frappe.get_doc('Payment Entry List', actual_inst.payment_ref)
@@ -183,7 +192,7 @@ def apply_installments_state(pp, _new_installments_state):
 				for ref in new_inst['payment_refs']:
 					pel.append('refs',{
 						'payment_entry': ref['payment_entry'],
-						'paid_amount': ref['amount'],
+						'paid_amount': from_cents(ref['amount']),
 						'date': ref.get('date'),
 					})
 				pel.save()
@@ -193,11 +202,16 @@ def apply_installments_state(pp, _new_installments_state):
 				for pay_ref in new_inst['payment_refs']:
 					pel.append('refs', {
 						'payment_entry': pay_ref['payment_entry'],
-						'paid_amount': pay_ref['amount'],
+						'paid_amount': from_cents(pay_ref['amount']),
 						'date': pay_ref.get('date'),
 					})
 				pel.save()
 				actual_inst.payment_ref = pel.name
+			
+			# Calculate total paid amount from multiple payments
+			total_paid = sum(ref['amount'] for ref in new_inst['payment_refs'])
+			actual_inst.paid_amount = from_cents(total_paid)
+			actual_inst.pending_amount = actual_inst.amount - actual_inst.paid_amount
 
 			
 		
