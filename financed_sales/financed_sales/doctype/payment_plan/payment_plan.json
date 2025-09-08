@@ -55,7 +55,8 @@
    "fieldname": "finance_application",
    "fieldtype": "Link",
    "label": "Finance Application",
-   "options": "Finance Application"
+   "options": "Finance Application",
+   "reqd": 1
   },
   {
    "fieldname": "credit_invoice",
@@ -68,7 +69,8 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Customer",
-   "options": "Customer"
+   "options": "Customer",
+   "reqd": 1
   },
   {
    "default": "Active",
