@@ -14,6 +14,7 @@ bench --site [site-name] clear-cache
 - Set `"modified"` to current date/time for easy identification in UI (use: `date '+%Y-%m-%d %H:%M:%S.%6N'`)
 - Use conventional commit messages: `type(scope): description` (e.g. `feat: add custom fields`, `docs: update notes`)
 - Commit changes before starting unrelated work or when convenient to break into multiple commits
+- Update version in `financed_sales/__init__.py` - Frappe uses this for production version tracking
 
 ## Interest Implementation
 - **Factura Proforma**: Modify existing `items` table with financed rates
