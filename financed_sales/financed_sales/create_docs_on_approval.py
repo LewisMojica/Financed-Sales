@@ -1,7 +1,8 @@
 import frappe
 from frappe import _
 from erpnext.selling.doctype.quotation.quotation import make_sales_order
-from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice 
+from erpnext.selling.doctype.sales_order.sales_order import make_sales_invoice
+from financed_sales.financed_sales.utils import distribute_interest_to_items 
 
 def main(doc,method):
 	if doc.workflow_state == 'Approved' and not doc.credit_invoice:
@@ -26,6 +27,20 @@ def create_sales_order(doc):
 	'description': 'Intereses',
 	'tax_amount': doc.interests,
 	})
+	
+	quotation = frappe.get_doc('Quotation', doc.quotation)
+	financed_items = distribute_interest_to_items(quotation.items, doc.interests)
+	
+	for item in financed_items:
+		sales_order.append('custom_financed_items', {
+			'item_code': item['item_code'],
+			'item_name': item['item_name'],
+			'qty': item['qty'],
+			'uom': item['uom'],
+			'conversion_factor': item['conversion_factor'],
+			'rate': item['rate'],
+			'amount': item['amount']
+		})
 	
 	sales_order.insert()
 	sales_order.submit()

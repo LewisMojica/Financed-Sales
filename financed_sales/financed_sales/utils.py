@@ -52,6 +52,7 @@ def distribute_interest_to_items(original_items, total_interest):
 			'item_name': item.item_name,
 			'qty': item.qty,
 			'uom': item.uom,
+			'conversion_factor': item.conversion_factor or 1,
 			'rate': float(financed_rate),
 			'amount': float(financed_amount),
 			'base_rate': float(financed_rate),
