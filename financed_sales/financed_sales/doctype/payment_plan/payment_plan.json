@@ -62,7 +62,8 @@
    "fieldname": "credit_invoice",
    "fieldtype": "Link",
    "label": "Credit Invoice",
-   "options": "Sales Invoice"
+   "options": "Sales Invoice",
+   "reqd": 1
   },
   {
    "fieldname": "customer",
