@@ -94,6 +94,12 @@ def create_down_payment_from_fin_app(fin_app_name):
 
 @frappe.whitelist()
 def create_payment_entry_from_payment_plan(payment_plan_name, paid_amount, mode_of_payment, submit = False, reference_number = None, reference_date = None):
+	# Validate required parameters
+	if not mode_of_payment:
+		frappe.throw(_("Payment method is required. Please select a payment method."))
+	if not paid_amount:
+		frappe.throw(_("Payment amount is required. Please enter the amount to pay."))
+	
 	paid_amount = float(paid_amount)
 	si_name = frappe.db.get_value('Payment Plan', payment_plan_name, 'credit_invoice')
 	si = SimpleNamespace(doctype='Sales Invoice', name=si_name)
@@ -101,6 +107,12 @@ def create_payment_entry_from_payment_plan(payment_plan_name, paid_amount, mode_
 
 @frappe.whitelist()
 def create_payment_entry_from_finance_application(finance_application_name, paid_amount, mode_of_payment, submit = False, reference_number = None, reference_date = None):
+	# Validate required parameters
+	if not mode_of_payment:
+		frappe.throw(_("Payment method is required. Please select a payment method."))
+	if not paid_amount:
+		frappe.throw(_("Payment amount is required. Please enter the amount to pay."))
+	
 	paid_amount = float(paid_amount)
 	so_name = frappe.db.get_value('Finance Application', finance_application_name, 'sales_order')
 	so = SimpleNamespace(doctype='Sales Order', name=so_name)
