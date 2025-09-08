@@ -27,12 +27,14 @@ return new frappe.ui.Dialog({
 				label: 'Amount to pay',
 				fieldname: 'paid_amount',
 				fieldtype: 'Currency',
+				reqd: 1,
 			},
 			{
 				label: 'Payment method',
 				fieldname: 'mode_of_payment',
 				fieldtype: 'Link',
 				options: 'Mode of Payment',
+				reqd: 1,
 				onchange: function() {
 					const mode_of_payment = this.get_value();
 					const dialog = window.cur_dialog;
@@ -63,6 +65,16 @@ return new frappe.ui.Dialog({
 	size: 'small', // small, large, extra-large 
 	primary_action_label: 'Submit payment',
 	primary_action(values) {
+		// Validate required fields
+		if (!values.paid_amount) {
+			frappe.msgprint(__('Please enter the amount to pay'));
+			return;
+		}
+		if (!values.mode_of_payment) {
+			frappe.msgprint(__('Please select a payment method'));
+			return;
+		}
+		
 		show_confirmation_dialog(values, pp_name, 'Payment Plan');
 	 }
 });
@@ -77,10 +89,10 @@ function show_confirmation_dialog(payment_values, source_name, source_type) {
 				fieldtype: 'HTML',
 				fieldname: 'payment_summary',
 				options: `
-					<div class="payment-summary">
-						<h4>Payment Details:</h4>
-						<p><strong>Amount to pay:</strong> ${format_currency(payment_values.paid_amount)}</p>
-						<p><strong>Payment method:</strong> ${payment_values.mode_of_payment}</p>
+			<div class="payment-summary">
+				<h4>Payment Details:</h4>
+				<p><strong>Amount to pay:</strong> ${format_currency(payment_values.paid_amount)}</p>
+				<p><strong>Payment method:</strong> ${payment_values.mode_of_payment || 'Not selected'}</p>
 						${payment_values.reference_number ? `<p><strong>Reference number:</strong> ${payment_values.reference_number}</p>` : ''}
 						${payment_values.reference_date ? `<p><strong>Reference date:</strong> ${payment_values.reference_date}</p>` : ''}
 						<p><strong>Source:</strong> ${source_type} - ${source_name}</p>
@@ -141,6 +153,19 @@ function submit_payment(payment_values, source_name, source_type) {
 			} else {
 				frappe.msgprint("Error creating payment entry");
 			}
+		},
+		error: function(r) {
+			let error_msg = "Error creating payment entry";
+			if (r.message) {
+				error_msg = r.message;
+			} else if (r.exc_type === 'TypeError' && r.exception && r.exception.includes('mode_of_payment')) {
+				error_msg = "Payment method is required. Please select a payment method.";
+			}
+			frappe.msgprint({
+				title: __('Payment Error'),
+				message: error_msg,
+				indicator: 'red'
+			});
 		}
 	});
 }
