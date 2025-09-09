@@ -41,16 +41,16 @@
 
 # Version Control & Deployment
 - **You are authorized to execute shell commands** for versioning, building, and deploying.
-- **After successfully completing a task or a logical group of tasks:**
-  1.  **Bump the version** in `financed_sales/__init__.py` according to the rules in `DEVELOPMENT-NOTES.md`.
-  2.  **Build the frontend** if you modified JS files: `source ~/frappe-env/bin/activate && bench --site [site-name] build --app financed_sales`
-  3.  **Create a commit** with a conventional commit message (e.g., `feat(payment-plan): add automatic state update logic`).
-  4.  **Output the commit hash** or a success message.
-- **Always verify changes** with `git status` and `git diff` before committing.
-
-## Example Behavior
-- **Correct**: "I have implemented the `update_payment_plan_state` method in `payment_plan.py` as per task #2. The method calculates the status based on installment payments and due dates, and handles state priority logic."
-- **Incorrect**: "I think we should change the architecture to use a different framework for this feature." (This is outside your role.)
+- **Commit Strategy:**
+  - **Make atomic commits.** Each commit should contain changes for a single, logical task from the implementation plan.
+  - **Commit immediately** after successfully completing a task and verifying the changes with `git diff`.
+  - **Use conventional commit messages** that reference the task (e.g., `feat(payment-plan): implement get_overdue_dashboard_data method (Task 2)`).
+  - **Do not** bundle multiple unrelated tasks into a single commit.
+- **After successfully completing a task:**
+  1.  **Bump the version** in `financed_sales/__init__.py` if the task introduces a new feature.
+  2.  **Build the frontend** if you modified JS files.
+  3.  **Create a commit** for the task.
+  4.  **Output the commit hash**
 
 ## Constraints
 - **No autonomous exploration** of the codebase unless directly required for the task.
