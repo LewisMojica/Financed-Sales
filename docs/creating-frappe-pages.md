@@ -68,11 +68,11 @@ frappe.pages["page-slug"].on_page_load = function (wrapper) {
 		single_column: true,
 	});
 
-	wrapper.page_instance = new YourApp.PageClass(wrapper);
+	wrapper.page_instance = new PageClass(wrapper);
 	frappe.breadcrumbs.add("Module Name");
 };
 
-YourApp.PageClass = class PageClass {
+class PageClass {
 	constructor(wrapper) {
 		var me = this;
 		setTimeout(function () {
@@ -123,7 +123,7 @@ YourApp.PageClass = class PageClass {
 	render() {
 		// Render your UI here
 	}
-};
+}
 ```
 
 ### 4. Create Backend Python (PY)
@@ -214,6 +214,26 @@ The page will be available at:
 5. **Error Messages**: Use translatable strings with `_()` and `__()`
 6. **Responsive**: Handle window resize events if needed
 7. **Loading States**: Show loading indicators during API calls
+8. **Namespace Issues**: Use simple class names without namespace prefixes to avoid `ReferenceError: namespace is not defined` errors
+
+## Common Issues
+
+### JavaScript Namespace Error
+**Problem**: `ReferenceError: your_app is not defined`
+
+**Wrong**:
+```javascript
+wrapper.page_instance = new your_app.PageClass(wrapper);
+your_app.PageClass = class PageClass {
+```
+
+**Correct**:
+```javascript
+wrapper.page_instance = new PageClass(wrapper);
+class PageClass {
+```
+
+**Solution**: Use simple class names without namespace prefixes unless you have properly defined the namespace globally.
 
 ## Example: Sales Funnel Reference
 
