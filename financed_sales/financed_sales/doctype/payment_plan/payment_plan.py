@@ -29,6 +29,13 @@ class PaymentPlan(Document):
 		self.update_payment_plan_state()
 		print(state)
 	
+	def after_submit(self):
+		"""Update Payment Plan state after successful submission"""
+		try:
+			self.save_payment_plan_state()
+		except Exception as e:
+			frappe.log_error(f"Failed to update Payment Plan {self.name} state after submit: {str(e)}")
+	
 	def calculate_payment_plan_state(self):
 		"""Calculate Payment Plan state based on installment payment status and due dates"""
 		if not self.installments:
@@ -60,7 +67,15 @@ class PaymentPlan(Document):
 		new_state = self.calculate_payment_plan_state()
 		if self.status != new_state:
 			self.status = new_state
-			frappe.db.set_value("Payment Plan", self.name, "status", new_state)
+	
+	def save_payment_plan_state(self):
+		"""Save Payment Plan state to database in separate transaction"""
+		try:
+			frappe.db.set_value("Payment Plan", self.name, "status", self.status)
+			frappe.db.commit()
+		except Exception as e:
+			frappe.log_error(f"Failed to update Payment Plan {self.name} status: {str(e)}")
+			# Don't raise exception to avoid breaking payment processing
 	
 	@staticmethod
 	def check_overdue_payment_plans():

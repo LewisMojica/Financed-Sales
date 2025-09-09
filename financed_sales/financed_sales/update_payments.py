@@ -60,14 +60,22 @@ def update_payments(fa, pe, save=False):
 		ok = validate_states_continuity(new_payment_state,current_payment_state) 
 		print(f'Validation Result <{ok}>')
 		apply_installments_state(doc, new_payment_state)
-		# Update Payment Plan state after payment allocation
-		doc.update_payment_plan_state()
 		print(f' ~~~~~~ init new inst state ~~~~~\n {new_payment_state}\n~~~~~~~~~~~~~~~ end new inst state~~~~~~~')
 		
 	
 	
 	if save:	
 		doc.save()
+		# Update Payment Plan state after successful save to avoid concurrency issues
+		if doc.doctype == 'Payment Plan':
+			try:
+				# Reload document to get fresh state and avoid timestamp conflicts
+				fresh_doc = frappe.get_doc('Payment Plan', doc.name)
+				fresh_doc.update_payment_plan_state()
+				fresh_doc.save_payment_plan_state()
+			except Exception as e:
+				frappe.log_error(f"Failed to update Payment Plan {doc.name} state: {str(e)}")
+				# Don't raise exception to avoid breaking payment processing
 
 def to_cents(amount):
 	return int(round(amount*100))
