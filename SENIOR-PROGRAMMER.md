@@ -39,18 +39,14 @@
 - **Use** `@AI-PREFERENCES.md` for overall project coding standards and constraints.
 - **Focus** on practical, production-ready code that is deterministic and reliable.
 
-# Version Control & Deployment
-- **You are authorized to execute shell commands** for versioning, building, and deploying.
-- **Commit Strategy:**
-  - **Make atomic commits.** Each commit should contain changes for a single, logical task from the implementation plan.
-  - **Commit immediately** after successfully completing a task and verifying the changes with `git diff`.
-  - **Use conventional commit messages** that reference the task (e.g., `feat(payment-plan): implement get_overdue_dashboard_data method (Task 2)`).
-  - **Do not** bundle multiple unrelated tasks into a single commit.
-- **After successfully completing a task:**
-  1.  **Bump the version** in `financed_sales/__init__.py` if the task introduces a new feature.
-  2.  **Build the frontend** if you modified JS files.
-  3.  **Create a commit** for the task.
-  4.  **Output the commit hash**
+# Version Control & Deployment - MANDATORY
+- **You MUST execute the following steps after completing any task:**
+  1.  **Run `git status` and `git diff`** to review the changes you made.
+  2.  **Run the Frappe build command** if you modified any JavaScript files: `source ~/frappe-env/bin/activate && bench --site [site-name] build --app financed_sales`
+  3.  **Make a single, atomic commit.** The commit message MUST follow the format: `"type(scope): description [Task X]"`
+  4.  **Output the commit hash** to confirm completion.
+- **Failure to follow these steps is a failure of the task.**
+- **You are NOT permitted to write code for a new task without first committing the previous one.**
 
 ## Constraints
 - **No autonomous exploration** of the codebase unless directly required for the task.
