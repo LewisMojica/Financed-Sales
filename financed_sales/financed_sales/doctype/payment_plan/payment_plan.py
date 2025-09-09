@@ -4,6 +4,7 @@
 import frappe
 from frappe.model.document import Document
 from financed_sales.financed_sales.update_payments import auto_alloc_payments, apply_installments_state
+from datetime import datetime, date
 
 
 class PaymentPlan(Document):
@@ -25,4 +26,65 @@ class PaymentPlan(Document):
 		print('~~~~~~~~~~~~~~~~~~~lsubmitted!~~~~~~~~~~~~~~~~~~\n\n~~~~~~~~~~~~~~~~~~~~~~~~~')
 		state = auto_alloc_payments(self.down_payment_amount, self.installments, self.payment_refs)
 		apply_installments_state(self, state)
+		self.update_payment_plan_state()
 		print(state)
+	
+	def calculate_payment_plan_state(self):
+		"""Calculate Payment Plan state based on installment payment status and due dates"""
+		if not self.installments:
+			return "Draft"
+		
+		today = date.today()
+		has_overdue = False
+		all_paid = True
+		
+		for installment in self.installments:
+			# Check if installment is overdue
+			if installment.due_date and installment.due_date < today and installment.pending_amount > 0:
+				has_overdue = True
+			
+			# Check if all installments are fully paid
+			if installment.pending_amount > 0:
+				all_paid = False
+		
+		# State priority: Completed > Overdue > Active
+		if all_paid:
+			return "Completed"
+		elif has_overdue:
+			return "Overdue"
+		else:
+			return "Active"
+	
+	def update_payment_plan_state(self):
+		"""Update Payment Plan status based on current installment state"""
+		new_state = self.calculate_payment_plan_state()
+		if self.status != new_state:
+			self.status = new_state
+			frappe.db.set_value("Payment Plan", self.name, "status", new_state)
+	
+	@staticmethod
+	def check_overdue_payment_plans():
+		"""Check and update Payment Plans with overdue installments"""
+		today = date.today()
+		
+		# Find Payment Plans with overdue installments
+		overdue_plans = frappe.db.sql("""
+			SELECT DISTINCT pp.name
+			FROM `tabPayment Plan` pp
+			INNER JOIN `tabPayment Plan Installment` ppi ON pp.name = ppi.parent
+			WHERE pp.status IN ('Active', 'Draft')
+			AND ppi.due_date < %s
+			AND ppi.pending_amount > 0
+			AND pp.docstatus = 1
+		""", (today,), as_dict=True)
+		
+		# Update status to Overdue
+		for plan in overdue_plans:
+			frappe.db.set_value("Payment Plan", plan.name, "status", "Overdue")
+		
+		return len(overdue_plans)
+	
+	@staticmethod
+	def daily_overdue_check():
+		"""Scheduled task handler for daily overdue check"""
+		return PaymentPlan.check_overdue_payment_plans()

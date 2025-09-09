@@ -60,6 +60,8 @@ def update_payments(fa, pe, save=False):
 		ok = validate_states_continuity(new_payment_state,current_payment_state) 
 		print(f'Validation Result <{ok}>')
 		apply_installments_state(doc, new_payment_state)
+		# Update Payment Plan state after payment allocation
+		doc.update_payment_plan_state()
 		print(f' ~~~~~~ init new inst state ~~~~~\n {new_payment_state}\n~~~~~~~~~~~~~~~ end new inst state~~~~~~~')
 		
 	

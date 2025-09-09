@@ -178,23 +178,11 @@ doc_events = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"financed_sales.tasks.all"
-# 	],
-# 	"daily": [
-# 		"financed_sales.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"financed_sales.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"financed_sales.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"financed_sales.tasks.monthly"
-# 	],
-# }
+scheduler_events = {
+	"daily": [
+		"financed_sales.financed_sales.doctype.payment_plan.payment_plan.daily_overdue_check"
+	],
+}
 
 # Testing
 # -------
