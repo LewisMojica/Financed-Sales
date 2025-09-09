@@ -1,0 +1,26 @@
+{
+ "creation": "2025-09-09 16:47:38.746153",
+ "docstatus": 0,
+ "doctype": "Page",
+ "icon": "fa fa-clock-o",
+ "idx": 1,
+ "modified": "2025-09-09 16:47:38.746153",
+ "modified_by": "Administrator",
+ "module": "Financed Sales",
+ "name": "overdue-financed-sales",
+ "owner": "Administrator",
+ "page_name": "overdue-financed-sales",
+ "roles": [
+  {
+   "role": "Sales Manager"
+  },
+  {
+   "role": "Accounts Manager"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "standard": "Yes",
+ "title": "Overdue Financed Sales"
+}

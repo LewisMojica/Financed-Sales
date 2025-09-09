@@ -1,0 +1,15 @@
+.overdue-content-wrapper {
+	margin: 15px;
+	width: 100%;
+}
+
+.overdue-table {
+	margin-top: 20px;
+}
+
+.overdue-summary {
+	margin-bottom: 20px;
+	padding: 15px;
+	background-color: var(--bg-color);
+	border-radius: 5px;
+}
