@@ -74,6 +74,7 @@ Quotation → Finance Application [Submission] → Sales Order → Finance Appli
 ### Commit Messages
 - **Must use conventional commit format**: `type(scope): description`
 - Examples: `feat: add custom fields`, `fix: payment allocation bug`, `docs: update notes`
+- **Don't create commit summary messages after commits** - the git output shows what was committed
 
 ### Data Handling
 - Preserve original field values when transforming data
