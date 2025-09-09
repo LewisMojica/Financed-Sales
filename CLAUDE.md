@@ -1,0 +1,102 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+This is a Frappe/ERPNext app called "Financed Sales" that enables customer financed sales workflows. It allows creating financing applications from quotations and POS transactions with structured payment plans, including down payments, installments, and interest calculations.
+
+## Essential Commands
+
+### Environment Setup
+```bash
+# Always activate the virtual environment first
+source ~/frappe-env/bin/activate
+
+# Import custom fields after making changes
+bench --site [site-name] import-doc apps/financed_sales/financed_sales/fixtures/custom_field.json
+bench --site [site-name] clear-cache
+```
+
+### Frontend Development
+```bash
+# MANDATORY after EVERY JavaScript change - build the frontend
+source ~/frappe-env/bin/activate && bench --site [site-name] build --app financed_sales
+```
+
+### Code Quality
+```bash
+# Pre-commit hooks (configured in .pre-commit-config.yaml)
+pre-commit install
+pre-commit run --all-files
+
+# Ruff linting and formatting (configured in pyproject.toml)
+ruff check
+ruff format
+```
+
+## Architecture Overview
+
+### Core Workflow
+The financed sales process follows this workflow:
+```
+Quotation → Finance Application [Submission] → Sales Order → Finance Application [Approval] → Credit Invoice + Payment Plan [status = active] → Receive Payments
+```
+
+### Key DocTypes
+- **Finance Application**: Main financing document with approval workflow
+- **Payment Plan**: Manages installment schedules and payment tracking  
+- **Factura Proforma**: Custom invoice format for financed sales
+- **Financed Sales Settings**: Global configuration for interest rates, down payments
+
+### Event Hooks (hooks.py)
+- **Finance Application**: `on_update` and `on_update_after_submit` trigger document creation on approval
+- **Payment Entry**: `on_submit` triggers payment allocation to installments
+
+### JavaScript Integration
+- **Point of Sale**: `public/js/point_of_sale.js` 
+- **Quotation**: `public/js/quotation.js`
+- **Finance Application**: `public/js/finance_application.js`
+
+## Development Conventions
+
+### Custom Fields
+- Always set `"module": "Financed Sales"` in custom field JSON
+- Use `custom_financed_items` for financed items tables
+- Set `"modified"` to current timestamp for UI identification
+
+### Version Management
+- Update version in `financed_sales/__init__.py` for production tracking
+- Bug fixes: bump patch version (0.21.0 → 0.21.1)
+- New features: bump minor version (0.21.0 → 0.22.0)
+- **Always bump version immediately after implementing new features**
+
+### Commit Messages
+- **Must use conventional commit format**: `type(scope): description`
+- Examples: `feat: add custom fields`, `fix: payment allocation bug`, `docs: update notes`
+
+### Data Handling
+- Preserve original field values when transforming data
+- Use proportional allocation with banker's rounding for interest distribution
+- Pre-fill fields with likely values to improve user experience
+
+### Frappe/ERPNext Specifics
+- Table column visibility: Use `"in_list_view": 1` on child doctype fields, NOT `default_columns` on parent
+- Check source code in `/home/slart/frappe-env/dev-env/apps/frappe/` and `/home/slart/frappe-env/dev-env/apps/erpnext/` for unclear documentation
+- Frontend changes require building with `bench build --app financed_sales`
+
+## Key Implementation Details
+
+### Interest Implementation
+- **Factura Proforma**: Modifies existing `items` table with financed rates
+- **Sales Order/Invoice**: Adds `custom_items_with_interest` table, preserves original items + tax
+
+### Payment Processing
+- Sequential installment payment allocation
+- Down payment must be completed before installments
+- Automatic Payment Entry creation with proper account allocation
+- Reference number validation for Wire Transfer/Credit Card payments
+
+### Workflow States
+- **Finance Application**: Draft → Pending → Approved/Rejected
+- Automatic document creation triggered by state transitions
