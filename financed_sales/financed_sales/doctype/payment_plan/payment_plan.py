@@ -111,10 +111,7 @@ class PaymentPlan(Document):
 		today = date.today()
 		
 		for installment in self.installments:
-			# Calculate principal amount remaining (amount - paid_amount, excluding penalty)
-			principal_remaining = installment.amount - (installment.paid_amount or 0)
-			
-			if installment.due_date and installment.due_date < today and principal_remaining > 0:
+			if installment.due_date and installment.due_date < today and installment.pending_amount > 0:
 				# Calculate months overdue (integer only)
 				months_diff = relativedelta(today, installment.due_date)
 				months_overdue = months_diff.years * 12 + months_diff.months
@@ -122,8 +119,8 @@ class PaymentPlan(Document):
 				# Ensure months_overdue is not negative (safety check)
 				months_overdue = max(0, months_overdue)
 				
-				# Apply penalty formula: principal_remaining * 0.05 * months_overdue
-				penalty_amount = principal_remaining * 0.05 * months_overdue
+				# Apply penalty formula: pending_amount * 0.05 * months_overdue
+				penalty_amount = installment.pending_amount * 0.05 * months_overdue
 				installment.penalty_amount = penalty_amount
 			else:
 				# No penalty if not overdue or fully paid
