@@ -77,6 +77,34 @@ class PaymentPlan(Document):
 			frappe.log_error(f"Failed to update Payment Plan {self.name} status: {str(e)}")
 			# Don't raise exception to avoid breaking payment processing
 	
+	def calculate_overdue_penalties(self):
+		"""Calculate penalties for overdue installments in this payment plan.
+		
+		Cycles through all installments and sets penalty_amount to 100 for any
+		installment that is overdue (due_date < today) and has pending_amount > 0.
+		Only updates installments that don't already have the penalty amount set.
+		
+		Returns:
+			int: Number of installments that had penalties applied.
+		"""
+		if not self.installments:
+			return 0
+		
+		today = date.today()
+		updated_count = 0
+		
+		for installment in self.installments:
+			# Check if installment is overdue and has pending amount
+			if (installment.due_date and 
+				installment.due_date < today and 
+				installment.pending_amount > 0 and
+				installment.penalty_amount != 100):
+				
+				installment.penalty_amount = 100
+				updated_count += 1
+		
+		return updated_count
+	
 	@staticmethod
 	def check_overdue_payment_plans():
 		"""Check and update Payment Plans with overdue installments"""
