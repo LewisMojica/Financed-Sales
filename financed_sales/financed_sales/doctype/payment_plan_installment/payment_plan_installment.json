@@ -13,6 +13,7 @@
   "pending_amount",
   "payment_doctype",
   "payment_ref",
+  "penalty_amount",
   "penalty"
  ],
  "fields": [
@@ -72,13 +73,19 @@
    "label": "Payment Reference",
    "options": "payment_doctype",
    "read_only": 1
+  },
+  {
+   "fieldname": "penalty_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Penalty Amount"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-08-28 23:01:41.824452",
+ "modified": "2025-09-09 23:08:50.119018",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Plan Installment",
