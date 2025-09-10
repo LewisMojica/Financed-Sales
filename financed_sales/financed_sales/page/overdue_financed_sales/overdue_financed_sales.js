@@ -99,48 +99,30 @@ class OverdueFinancedSales {
 		me.elements.content_wrapper.empty();
 		me.elements.no_data.toggle(false);
 
-		// Hardcoded demo data for testing - bypass API
-		let demo_data = [
-			{
-				customer: "John Doe Enterprises",
-				finance_application_id: "FINAPP-2024-001",
-				overdue_amount: 1500.00,
-				days_overdue: 5
-			},
-			{
-				customer: "ABC Company Ltd", 
-				finance_application_id: "FINAPP-2024-002",
-				overdue_amount: 3200.50,
-				days_overdue: 23
-			},
-			{
-				customer: "Smith & Associates",
-				finance_application_id: "FINAPP-2024-003", 
-				overdue_amount: 750.25,
-				days_overdue: 45
-			}
-		];
-
-		me.render_hardcoded_table(demo_data);
+		if (!me.data || me.data.length === 0) {
+			me.elements.no_data.toggle(true);
+		} else {
+			me.render_overdue_table();
+		}
 	}
 
-	render_hardcoded_table(data) {
+	render_overdue_table() {
 		let me = this;
 		
-		let table_html = '<div class="overdue-summary"><h4>Overdue Financed Sales (' + data.length + ' records)</h4></div>';
+		let table_html = '<div class="overdue-summary"><h4>Overdue Financed Sales (' + me.data.length + ' records)</h4></div>';
 		table_html += '<table class="table table-bordered overdue-table">';
 		table_html += '<thead><tr>';
 		table_html += '<th>Customer</th>';
-		table_html += '<th>Finance Application</th>'; 
+		table_html += '<th>Payment Plan</th>'; 
 		table_html += '<th>Overdue Amount</th>';
 		table_html += '<th>Days Overdue</th>';
 		table_html += '</tr></thead><tbody>';
 
-		data.forEach(function(row) {
+		me.data.forEach(function(row) {
 			let days_class = row.days_overdue > 30 ? "text-danger" : "text-warning";
 			table_html += '<tr>';
 			table_html += '<td><strong>' + row.customer + '</strong></td>';
-			table_html += '<td>' + row.finance_application_id + '</td>';
+			table_html += '<td><a href="/app/payment-plan/' + row.payment_plan + '" target="_blank">' + row.payment_plan + '</a></td>';
 			table_html += '<td>$' + row.overdue_amount.toFixed(2) + '</td>';
 			table_html += '<td class="' + days_class + '"><strong>' + row.days_overdue + ' days</strong></td>';
 			table_html += '</tr>';
