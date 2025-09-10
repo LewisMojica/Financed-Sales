@@ -37,8 +37,7 @@ doc_events = {
 }
 scheduler_events = {
 	"daily": [
-		"financed_sales.financed_sales.doctype.payment_plan.payment_plan.daily_overdue_check",
-		"financed_sales.financed_sales.doctype.payment_plan.payment_plan.daily_penalty_update"
+		"financed_sales.financed_sales.doctype.payment_plan.payment_plan.daily_overdue_check"
 	],
 }
 
