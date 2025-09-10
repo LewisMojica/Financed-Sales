@@ -125,9 +125,7 @@ class PaymentPlan(Document):
 				# Apply penalty formula: principal_remaining * 0.05 * months_overdue
 				penalty_amount = principal_remaining * 0.05 * months_overdue
 				installment.penalty_amount = penalty_amount
-			else:
-				# No penalty if not overdue or fully paid
-				installment.penalty_amount = 0
+			# Note: penalty_amount is preserved for audit trail even when principal is fully paid
 	
 	@staticmethod
 	def update_penalty_amounts_bulk():
