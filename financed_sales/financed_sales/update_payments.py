@@ -187,14 +187,14 @@ def apply_installments_state(pp, _new_installments_state):
 		if no_refs == 0:
 			# No payments for this installment
 			actual_inst.paid_amount = 0
-			actual_inst.pending_amount = actual_inst.amount + (actual_inst.penalty_amount or 0)
+			actual_inst.pending_amount = actual_inst.amount
 			break
 		elif no_refs == 1:
 			actual_inst.payment_doctype = 'Payment Entry'
 			actual_inst.payment_ref = new_inst['payment_refs'][0]['payment_entry']
 			# Calculate paid amount from single payment
 			actual_inst.paid_amount = from_cents(new_inst['payment_refs'][0]['amount'])
-			actual_inst.pending_amount = actual_inst.amount - actual_inst.paid_amount + (actual_inst.penalty_amount or 0)
+			actual_inst.pending_amount = actual_inst.amount - actual_inst.paid_amount
 		else:
 			if actual_inst.payment_doctype == 'Payment Entry List' and actual_inst.payment_ref:
 				pel = frappe.get_doc('Payment Entry List', actual_inst.payment_ref)
@@ -221,7 +221,7 @@ def apply_installments_state(pp, _new_installments_state):
 			# Calculate total paid amount from multiple payments
 			total_paid = sum(ref['amount'] for ref in new_inst['payment_refs'])
 			actual_inst.paid_amount = from_cents(total_paid)
-			actual_inst.pending_amount = actual_inst.amount - actual_inst.paid_amount + (actual_inst.penalty_amount or 0)
+			actual_inst.pending_amount = actual_inst.amount - actual_inst.paid_amount
 
 			
 		
