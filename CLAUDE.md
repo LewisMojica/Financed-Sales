@@ -87,6 +87,28 @@ Quotation → Finance Application [Submission] → Sales Order → Finance Appli
 - Check source code in `/home/slart/frappe-env/dev-env/apps/frappe/` and `/home/slart/frappe-env/dev-env/apps/erpnext/` for unclear documentation
 - Frontend changes require building with `bench build --app financed_sales`
 
+### Debugging with bench execute
+For faster debugging than console copy-paste, create debug functions and execute them:
+
+```python
+# Create file: financed_sales/debug_[feature].py
+def debug_function():
+    import frappe
+    # Your debug code here
+    print("Debug output")
+```
+
+Execute with:
+```bash
+bench --site [site-name] execute "financed_sales.debug_[feature].debug_function"
+```
+
+**Benefits:**
+- Immediate execution and output
+- No interactive session management needed  
+- Can include complex multi-step debugging logic
+- Full access to Frappe context and database
+
 ## Key Implementation Details
 
 ### Interest Implementation
