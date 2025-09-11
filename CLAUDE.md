@@ -168,3 +168,4 @@ bench --site [site-name] export-fixtures --app financed_sales
 ### Workflow States
 - **Finance Application**: Draft → Pending → Approved/Rejected
 - Automatic document creation triggered by state transitions
+- debug code should go to finaced_sale/debug
