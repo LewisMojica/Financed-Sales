@@ -119,7 +119,9 @@ class PaymentPlan(Document):
 					days_after_grace = days_overdue - 5
 					periods_overdue = math.ceil(days_after_grace / 30.0)
 					penalty_rate = periods_overdue * 0.05  # 5% per 30-day period
-					new_penalty = round(installment.amount * penalty_rate, 2)
+					# Calculate penalty on unpaid installment amount (excluding previous penalties)
+					unpaid_installment = installment.amount - installment.paid_amount
+					new_penalty = round(unpaid_installment * penalty_rate, 2)
 				
 				# Only update if penalty amount has changed
 				if installment.penalty_amount != new_penalty:
