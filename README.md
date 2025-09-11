@@ -173,35 +173,27 @@ bench --site your-site.com install-app financed_sales
 
 ---
 
-## 🛠️ **Technical Highlights**
+## 🔬 **Payment Logic**
 
-### **Payment Processing Engine**
-```python
-# Automatic payment allocation with validation
-def allocate_payment(payment_entry):
-    # Validates payment method requirements
-    # Allocates to down payment first
-    # Then processes installments sequentially
-    # Updates all related documents
-```
+### **Sequential Payment Allocation Algorithm**
+Payments are automatically allocated using an algorithm that ensures proper order:
+- **Down payment first**: All payments go to down payment until fully paid
+- **Installment sequence**: Payments then fill installments in chronological order
+- **Partial payments**: Handles partial payments across multiple installments
+- **Cents-based precision**: Uses integer cents internally to avoid floating point errors
 
-### **Interest Distribution Algorithm**
-```python
-# Proportional interest distribution using banker's rounding
-def distribute_interest_to_items(items, total_interest):
-    # Ensures precise calculations
-    # Maintains data integrity
-    # Prevents rounding errors
-```
+### **Payment State Validation**
+The system verifies that installment payment states make logical sense:
+- **Sequential payment enforcement**: Installments must be paid in order (no skipping)
+- **State consistency checking**: Validates current payment state against proposed changes
+- **Payment integrity**: Ensures no gaps exist in the payment sequence
 
-### **Workflow State Management**
-```python
-# Automatic document creation based on workflow states
-if workflow_state == 'Approved':
-    create_sales_order()
-    create_credit_invoice()
-    create_payment_plan()
-```
+### **Progressive Penalty System**
+Overdue installments trigger automatic penalty calculations:
+- **Grace period**: 5 days with no penalty
+- **Escalating penalties**: 5% per 30-day period after grace (5%, 10%, 15%...)
+- **Daily automation**: Scheduled task checks for overdue payments
+- **Smart state management**: Updates Payment Plan status based on due dates
 
 ---
 
