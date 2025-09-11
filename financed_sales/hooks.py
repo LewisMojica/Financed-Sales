@@ -25,6 +25,10 @@ fixtures = [
 		"doctype": "Print Format",
 		"filters": { "name": 'Factura Proforma' }
 	},
+	{
+		"doctype": "Role",
+		"filters": {"name": ["in", ["Financed Sales Manager", "Financed Sales User"]]}
+	},
 ]
 doc_events = {
 	"Finance Application": {
