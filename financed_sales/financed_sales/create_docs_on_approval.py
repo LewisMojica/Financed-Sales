@@ -13,7 +13,7 @@ def main(doc,method):
 	
 	
 def create_sales_order(doc):
-	sales_order_dict = make_sales_order(doc.quotation, ignore_permissions=True)
+	sales_order_dict = make_sales_order(doc.quotation)
 	settings = frappe.get_single('Financed Sales Settings')
 
 	# The method returns a dictionary, convert to doc and save
