@@ -14,16 +14,41 @@ class FinanceApplication(Document):
 	
 	def before_cancel(self):
 		"""Handle cleanup when rejecting a pending Finance Application"""
-		# Only handle Pending state rejections - cancel the Sales Order using ignore_links
-		if self.workflow_state == 'Pending' and self.sales_order:
+		print(f"before_cancel called for {self.name}, state: {self.workflow_state}")
+		
+		# Handle rejections (workflow_state is already 'Rejected' when before_cancel is called)
+		if self.workflow_state == 'Rejected' and self.sales_order:
+			print(f"Attempting to cancel Sales Order: {self.sales_order}")
 			try:
 				sales_order = frappe.get_doc('Sales Order', self.sales_order)
+				print(f"Sales Order status before cancel: {sales_order.docstatus}")
+				
 				if sales_order.docstatus == 1:  # Only cancel if submitted
+					# First try to remove all link references
+					frappe.db.set_value('Sales Order', self.sales_order, 'custom_finance_application', None)
+					frappe.db.commit()
+					
 					# Cancel with ignore_links to bypass link checking
+					sales_order.reload()
 					sales_order.flags.ignore_links = True
 					sales_order.cancel()
+					print(f"Successfully cancelled Sales Order {self.sales_order}")
+				else:
+					print(f"Sales Order {self.sales_order} not submitted, status: {sales_order.docstatus}")
 			except Exception as e:
 				print(f"Error canceling Sales Order {self.sales_order}: {str(e)}")
+				import traceback
+				traceback.print_exc()
+		
+		# Also cancel any draft Factura Proforma documents linked to this Finance Application
+		factura_list = frappe.get_all('Factura Proforma', 
+			filters={'finance_application': self.name, 'docstatus': 0})
+		for factura in factura_list:
+			try:
+				frappe.delete_doc('Factura Proforma', factura.name)
+				print(f"Deleted draft Factura Proforma {factura.name}")
+			except Exception as e:
+				print(f"Error deleting Factura Proforma {factura.name}: {str(e)}")
 	
 	def on_cancel(self):
 		"""Update workflow state when document is cancelled"""
