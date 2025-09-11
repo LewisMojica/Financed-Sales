@@ -87,6 +87,18 @@ Quotation → Finance Application [Submission] → Sales Order → Finance Appli
 - Check source code in `/home/slart/frappe-env/dev-env/apps/frappe/` and `/home/slart/frappe-env/dev-env/apps/erpnext/` for unclear documentation
 - Frontend changes require building with `bench build --app financed_sales`
 
+### Core vs External DocTypes
+**Core DocTypes (owned by this app)**: Finance Application, Payment Plan, Factura Proforma, Financed Sales Settings, etc.
+- Edit directly in JSON files: `financed_sales/financed_sales/doctype/[doctype_name]/[doctype_name].json`
+- Modify any property (permissions, fields, options, etc.) directly in the JSON
+- Changes applied via: `bench --site [site-name] migrate`
+
+**External DocTypes (from Frappe/ERPNext)**: Quotation, Sales Order, Sales Invoice, etc.
+- Use Property Setter documents to modify any doctype property
+- Create via debug scripts for permissions, field properties, etc.
+- Add Property Setter to fixtures if needed for deployment
+- Cannot edit their JSON files as they belong to other apps
+
 ### Debugging with bench execute
 For faster debugging than console copy-paste, create debug scripts in the `financed_sales/debug/` directory:
 
