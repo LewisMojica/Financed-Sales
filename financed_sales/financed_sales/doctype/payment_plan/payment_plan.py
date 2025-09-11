@@ -123,9 +123,15 @@ class PaymentPlan(Document):
 				
 				# Only update if penalty amount has changed
 				if installment.penalty_amount != new_penalty:
+					# Calculate new pending amount including penalty
+					base_pending = installment.amount - installment.paid_amount
+					new_pending_amount = base_pending + new_penalty
+					
 					# Use direct database update for submitted documents
-					frappe.db.set_value("Payment Plan Installment", installment.name, 
-										"penalty_amount", new_penalty)
+					frappe.db.set_value("Payment Plan Installment", installment.name, {
+						"penalty_amount": new_penalty,
+						"pending_amount": new_pending_amount
+					})
 					updated_count += 1
 		
 		if updated_count > 0:
