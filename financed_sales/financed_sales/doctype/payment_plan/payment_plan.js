@@ -52,9 +52,16 @@ return new frappe.ui.Dialog({
 					const mode_of_payment = this.get_value();
 					const dialog = window.cur_dialog;
 				   
-					if (mode_of_payment === 'Wire Transfer' || mode_of_payment === 'Credit Card') {
-						dialog.set_df_property('reference_number', 'hidden', false);
-						dialog.set_df_property('reference_date', 'hidden', false);
+					if (mode_of_payment) {
+						frappe.db.get_value('Mode of Payment', mode_of_payment, 'type').then(r => {
+							if (r.message && r.message.type === 'Bank') {
+								dialog.set_df_property('reference_number', 'hidden', false);
+								dialog.set_df_property('reference_date', 'hidden', false);
+							} else {
+								dialog.set_df_property('reference_number', 'hidden', true);
+								dialog.set_df_property('reference_date', 'hidden', true);
+							}
+						});
 					} else {
 						dialog.set_df_property('reference_number', 'hidden', true);
 						dialog.set_df_property('reference_date', 'hidden', true);
@@ -144,16 +151,18 @@ function submit_payment(payment_values, source_name, source_type) {
 		args.payment_plan_name = source_name;
 	}
 	
-	if (payment_values.mode_of_payment === 'Wire Transfer' || payment_values.mode_of_payment === 'Credit Card') {
-		args.reference_number = payment_values.reference_number;
-		args.reference_date = payment_values.reference_date;
-	}
-	
-	const method_name = source_type === 'Finance Application' 
-		? "financed_sales.financed_sales.api.create_payment_entry_from_finance_application"
-		: "financed_sales.financed_sales.api.create_payment_entry_from_payment_plan";
-	
-	frappe.call({
+	// Check payment method type to determine if reference fields are needed
+	frappe.db.get_value('Mode of Payment', payment_values.mode_of_payment, 'type').then(r => {
+		if (r.message && r.message.type === 'Bank') {
+			args.reference_number = payment_values.reference_number;
+			args.reference_date = payment_values.reference_date;
+		}
+		
+		const method_name = source_type === 'Finance Application' 
+			? "financed_sales.financed_sales.api.create_payment_entry_from_finance_application"
+			: "financed_sales.financed_sales.api.create_payment_entry_from_payment_plan";
+		
+		frappe.call({
 		method: method_name,
 		args: args,
 		callback: function(response) {
@@ -180,5 +189,6 @@ function submit_payment(payment_values, source_name, source_type) {
 				indicator: 'red'
 			});
 		}
+		});
 	});
 }
