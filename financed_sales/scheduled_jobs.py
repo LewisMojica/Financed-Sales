@@ -36,10 +36,7 @@ def daily_penalty_calculation():
 				payment_plan = frappe.get_doc("Payment Plan", plan_data["payment_plan"])
 				penalties_applied = payment_plan.calculate_overdue_penalties()
 				
-				if penalties_applied > 0:
-					payment_plan.save()
-					total_penalties_applied += penalties_applied
-				
+				total_penalties_applied += penalties_applied
 				total_plans += 1
 				
 			except Exception as e:
