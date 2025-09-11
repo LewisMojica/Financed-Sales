@@ -29,6 +29,10 @@ fixtures = [
 		"doctype": "Role",
 		"filters": {"name": ["in", ["Financed Sales Manager", "Financed Sales User"]]}
 	},
+	{
+		"doctype": "Workflow Action Master",
+		"filters": {"name": "Submit"}
+	},
 ]
 doc_events = {
 	"Finance Application": {
