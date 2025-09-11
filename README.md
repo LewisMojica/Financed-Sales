@@ -242,17 +242,11 @@ Custom invoice formats available:
 ## 🔧 **Development & Contributing**
 
 ### **Development Setup**
-```bash
-# Clone and setup
-cd apps/financed_sales
-source ~/frappe-env/bin/activate
-
-# Install pre-commit hooks
-pre-commit install
-
-# Build after changes
-bench --site your-site.com build --app financed_sales
-```
+1. Create a Frappe site with Frappe v15 and ERPNext v15
+2. Set developer mode on the site
+3. Get and install the Financed Sales app
+4. Unshallow `apps/financed_sales` for full git history
+5. Install pre-commit hooks: `pre-commit install`
 
 ### **Code Quality Tools**
 - **Ruff**: Python linting and formatting
