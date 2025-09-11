@@ -1,8 +1,20 @@
-.DS_Store
+# Debug scripts - local development only
+financed_sales/debug/
+
+# Python cache files
 *.pyc
 *.egg-info
+__pycache__
+
+# IDE/Editor files
 *.swp
 tags
+
+# Dependencies
 node_modules
-__pycache__
+
+# OS files
+.DS_Store
+
+# Development files
 TODO.md
