@@ -119,13 +119,21 @@ class PaymentPlan(Document):
 					days_after_grace = days_overdue - 5
 					periods_overdue = math.ceil(days_after_grace / 30.0)
 					penalty_rate = periods_overdue * 0.05  # 5% per 30-day period
-					new_penalty = round(installment.amount * penalty_rate, 2)
+					# Calculate penalty on unpaid installment amount (excluding previous penalties)
+					unpaid_installment = installment.amount - installment.paid_amount
+					new_penalty = round(unpaid_installment * penalty_rate, 2)
 				
 				# Only update if penalty amount has changed
 				if installment.penalty_amount != new_penalty:
+					# Calculate new pending amount including penalty
+					base_pending = installment.amount - installment.paid_amount
+					new_pending_amount = base_pending + new_penalty
+					
 					# Use direct database update for submitted documents
-					frappe.db.set_value("Payment Plan Installment", installment.name, 
-										"penalty_amount", new_penalty)
+					frappe.db.set_value("Payment Plan Installment", installment.name, {
+						"penalty_amount": new_penalty,
+						"pending_amount": new_pending_amount
+					})
 					updated_count += 1
 		
 		if updated_count > 0:
