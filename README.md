@@ -32,8 +32,15 @@ A structured financing system that automates the process from quotation to payme
 
 ### 🚀 **Financing Workflows**
 ```
-💼 Quotation → 📋 Finance Application → ✅ Approval → 📄 Sales Order → 💳 Credit Invoice + Payment Plan → 💰 Payment Collection
+📋 Finance Application → ✅ Approval → 💰 Payment Collection
+        ↓ (auto)              ↓ (auto)
+   📄 Sales Order     💳 Invoice + Payment Plan
 ```
+
+**Key automation points:**
+- **POS/Quotation** → Finance Application (one-click creation)
+- **Submission** → Sales Order (auto-created)  
+- **Approval** → Invoice + Payment Plan (auto-created, installment tracking starts)
 
 ### 🧮 **Interest Calculations**
 - **Proportional Distribution**: Interest distributed accurately across items using banker's rounding
