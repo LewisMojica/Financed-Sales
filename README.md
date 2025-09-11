@@ -269,11 +269,6 @@ bench --site your-site.com run-tests --app financed_sales
 bench --site your-site.com run-tests financed_sales.tests.test_payment_plan
 ```
 
-### **Debugging**
-Debug scripts available in `financed_sales/debug/`:
-```bash
-bench --site your-site.com execute "financed_sales.debug.debug_penalty.debug_function"
-```
 
 ---
 
@@ -302,6 +297,10 @@ We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING
 - Code style requirements
 - Pull request process
 - Issue reporting guidelines
+
+**For AI assistants (Claude Code, etc.)**: This project includes comprehensive development guidance:
+- [CLAUDE.md](CLAUDE.md) - Architecture overview, workflows, and AI-specific conventions
+- [DEVELOPMENT_NOTES.md](DEVELOPMENT_NOTES.md) - Technical implementation details and common pitfalls
 
 ---
 
