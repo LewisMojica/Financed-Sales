@@ -13,7 +13,7 @@ def main(doc,method):
 	
 	
 def create_sales_order(doc):
-	sales_order_dict = make_sales_order(doc.quotation)
+	sales_order_dict = make_sales_order(doc.quotation, ignore_permissions=True)
 	settings = frappe.get_single('Financed Sales Settings')
 
 	# The method returns a dictionary, convert to doc and save
@@ -42,7 +42,7 @@ def create_sales_order(doc):
 			'amount': item['amount']
 		})
 	
-	sales_order.insert()
+	sales_order.insert(ignore_permissions=True)
 	sales_order.submit()
 	doc.sales_order = sales_order.name
 	frappe.db.set_value(doc.doctype, doc.name, 'sales_order', sales_order.name)
@@ -66,7 +66,7 @@ def on_approval(doc):
 def create_credit_inv(doc, submit = True):
 	settings = frappe.get_single('Financed Sales Settings')
 	account = settings.interests_account #account for interest
-	invoice = make_sales_invoice(doc.sales_order)
+	invoice = make_sales_invoice(doc.sales_order, ignore_permissions=True)
 	quotation = frappe.get_doc('Quotation', doc.quotation)
 
 	invoice.custom_is_credit_invoice = True
@@ -85,7 +85,7 @@ def create_credit_inv(doc, submit = True):
 	# Set the financed total
 	invoice.custom_financed_total = financed_total
 
-	invoice.insert()
+	invoice.insert(ignore_permissions=True)
 	if submit:
 		invoice.submit()
 	return invoice.name
@@ -113,7 +113,7 @@ def create_payment_plan(doc, credit_invoice_name, submit = True):
 		
 		
 
-	plan.insert()
+	plan.insert(ignore_permissions=True)
 	if submit:
 		plan.submit()
 	return plan.name
