@@ -90,22 +90,23 @@ A structured financing system that automates the process from quotation to payme
 ## 🚀 **Quick Start**
 
 ### **Prerequisites**
-- ERPNext v13+ (compatible with latest versions)
-- Python 3.8+
+- **ERPNext v15** (this app extends ERPNext core functionality)
+- Python 3.10+ (same as ERPNext v15 requirement)
 - Frappe Framework
 
+**Note**: This app is designed to work alongside ERPNext, leveraging core doctypes like Quotation, Sales Order, Sales Invoice, and Payment Entry.
+
 ### **Installation**
+
+**Important**: Install this app on an existing Frappe site with ERPNext, not as a standalone application.
 
 ```bash
 # Get the app
 cd /path/to/your/bench
-bench get-app https://github.com/your-repo/financed_sales.git
+bench get-app https://github.com/LewisMojica/Financed-Sales.git
 
-# Install on your site
+# Install on your Frappe site with ERPNext
 bench --site your-site.com install-app financed_sales
-
-# Setup fixtures and custom fields
-bench --site your-site.com migrate
 ```
 
 ### **Initial Configuration**
