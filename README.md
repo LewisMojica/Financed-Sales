@@ -1,18 +1,20 @@
 # 💰 Financed Sales
 
-> **An ERPNext application for customer financing workflows**
+> **An ERPNext application for financed sales workflows**
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Version](https://img.shields.io/badge/version-0.29.4-green.svg)](https://github.com/your-repo/financed_sales)
 [![ERPNext Compatible](https://img.shields.io/badge/ERPNext-Compatible-orange.svg)](https://erpnext.com/)
 
-**Financed Sales** is an ERPNext application that enables customer financing workflows. It converts quotations into structured financing applications with automated payment plans, interest calculations, and payment tracking.
+**Financed Sales** is an ERPNext application designed for financed sales workflows - selling products or services with payment plans. It converts quotations into structured financing applications with automated payment plans, interest calculations, and payment tracking.
+
+**Note**: This application is specifically for financed sales (selling items with installment payments), not general financing like cash loans or credit facilities.
 
 ---
 
 ## 🎯 **Overview**
 
-Financed Sales addresses the need for structured customer financing within ERPNext. The application provides tools for creating financing applications, managing approval workflows, and tracking payment plans from quotation to final collection.
+Financed Sales addresses the need for structured financed sales within ERPNext. The application provides tools for selling items with financing terms, managing approval workflows, and tracking installment payments from quotation to final collection.
 
 ### **Key Challenges Addressed**
 - Manual calculations for financing terms and interest distribution
