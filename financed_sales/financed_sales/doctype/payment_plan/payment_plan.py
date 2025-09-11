@@ -78,15 +78,23 @@ class PaymentPlan(Document):
 			# Don't raise exception to avoid breaking payment processing
 	
 	def calculate_overdue_penalties(self):
-		"""Calculate penalties for overdue installments in this payment plan.
+		"""Calculate progressive penalties for overdue installments using 30-day periods.
 		
-		Cycles through all installments and sets penalty_amount to 100 for any
-		installment that is overdue (due_date < today) and has pending_amount > 0.
-		Only updates installments that don't already have the penalty amount set.
+		Penalty structure:
+		- Days 1-5: Grace period (no penalty)
+		- Days 6-35: 5% penalty (period 1)
+		- Days 36-65: 10% penalty (period 2)  
+		- Days 66-95: 15% penalty (period 3)
+		- And so on...
+		
+		Uses fixed 30-day periods as requested by client.
+		Formula: penalty_amount = installment_amount × periods_overdue × 5%
 		
 		Returns:
-			int: Number of installments that had penalties applied.
+			int: Number of installments that had penalties updated.
 		"""
+		import math
+		
 		if not self.installments:
 			return 0
 		
@@ -97,13 +105,28 @@ class PaymentPlan(Document):
 			# Check if installment is overdue and has pending amount
 			if (installment.due_date and 
 				installment.due_date < today and 
-				installment.pending_amount > 0 and
-				installment.penalty_amount != 100):
+				installment.pending_amount > 0):
 				
-				# Use direct database update for submitted documents
-				frappe.db.set_value("Payment Plan Installment", installment.name, 
-									"penalty_amount", 100)
-				updated_count += 1
+				# Calculate days overdue
+				days_overdue = (today - installment.due_date).days
+				
+				# Calculate penalty based on 30-day periods with grace period
+				if days_overdue <= 5:
+					# Grace period - no penalty
+					new_penalty = 0
+				else:
+					# Calculate 30-day periods overdue after grace period
+					days_after_grace = days_overdue - 5
+					periods_overdue = math.ceil(days_after_grace / 30.0)
+					penalty_rate = periods_overdue * 0.05  # 5% per 30-day period
+					new_penalty = round(installment.amount * penalty_rate, 2)
+				
+				# Only update if penalty amount has changed
+				if installment.penalty_amount != new_penalty:
+					# Use direct database update for submitted documents
+					frappe.db.set_value("Payment Plan Installment", installment.name, 
+										"penalty_amount", new_penalty)
+					updated_count += 1
 		
 		if updated_count > 0:
 			frappe.db.commit()
