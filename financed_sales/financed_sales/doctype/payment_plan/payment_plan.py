@@ -100,8 +100,13 @@ class PaymentPlan(Document):
 				installment.pending_amount > 0 and
 				installment.penalty_amount != 100):
 				
-				installment.penalty_amount = 100
+				# Use direct database update for submitted documents
+				frappe.db.set_value("Payment Plan Installment", installment.name, 
+									"penalty_amount", 100)
 				updated_count += 1
+		
+		if updated_count > 0:
+			frappe.db.commit()
 		
 		return updated_count
 	
