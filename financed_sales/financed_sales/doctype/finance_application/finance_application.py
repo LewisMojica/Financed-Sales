@@ -14,18 +14,22 @@ class FinanceApplication(Document):
 	
 	def before_cancel(self):
 		"""Handle cleanup when rejecting a pending Finance Application"""
-		# Only handle Pending state rejections - remove link and cancel the Sales Order
+		# Only handle Pending state rejections - cancel the Sales Order using ignore_links
 		if self.workflow_state == 'Pending' and self.sales_order:
 			try:
-				# Remove the link from Sales Order to Finance Application first
-				frappe.db.set_value('Sales Order', self.sales_order, 'custom_finance_application', '')
-				
-				# Now cancel the Sales Order
 				sales_order = frappe.get_doc('Sales Order', self.sales_order)
 				if sales_order.docstatus == 1:  # Only cancel if submitted
+					# Cancel with ignore_links to bypass link checking
+					sales_order.flags.ignore_links = True
 					sales_order.cancel()
 			except Exception as e:
-				frappe.log_error(f"Error canceling Sales Order {self.sales_order}: {str(e)}")
+				print(f"Error canceling Sales Order {self.sales_order}: {str(e)}")
+	
+	def on_cancel(self):
+		"""Update workflow state when document is cancelled"""
+		# Set workflow state to Rejected when cancelled from Pending state
+		if self.workflow_state == 'Pending':
+			frappe.db.set_value(self.doctype, self.name, 'workflow_state', 'Rejected')
 	@frappe.whitelist()
 	def create_factura_proforma(self):
 		sub_total = 0
