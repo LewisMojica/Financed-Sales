@@ -10,6 +10,23 @@
 
 **Note**: This application is specifically for financed sales (selling items with installment payments), not general financing like cash loans or credit facilities.
 
+## 📋 **Table of Contents**
+
+- [🎯 Overview](#-overview)
+- [✨ Key Features](#-key-features)
+- [🏗️ Core Architecture](#️-core-architecture)
+- [🚀 Quick Start](#-quick-start)
+- [💡 Usage Examples](#-usage-examples)
+- [🎭 User Journey](#-user-journey)
+- [🔬 Payment Logic](#-payment-logic)
+- [🎨 Customization Options](#-customization-options)
+- [📈 Benefits](#-benefits)
+- [🔧 Development & Contributing](#-development--contributing)
+- [📚 Documentation](#-documentation)
+- [🤝 Support & Community](#-support--community)
+- [📜 License](#-license)
+- [🙏 Acknowledgments](#-acknowledgments)
+
 ---
 
 ## 🎯 **Overview**
