@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-07-22 23:20:04.613126",
+ "creation": "2025-09-11 13:56:07.386324",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -13,11 +13,11 @@
   "pending_amount",
   "payment_doctype",
   "payment_ref",
-  "penalty_amount",
-  "penalty"
+  "penalty_amount"
  ],
  "fields": [
   {
+   "columns": 2,
    "fieldname": "due_date",
    "fieldtype": "Date",
    "in_list_view": 1,
@@ -58,15 +58,7 @@
   },
   {
    "allow_on_submit": 1,
-   "fieldname": "penalty",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Penalty",
-   "options": "Dunning",
-   "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
+   "columns": 10,
    "fieldname": "payment_ref",
    "fieldtype": "Dynamic Link",
    "in_list_view": 1,
@@ -75,6 +67,7 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "penalty_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -85,7 +78,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-09-09 23:08:50.119018",
+ "modified": "2025-09-11 14:01:32.956682",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Payment Plan Installment",
