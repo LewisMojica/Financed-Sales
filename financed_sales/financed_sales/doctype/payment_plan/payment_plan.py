@@ -163,7 +163,3 @@ class PaymentPlan(Document):
 		
 		return len(overdue_plans)
 	
-	@staticmethod
-	def daily_overdue_check():
-		"""Scheduled task handler for daily overdue check"""
-		return PaymentPlan.check_overdue_payment_plans()
