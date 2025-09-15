@@ -145,7 +145,7 @@ def get_payment_refs(inst):
 
 def convert_fa_installments_to_alloc_format(pp):
 	installments_table = pp.installments
-	output = [{'amount': to_cents(installment.amount), 'payment_refs': []} for installment in installments_table]
+	output = [{'amount': to_cents(installment.amount + (installment.penalty_amount or 0)), 'payment_refs': []} for installment in installments_table]
 	for output_inst,inst in zip(output, installments_table):
 		output_inst['payment_refs'] = get_payment_refs(inst)
 	return output	
