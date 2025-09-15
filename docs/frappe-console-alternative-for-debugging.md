@@ -1,6 +1,10 @@
-### Debugging with bench execute
-For faster debugging than console copy-paste, create debug scripts in the `financed_sales/debug/` directory:
+### Debugging Scripts
+- **Never use `bench console`** - it's interactive and incompatible with Claude Code
 
+### Debugging with bench execute
+Create debug scripts in the `financed_sales/debug/` directory:
+- Only print essential information to avoid context bloat
+- **Keep output minimal**: Use `print(f"Data: {value}")` not `print(f"========={value}=========")`
 ```python
 # Create file: financed_sales/debug/debug_[feature].py
 def debug_function():
