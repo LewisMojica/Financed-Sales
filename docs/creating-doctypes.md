@@ -106,6 +106,7 @@ class MyDocType(Document):
  "icon": "fa fa-file",
  "idx": 0,
  "is_submittable": 0,
+ "is_virtual": 0,
  "issingle": 0,
  "istable": 0,
  "max_attachments": 0,
@@ -145,11 +146,6 @@ class MyDocType(Document):
 ### 5. Import the DocType
 ```bash
 bench --site [site-name] import-doc apps/financed_sales/financed_sales/doctype/my_doctype/my_doctype.json
-```
-
-### 6. Clear Cache
-```bash
-bench --site [site-name] clear-cache
 ```
 
 ## Why Complete Structure is Required
