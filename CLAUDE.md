@@ -1,68 +1,34 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Project Overview
 
 This is a Frappe/ERPNext app called "Financed Sales" that enables customer financed sales workflows. It allows creating financing applications from quotations and POS transactions with structured payment plans, including down payments, installments, and interest calculations.
+
+## Documentation
+For additional documentation, see docs/ directory. Use `ls docs/` to see available files, then choose the relevant one - this avoids bloating context with unnecessary files.
 
 ## Essential Commands
 
 ### Environment Setup
 ```bash
-# Always activate the virtual environment first
+# Make sure the venv is active, as the bench command in the the venv.
 source ~/frappe-env/bin/activate
 
-# Import custom fields after making changes
-bench --site [site-name] import-doc apps/financed_sales/financed_sales/fixtures/custom_field.json
-bench --site [site-name] clear-cache
+# After editing a Doctype by its json file do this to update the database (UI won't show the changes if not done)
+bench --site dev.localhost import-doc apps/financed_sales/financed_sales/fixtures/custom_field.json
 ```
 
 ### Frontend Development
 ```bash
 # MANDATORY after EVERY JavaScript change - build the frontend
-source ~/frappe-env/bin/activate && bench --site [site-name] build --app financed_sales
+source ~/frappe-env/bin/activate && bench --site dev.localhost build --app financed_sales
 ```
 
-### Code Quality
-```bash
-# Pre-commit hooks (configured in .pre-commit-config.yaml)
-pre-commit install
-pre-commit run --all-files
-
-# Ruff linting and formatting (configured in pyproject.toml)
-ruff check
-ruff format
-```
-
-## Architecture Overview
-
-### Core Workflow
-The financed sales process follows this workflow:
-```
-Quotation → Finance Application [Submission] → Sales Order → Finance Application [Approval] → Credit Invoice + Payment Plan [status = active] → Receive Payments
-```
-
-### Key DocTypes
-- **Finance Application**: Main financing document with approval workflow
-- **Payment Plan**: Manages installment schedules and payment tracking  
-- **Factura Proforma**: Custom invoice format for financed sales
-- **Financed Sales Settings**: Global configuration for interest rates, down payments
-
-### Event Hooks (hooks.py)
-- **Finance Application**: `on_update` and `on_update_after_submit` trigger document creation on approval
-- **Payment Entry**: `on_submit` triggers payment allocation to installments
-
-### JavaScript Integration
-- **Point of Sale**: `public/js/point_of_sale.js` 
-- **Quotation**: `public/js/quotation.js`
-- **Finance Application**: `public/js/finance_application.js`
 
 ## Development Conventions
 
 ### Custom Fields
 - Always set `"module": "Financed Sales"` in custom field JSON
-- Use `custom_financed_items` for financed items tables
 - Set `"modified"` to current timestamp for UI identification
 
 ### Version Management
@@ -72,26 +38,32 @@ Quotation → Finance Application [Submission] → Sales Order → Finance Appli
 - **Always bump version immediately after implementing new features**
 
 ### Commit Messages
+- **Verify branch**: run `git branch` before `git add` if the branch name seems sus ask for confirmation.
 - **Must use conventional commit format**: `type(scope): description`
-- Examples: `feat: add custom fields`, `fix: payment allocation bug`, `docs: update notes`
-- **Don't create commit summary messages after commits** - the git output shows what was committed
-- **Don't use Claude Code attribution** - just use the conventional commit format without additional attribution text
+- **Verify Changes**: Always check `git diff` before committing to ensure commit message accurately describes actual changes
+- Don't pile many changes for a single commit. 
+- Commit changes before starting unrelated work. 
+- **Don't use Claude Code attribution** 
+### Guideline for Docstrings (Google Style): When to Write Docstrings
+- **Public Functions/Methods**: All functions intended for use by other parts of the codebase.
+- **Classes**: Every class definition.
+- **Modules**: Add a docstring at the top of each file explaining its purpose.
+- **Complex Private Functions**: Any non-trivial helper function where the purpose or logic is not immediately obvious.
 
 ### Data Handling
-- Preserve original field values when transforming data
-- Use proportional allocation with banker's rounding for interest distribution
 - Pre-fill fields with likely values to improve user experience
 
 ### Frappe/ERPNext Specifics
 - Table column visibility: Use `"in_list_view": 1` on child doctype fields, NOT `default_columns` on parent
-- Check source code in `/home/slart/frappe-env/dev-env/apps/frappe/` and `/home/slart/frappe-env/dev-env/apps/erpnext/` for unclear documentation
-- Frontend changes require building with `bench build --app financed_sales`
+- If documentation is missing/wrong the source code is the most reliable source of truth.
+	Source code of the Frappe framework: `/home/slart/frappe-env/dev-env/apps/frappe/`
+	Source code of ERPNext: `/home/slart/frappe-env/dev-env/apps/erpnext/`
 
 ### Core vs External DocTypes
 **Core DocTypes (owned by this app)**: Finance Application, Payment Plan, Factura Proforma, Financed Sales Settings, etc.
 - Edit directly in JSON files: `financed_sales/financed_sales/doctype/[doctype_name]/[doctype_name].json`
 - Modify any property (permissions, fields, options, etc.) directly in the JSON
-- Changes applied via: `bench --site [site-name] migrate`
+- Changes applied via: `bench --site dev.localhost import-doc [json file path]`
 
 **External DocTypes (from Frappe/ERPNext)**: Quotation, Sales Order, Sales Invoice, etc.
 - Use Property Setter documents to modify any doctype property
@@ -99,73 +71,4 @@ Quotation → Finance Application [Submission] → Sales Order → Finance Appli
 - Add Property Setter to fixtures if needed for deployment
 - Cannot edit their JSON files as they belong to other apps
 
-### Debugging with bench execute
-For faster debugging than console copy-paste, create debug scripts in the `financed_sales/debug/` directory:
 
-```python
-# Create file: financed_sales/debug/debug_[feature].py
-def debug_function():
-    import frappe
-    # Your debug code here
-    print("Debug output")
-```
-
-Execute with:
-```bash
-bench --site [site-name] execute "financed_sales.debug.debug_[feature].debug_function"
-```
-
-**Debug Directory Structure:**
-```
-financed_sales/
-├── debug/                    # Ignored by git
-│   ├── README.md            # Debug patterns and examples
-│   ├── debug_penalty.py     # Penalty calculation debugging
-│   └── debug_[feature].py   # Feature-specific debugging
-```
-
-**Benefits:**
-- Immediate execution and output
-- No interactive session management needed  
-- Can include complex multi-step debugging logic
-- Full access to Frappe context and database
-- Organized and reusable debug scripts
-- Debug files ignored by git for clean repository
-
-### Fixtures Management
-Fixtures are used to bring document instances (roles, custom fields, workflows, etc.) to environments where the app is installed. They ensure required documents are created automatically when the app is installed.
-
-**Creating fixtures workflow:**
-1. Create the document in database using debug scripts (for roles, custom fields, etc.)
-2. Add fixture definition to `hooks.py` fixtures array
-3. Export fixtures to JSON files: `bench --site [site-name] export-fixtures --app financed_sales`
-
-**Re-export fixtures when needed:**
-```bash
-# Only needed after updating documents that are defined as fixtures in hooks.py AND you want the JSON to update
-bench --site [site-name] export-fixtures --app financed_sales
-```
-
-**Fixture types in this app:**
-- **Custom Fields**: Auto-exported with module filter
-- **Roles**: Custom roles for permission management (`Financed Sales Manager`, `Financed Sales User`)
-- **Workflows**: Finance Application approval process
-- **Print Formats**: Custom invoice formats
-- **Workflow States**: Workflow state definitions
-
-## Key Implementation Details
-
-### Interest Implementation
-- **Factura Proforma**: Modifies existing `items` table with financed rates
-- **Sales Order/Invoice**: Adds `custom_items_with_interest` table, preserves original items + tax
-
-### Payment Processing
-- Sequential installment payment allocation
-- Down payment must be completed before installments
-- Automatic Payment Entry creation with proper account allocation
-- Reference number validation for Wire Transfer/Credit Card payments
-
-### Workflow States
-- **Finance Application**: Draft → Pending → Approved/Rejected
-- Automatic document creation triggered by state transitions
-- debug code should go to finaced_sale/debug
