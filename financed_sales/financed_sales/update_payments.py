@@ -85,7 +85,7 @@ def from_cents(amount_in_cents):
 
 def auto_alloc_payments(down_payment, installments_table, payments_table):
 	
-	installments = [{'amount': to_cents(installment.amount), 'payment_refs': []} for installment in installments_table]
+	installments = [{'amount': to_cents(installment.amount + (installment.penalty_amount or 0)), 'payment_refs': []} for installment in installments_table]
 	installments.insert(0, {'amount': to_cents(down_payment), 'payment_refs': []})
 	payments = [{'payment_entry': payment.payment_entry, 'amount': to_cents(payment.amount), 'date': payment.date, 'allocated': 0} for payment in payments_table] 
 
