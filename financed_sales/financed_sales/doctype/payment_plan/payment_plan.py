@@ -123,16 +123,17 @@ class PaymentPlan(Document):
 					unpaid_installment = installment.amount - installment.paid_amount
 					new_penalty = round(unpaid_installment * penalty_rate, 2)
 				
-				# Only update if penalty amount has changed
-				if installment.penalty_amount != new_penalty:
-					# Calculate new pending amount including penalty
-					base_pending = installment.amount - installment.paid_amount
-					new_pending_amount = base_pending + new_penalty
-					
+				# Calculate expected pending amount including penalty
+				expected_pending_amount = (installment.amount - installment.paid_amount) + new_penalty
+
+				# Update if penalty amount or pending amount needs correction
+				if (installment.penalty_amount != new_penalty or
+					abs(installment.pending_amount - expected_pending_amount) > 0.01):
+
 					# Use direct database update for submitted documents
 					frappe.db.set_value("Payment Plan Installment", installment.name, {
 						"penalty_amount": new_penalty,
-						"pending_amount": new_pending_amount
+						"pending_amount": expected_pending_amount
 					})
 					updated_count += 1
 		
