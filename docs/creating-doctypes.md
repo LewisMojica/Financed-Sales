@@ -159,6 +159,27 @@ The error without proper structure:
 ModuleNotFoundError: No module named 'financed_sales.financed_sales.doctype.my_doctype'
 ```
 
+## Import Permissions
+
+**IMPORTANT**: If you set `"import": 1` in any role permissions, you MUST also set `"allow_import": 1` at the DocType level, otherwise the import will fail with validation error:
+
+```
+Cannot set import as DocType(Your DocType) is not importable
+```
+
+Example with import enabled:
+```json
+{
+ "allow_import": 1,
+ "permissions": [
+  {
+   "import": 1,
+   "role": "Your Role"
+  }
+ ]
+}
+```
+
 ## Field Types Reference
 
 Common field types for JSON definition:
