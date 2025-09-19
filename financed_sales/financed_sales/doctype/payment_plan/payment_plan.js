@@ -10,6 +10,10 @@ frappe.ui.form.on('Payment Plan', {
 	refresh: function(frm) {
 		// Ensure credit invoice field is marked as required
 		frm.set_df_property('credit_invoice', 'reqd', 1);
+
+		// Ignore linked documents when cancelling to preserve audit trail
+		// This prevents the "Cancel All Documents" dialog from appearing
+		frm.ignore_doctypes_on_cancel_all = ["Finance Application", "Sales Invoice", "Sales Order"];
 	},
 	
 	validate: function(frm) {

@@ -163,4 +163,10 @@ class PaymentPlan(Document):
 			frappe.db.set_value("Payment Plan", plan.name, "status", "Overdue")
 		
 		return len(overdue_plans)
-	
+
+	def before_cancel(self):
+		"""Handle cleanup when cancelling Payment Plan"""
+		print(f"before_cancel called for Payment Plan {self.name}")
+		# Set flag to ignore links during cancellation to preserve audit trail
+		self.flags.ignore_links = True
+
