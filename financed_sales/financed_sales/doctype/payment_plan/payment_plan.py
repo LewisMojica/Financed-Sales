@@ -170,27 +170,31 @@ class PaymentPlan(Document):
 
 		# Cancel Sales Invoice if it exists
 		if self.credit_invoice:
-			try:
-				sales_invoice = frappe.get_doc("Sales Invoice", self.credit_invoice)
-				if sales_invoice.docstatus == 1:  # Only cancel if submitted
-					sales_invoice.flags.ignore_links = True
-					sales_invoice.cancel()
-					print(f"Cancelled Sales Invoice {self.credit_invoice}")
-			except Exception as e:
-				print(f"Error cancelling Sales Invoice {self.credit_invoice}: {str(e)}")
+			sales_invoice = frappe.get_doc("Sales Invoice", self.credit_invoice)
+			if sales_invoice.docstatus == 1:  # Only cancel if submitted
+				sales_invoice.flags.ignore_links = True
+				sales_invoice.cancel()
+				print(f"Cancelled Sales Invoice {self.credit_invoice}")
 
 		# Cancel Sales Order from Finance Application if it exists
 		if self.finance_application:
-			try:
-				finance_app = frappe.get_doc("Finance Application", self.finance_application)
-				if finance_app.sales_order:
-					sales_order = frappe.get_doc("Sales Order", finance_app.sales_order)
-					if sales_order.docstatus == 1:  # Only cancel if submitted
-						sales_order.flags.ignore_links = True
-						sales_order.cancel()
-						print(f"Cancelled Sales Order {finance_app.sales_order}")
-			except Exception as e:
-				print(f"Error cancelling Sales Order: {str(e)}")
+			finance_app = frappe.get_doc("Finance Application", self.finance_application)
+			if finance_app.sales_order:
+				sales_order = frappe.get_doc("Sales Order", finance_app.sales_order)
+				if sales_order.docstatus == 1:  # Only cancel if submitted
+					sales_order.flags.ignore_links = True
+					sales_order.cancel()
+					print(f"Cancelled Sales Order {finance_app.sales_order}")
+
+		# Cancel Factura Proforma from Finance Application if it exists
+		if self.finance_application:
+			factura_list = frappe.get_all('Factura Proforma',
+				filters={'finance_application': self.finance_application, 'docstatus': 1})
+			for factura in factura_list:
+				factura_doc = frappe.get_doc('Factura Proforma', factura.name)
+				factura_doc.flags.ignore_links = True
+				factura_doc.cancel()
+				print(f"Cancelled Factura Proforma {factura.name}")
 
 		# Set flag to ignore links during cancellation
 		self.flags.ignore_links = True
