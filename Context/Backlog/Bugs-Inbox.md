@@ -15,6 +15,11 @@ Bugs captured here will be moved to Bugs-Backlog.md during `/ctxk:bckl:prioritiz
 
 ---
 
+## [BUG-004] Payment Entry allocation limitation blocks penalty implementation
+**Added**: 2025-09-20
+**Source**: GitHub Issue #4
+**Context**: The current payment entry system only allows one allocation row, which prevents properly tracking and allocating penalty payments. This constraint blocks the penalty system from functioning correctly, as penalty payments require two allocation rows: one for the principal amount and another for the penalty amount. The issue impacts accounting records, payment validation, and creates an incomplete audit trail for penalty payments.
+
 ## [BUG-001] Example bug title
 <!-- Added: 2025-09-15 | Source: Me -->
 
