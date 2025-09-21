@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash",
+      "BashOutput",
+      "Edit",
+      "ExitPlanMode",
+      "Glob",
+      "Grep",
+      "KillShell",
+      "LS",
+      "MultiEdit",
+      "Read",
+      "Task",
+      "TodoWrite",
+      "WebFetch",
+      "WebSearch",
+      "Write"
+    ],
+    "deny": [
+      "Bash(base64 -d | sh:*)",
+      "Bash(brew install:*)",
+      "Bash(cat /etc/passwd:*)",
+      "Bash(cat ~/.ssh:*)",
+      "Bash(chmod -R 777:*)",
+      "Bash(chmod 777:*)",
+      "Bash(crontab -r:*)",
+      "Bash(curl :* | sh::*)",
+      "Bash(dd if=:*)",
+      "Bash(defaults write:*)",
+      "Bash(find :* -name ':*.key'::*)",
+      "Bash(format:*)",
+      "Bash(gem install:*)",
+      "Bash(git force:*)",
+      "Bash(git push:*)",
+      "Bash(git rebase:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(grep -r password:*)",
+      "Bash(halt:*)",
+      "Bash(history | sh:*)",
+      "Bash(kill -9:*)",
+      "Bash(killall -9:*)",
+      "Bash(launchctl load:*)",
+      "Bash(logkeys:*)",
+      "Bash(mkfs:*)",
+      "Bash(nc -l:*)",
+      "Bash(netcat -l:*)",
+      "Bash(npm i -g:*)",
+      "Bash(npm install -g:*)",
+      "Bash(openssl:*)",
+      "Bash(osascript:*)",
+      "Bash(pfctl:*)",
+      "Bash(pip install:*)",
+      "Bash(pip install --trusted-host:*)",
+      "Bash(python -m http.server:*)",
+      "Bash(python3 -m http.server:*)",
+      "Bash(reboot:*)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf .:*)",
+      "Bash(rm -rf ~/*)",
+      "Bash(rsync:*)",
+      "Bash(scp:*)",
+      "Bash(security dump-keychain:*)",
+      "Bash(security export:*)",
+      "Bash(security unlock-keychain:*)",
+      "Bash(shutdown:*)",
+      "Bash(ssh:*)",
+      "Bash(su -:*)",
+      "Bash(sudo -i:*)",
+      "Bash(sudo chown -R:*)",
+      "Bash(sudo launchctl:*)",
+      "Bash(sudo passwd:*)",
+      "Bash(sudo rm:*)",
+      "Bash(sudo service:*)",
+      "Bash(sudo systemctl:*)",
+      "Bash(wget :* -O - | sh::*)",
+      "Bash(yarn global add:*)",
+      "Read(*.mobileprovision)",
+      "Read(*.p12)",
+      "Read(*.pem)",
+      "Read(.env*)",
+      "Read(.netrc)",
+      "Read(AuthKey_*.p8)",
+      "Read(fastlane/.env*)",
+      "Read(~/.aws/*)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.ssh/*)",
+      "Read(~/Library/Keychains/*)",
+      "Write(~/.aws/*)",
+      "Write(~/.ssh/*)"
+    ]
+  },
+  "model": "sonnet",
+  "statusLine": {
+    "type": "command",
+    "command": "./Context/Scripts/CustomStatusline.sh --plan Pro",
+    "padding": 0
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./Context/Scripts/AutoFormat.sh"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command", 
+            "command": "./Context/Scripts/VersionStatus.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
