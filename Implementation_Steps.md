@@ -11,7 +11,6 @@ Fix penalty payment allocation by allowing dual Payment Entry references (Sales 
 
 **Description**: Add penalty income account field to Financed Sales Settings DocType
 **File**: `financed_sales/financed_sales/doctype/financed_sales_settings/financed_sales_settings.json`
-**Dependencies**: None
 
 **Requirements**:
 - Add "penalty_income_account" field to Financed Sales Settings
@@ -27,7 +26,6 @@ Fix penalty payment allocation by allowing dual Payment Entry references (Sales 
 
 **Description**: Create wrapper function that analyzes payment allocation to determine penalty vs principal breakdown
 **File**: `financed_sales/financed_sales/financed_sales/allocation_wrapper.py` (new file)
-**Dependencies**: S001 complete
 
 **Requirements**:
 - Create function `analyze_payment_allocation` that takes payment plan document and total payment amount
@@ -51,7 +49,6 @@ Fix penalty payment allocation by allowing dual Payment Entry references (Sales 
 
 **Description**: Backend function to create Journal Entry for penalty amounts with proper accounting entries
 **File**: `financed_sales/financed_sales/financed_sales/penalty_journal.py` (new file)
-**Dependencies**: S001, S002 complete
 
 **Requirements**:
 - Create function `create_penalty_journal_entry` that accepts penalty amount, customer, and payment plan name
@@ -81,7 +78,6 @@ Fix penalty payment allocation by allowing dual Payment Entry references (Sales 
 
 **Description**: Enhance payment entry creation to integrate allocation analysis and support dual references
 **File**: `financed_sales/financed_sales/financed_sales/api.py`
-**Dependencies**: S002, S003 complete
 
 **Requirements**:
 - Modify `create_payment_entry_from_payment_plan` function to use allocation analysis before creating payment entry
@@ -109,7 +105,6 @@ Fix penalty payment allocation by allowing dual Payment Entry references (Sales 
 
 **Description**: Modify validation to allow dual references for penalty scenarios while preserving existing behavior
 **File**: `financed_sales/financed_sales/financed_sales/update_payments.py`
-**Dependencies**: S004 complete
 
 **Requirements**:
 - Modify existing reference count validation to allow both 1 and 2 references instead of only 1
@@ -137,7 +132,6 @@ Fix penalty payment allocation by allowing dual Payment Entry references (Sales 
 
 **Description**: Validate complete penalty payment workflow through comprehensive testing
 **File**: Manual testing procedure (no code changes)
-**Dependencies**: S001-S005 complete
 
 **Test Requirements**:
 - Verify penalty payment workflow: payment analysis → journal entry creation → dual reference payment entry
