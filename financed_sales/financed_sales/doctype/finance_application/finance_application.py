@@ -72,8 +72,20 @@ class FinanceApplication(Document):
 				except Exception as e:
 					print(f"Error clearing Payment Plan reference: {str(e)}")
 		
+		# Handle submitted Factura Proforma documents
+		factura_submitted_list = frappe.get_all('Factura Proforma',
+			filters={'finance_application': self.name, 'docstatus': 1})
+		for factura in factura_submitted_list:
+			try:
+				factura_doc = frappe.get_doc('Factura Proforma', factura.name)
+				factura_doc.flags.ignore_links = True
+				factura_doc.cancel()
+				print(f"Cancelled submitted Factura Proforma {factura.name}")
+			except Exception as e:
+				print(f"Error cancelling Factura Proforma {factura.name}: {str(e)}")
+
 		# Also cancel any draft Factura Proforma documents linked to this Finance Application
-		factura_list = frappe.get_all('Factura Proforma', 
+		factura_list = frappe.get_all('Factura Proforma',
 			filters={'finance_application': self.name, 'docstatus': 0})
 		for factura in factura_list:
 			try:
