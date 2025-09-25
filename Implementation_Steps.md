@@ -8,7 +8,7 @@ Fix penalty payment allocation by allowing dual Payment Entry references (Sales 
 ## Implementation Steps
 
 **General Requirements for All Steps**:
-- After completing each step, run `ruff check --fix` and `ruff format` for all Python files you modified
+- After completing each step, run `ruff check --fix` and `ruff format` only for Python files you modified
 - Resolve any remaining issues that ruff didn't fix automatically
 - Only proceed to the next step once all linting issues are resolved
 
