@@ -1,7 +1,5 @@
 # CLAUDE.md
 
-@Context.md
-
 ## Project Overview
 
 This is a Frappe/ERPNext app called "Financed Sales" that enables customer financed sales workflows. It allows creating financing applications from quotations and POS transactions with structured payment plans, including down payments, installments, and interest calculations.
