@@ -66,28 +66,3 @@ def create_test_quotation_for_financing():
         'quotation': quotation.name
     }
 
-
-def test_create_finance_application_workflow():
-    """
-    Test the complete factory → create_finance_application workflow.
-
-    Returns:
-        dict: {
-            'customer': Customer document name,
-            'quotation': Quotation document name,
-            'finance_application': Finance Application document name
-        }
-    """
-    from financed_sales.financed_sales.api import create_finance_application
-
-    # Create test quotation using factory
-    factory_result = create_test_quotation_for_financing()
-
-    # Create finance application from quotation
-    finance_app_result = create_finance_application(factory_result['quotation'])
-
-    return {
-        'customer': factory_result['customer'],
-        'quotation': factory_result['quotation'],
-        'finance_application': finance_app_result['name']
-    }
