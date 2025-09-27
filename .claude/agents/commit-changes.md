@@ -1,8 +1,8 @@
 ---
-meta: "Template Version: 4 | ContextKit: 0.0.0 | Updated: 2025-09-16"
 name: commit-changes
 description: Intelligent git analysis, commit message generation, and commit execution with comprehensive format validation
 tools: Read, Bash, Grep, Glob
+model: haiku
 color: green
 ---
 
