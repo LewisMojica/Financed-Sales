@@ -80,9 +80,22 @@ def analyze_payment_allocation(payment_plan_doc, total_payment_amount):
 				installment_principal = installment.amount
 				installment_penalty = getattr(installment, "penalty_amount", 0) or 0
 
-				# Payment goes to principal first, then penalty
-				principal_payment = min(simulation_allocation, installment_principal)
-				penalty_payment = max(0, simulation_allocation - installment_principal)
+				# Calculate cumulative principal already paid to this installment (excluding simulation)
+				cumulative_principal_paid = 0
+				for payment_ref in allocated_item["payment_refs"]:
+					if payment_ref["payment_entry"] != "SIMULATION":
+						# This is an existing payment - add its amount to cumulative principal
+						existing_allocation = from_cents(payment_ref["amount"])
+						cumulative_principal_paid += min(
+							existing_allocation, installment_principal - cumulative_principal_paid
+						)
+
+				# Calculate remaining principal needed for this installment
+				remaining_principal_needed = max(0, installment_principal - cumulative_principal_paid)
+
+				# Allocate simulation payment: principal first, then penalty
+				principal_payment = min(simulation_allocation, remaining_principal_needed)
+				penalty_payment = max(0, simulation_allocation - principal_payment)
 
 				# Ensure penalty payment doesn't exceed available penalty
 				penalty_payment = min(penalty_payment, installment_penalty)
