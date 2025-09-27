@@ -203,6 +203,13 @@ def create_payment_entry(
 
 	# Add dual reference support - add journal entry reference if provided
 	if journal_entry_reference:
+		# Adjust Sales Invoice allocation to principal amount only (exclude penalty)
+		principal_amount = paid_amount - penalty_amount
+		for ref in pe.references:
+			if ref.reference_doctype == "Sales Invoice":
+				ref.allocated_amount = principal_amount
+				break
+
 		# Payment entry should now have dual references: Sales Invoice + Journal Entry
 		pe.append(
 			"references",
