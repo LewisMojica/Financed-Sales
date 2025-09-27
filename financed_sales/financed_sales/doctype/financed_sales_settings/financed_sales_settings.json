@@ -6,6 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "interests_account",
+  "penalty_income_account",
   "interest_rate",
   "rate_period",
   "down_payment_percent",
@@ -16,6 +17,12 @@
    "fieldname": "interests_account",
    "fieldtype": "Link",
    "label": "Cuenta para Intereses",
+   "options": "Account"
+  },
+  {
+   "fieldname": "penalty_income_account",
+   "fieldtype": "Link",
+   "label": "Penalty Income Account",
    "options": "Account"
   },
   {
