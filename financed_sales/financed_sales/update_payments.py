@@ -214,7 +214,6 @@ def apply_installments_state(pp, _new_installments_state):
 	new_payment_state = deepcopy(_new_installments_state)
 	downp_state = new_payment_state.pop(0)  # remove down payment
 	downp_refs_no = len(downp_state["payment_refs"])
-	print(downp_refs_no)
 	if downp_refs_no == 1:
 		pp.down_payment_ref_type = "Payment Entry"
 		pp.down_payment_reference = downp_state["payment_refs"][0]["payment_entry"]
