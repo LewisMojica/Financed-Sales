@@ -182,3 +182,30 @@ def _get_or_create_interests_income_account(company):
     }).insert(ignore_permissions=True)
 
     return account.name
+
+
+def _get_or_create_test_user_with_role(role):
+    """Get or create a test user with specific role.
+
+    Args:
+        role: The role name to assign to the user
+
+    Returns:
+        str: Email address of the created/retrieved user
+    """
+    # Create new test user
+    unique_suffix = str(uuid.uuid4())[:8]
+    email = f"test.financed.sales.{unique_suffix}@example.com"
+
+    user = frappe.get_doc({
+        "doctype": "User",
+        "email": email,
+        "first_name": "Test",
+        "last_name": "Financed Sales Manager",
+        "send_welcome_email": 0,
+        "roles": [
+            {"role": role}
+        ]
+    }).insert(ignore_permissions=True)
+
+    return user.name
