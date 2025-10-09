@@ -40,25 +40,7 @@ def create_payment_plan_with_factura():
 
 
 def test_factory():
-    """Test the factory and verify Payment Plan can be cancelled."""
+    """Test the factory."""
     result = create_payment_plan_with_factura()
-
-    # Verify cancellation works
-    payment_plan = frappe.get_doc("Payment Plan", result['payment_plan'])
-    factura = frappe.get_doc("Factura Proforma", result['factura_proforma'])
-
-    test_result = {
-        **result,
-        'verification': {
-            'payment_plan_docstatus': payment_plan.docstatus,
-            'factura_docstatus': factura.docstatus,
-            'finance_app_has_factura': bool(frappe.get_all(
-                'Factura Proforma',
-                filters={'finance_application': result['finance_application'], 'docstatus': 1},
-                limit=1
-            ))
-        }
-    }
-
-    print(json.dumps(test_result, indent=2))
-    return test_result
+    print(json.dumps(result, indent=2))
+    return result
