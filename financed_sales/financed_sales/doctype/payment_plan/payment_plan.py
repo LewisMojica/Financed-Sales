@@ -23,11 +23,9 @@ class PaymentPlan(Document):
 			frappe.throw("Installments table cannot be empty. Please add at least one installment.")
 	
 	def before_submit(self):
-		print('~~~~~~~~~~~~~~~~~~~lsubmitted!~~~~~~~~~~~~~~~~~~\n\n~~~~~~~~~~~~~~~~~~~~~~~~~')
 		state = auto_alloc_payments(self.down_payment_amount, self.installments, self.payment_refs)
 		apply_installments_state(self, state)
 		self.update_payment_plan_state()
-		print(state)
 	
 	def after_submit(self):
 		"""Update Payment Plan state after successful submission"""
@@ -166,15 +164,12 @@ class PaymentPlan(Document):
 
 	def before_cancel(self):
 		"""Handle cleanup when cancelling Payment Plan"""
-		print(f"before_cancel called for Payment Plan {self.name}")
-
 		# Cancel Sales Invoice if it exists
 		if self.credit_invoice:
 			sales_invoice = frappe.get_doc("Sales Invoice", self.credit_invoice)
 			if sales_invoice.docstatus == 1:  # Only cancel if submitted
 				sales_invoice.flags.ignore_links = True
 				sales_invoice.cancel()
-				print(f"Cancelled Sales Invoice {self.credit_invoice}")
 
 		# Cancel Sales Order from Finance Application if it exists
 		if self.finance_application:
@@ -184,7 +179,6 @@ class PaymentPlan(Document):
 				if sales_order.docstatus == 1:  # Only cancel if submitted
 					sales_order.flags.ignore_links = True
 					sales_order.cancel()
-					print(f"Cancelled Sales Order {finance_app.sales_order}")
 
 		# Cancel Factura Proforma from Finance Application if it exists
 		if self.finance_application:
@@ -194,7 +188,6 @@ class PaymentPlan(Document):
 				factura_doc = frappe.get_doc('Factura Proforma', factura.name)
 				factura_doc.flags.ignore_links = True
 				factura_doc.cancel()
-				print(f"Cancelled Factura Proforma {factura.name}")
 
 		# Set flag to ignore links during cancellation
 		self.flags.ignore_links = True
