@@ -79,7 +79,6 @@ def create_finance_application(quotation_name):
 		}
 	).insert()
 
-	print(f"creating application {application.name}")
 	return {"name": application.name}
 
 

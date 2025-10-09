@@ -23,11 +23,9 @@ class PaymentPlan(Document):
 			frappe.throw("Installments table cannot be empty. Please add at least one installment.")
 	
 	def before_submit(self):
-		print('~~~~~~~~~~~~~~~~~~~lsubmitted!~~~~~~~~~~~~~~~~~~\n\n~~~~~~~~~~~~~~~~~~~~~~~~~')
 		state = auto_alloc_payments(self.down_payment_amount, self.installments, self.payment_refs)
 		apply_installments_state(self, state)
 		self.update_payment_plan_state()
-		print(state)
 	
 	def after_submit(self):
 		"""Update Payment Plan state after successful submission"""
