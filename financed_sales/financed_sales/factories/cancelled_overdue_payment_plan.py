@@ -99,6 +99,36 @@ def create_test_payment_plan_for_penalty_journal():
     if not payment_plan_name:
         frappe.throw("Payment Plan was not created automatically after approval")
 
+    # Step 11: Modify Payment Plan installments to have overdue dates and penalties
+    payment_plan = frappe.get_doc('Payment Plan', payment_plan_name)
+
+    # Update installment due dates to past dates (creating overdue scenario)
+    # First installment was due 60 days ago
+    overdue_start_date = frappe.utils.add_days(frappe.utils.today(), -60)
+
+    # Add penalties to the first 3 overdue installments
+    penalty_amounts = [500.0, 750.0, 1000.0]
+
+    for i, installment in enumerate(payment_plan.installments):
+        # Update due date to past date
+        new_due_date = frappe.utils.add_months(overdue_start_date, i)
+
+        # Set penalty for first 3 installments
+        penalty = penalty_amounts[i] if i < len(penalty_amounts) else 0.0
+
+        # Update via direct database update (since Payment Plan is submitted)
+        frappe.db.set_value('Payment Plan Installment', installment.name, {
+            'due_date': new_due_date,
+            'penalty_amount': penalty,
+            'pending_amount': installment.amount + penalty
+        })
+
+    frappe.db.commit()
+
+    # Step 12: Cancel the Payment Plan to reproduce the bug
+    payment_plan.reload()  # Reload to get fresh data
+    payment_plan.cancel()
+
     return {
         'customer': customer,
         'quotation': quotation.name,
