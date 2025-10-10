@@ -21,18 +21,20 @@ def main(pe, method):
 	if pe.unallocated_amount != 0.00:
 		frappe.throw(f"Unallocated amount must be 0.00 and is {pe.unallocated_amount}")
 
-	# Get Sales Invoice reference for Finance Application lookup
-	sales_invoice_ref = None
+	# Get primary reference for Finance Application lookup (Sales Order or Sales Invoice)
+	# Sales Order is used for Pending state (down payments)
+	# Sales Invoice is used for Approved state (installment payments)
+	primary_ref = None
 	for ref in pe.references:
-		if ref.reference_doctype == "Sales Invoice":
-			sales_invoice_ref = ref
+		if ref.reference_doctype in ["Sales Invoice", "Sales Order"]:
+			primary_ref = ref
 			break
 
-	if not sales_invoice_ref:
-		frappe.throw("Sales Invoice reference is required for Finance Application lookup")
+	if not primary_ref:
+		frappe.throw("Sales Order or Sales Invoice reference is required for Finance Application lookup")
 
 	fa_name = frappe.get_value(
-		sales_invoice_ref.reference_doctype, sales_invoice_ref.reference_name, "custom_finance_application"
+		primary_ref.reference_doctype, primary_ref.reference_name, "custom_finance_application"
 	)
 	if not fa_name:
 		frappe.throw("Finance Application reference not found")
@@ -43,7 +45,7 @@ def main(pe, method):
 		("Approved", "Sales Invoice"),
 		("Pending", "Sales Order"),
 	)
-	if (fa.workflow_state, sales_invoice_ref.reference_doctype) not in valid_state_and_ref_combinations:
+	if (fa.workflow_state, primary_ref.reference_doctype) not in valid_state_and_ref_combinations:
 		frappe.throw(f"Wrong ref doctype for {fa.workflow_state} Finance Application")
 	update_payments(fa, pe, save=True)
 
