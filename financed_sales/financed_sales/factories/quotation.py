@@ -1,6 +1,6 @@
 """Factory for creating Quotations."""
 import frappe
-from .helpers import _get_or_create_test_customer, _get_or_create_test_company, _get_or_create_test_item
+from .helpers import _get_or_create_test_customer, _get_default_company, _get_or_create_test_item
 
 
 def create_quotation():
@@ -15,7 +15,7 @@ def create_quotation():
         }
     """
     customer = _get_or_create_test_customer()
-    company = _get_or_create_test_company()
+    company = _get_default_company()
     item = _get_or_create_test_item()
 
     company_currency = frappe.db.get_value('Company', company, 'default_currency')
