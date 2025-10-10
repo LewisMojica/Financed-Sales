@@ -6,7 +6,7 @@ import uuid
 def _ensure_financed_sales_settings():
     """Configure Financed Sales Settings with penalty income account."""
     settings = frappe.get_single("Financed Sales Settings")
-    company = _get_or_create_test_company()
+    company = _get_default_company()
 
     penalty_account = _get_or_create_penalty_income_account(company)
     interests_account = _get_or_create_interests_income_account(company)
@@ -40,22 +40,18 @@ def _get_or_create_test_customer():
     return customer.name
 
 
-def _get_or_create_test_company():
-    """Get the default company that has existing accounts and warehouses."""
-    company_with_stores = frappe.db.get_value('Warehouse', 'Stores - S-C', 'company')
-    if company_with_stores:
-        return company_with_stores
+def _get_default_company():
+    """Get the default company."""
+    default_company = frappe.defaults.get_user_default("Company")
+    if not default_company:
+        frappe.throw("No default company found. Please set a default company.")
 
-    existing_companies = frappe.db.get_list('Company', fields=['name'], limit=1)
-    if existing_companies:
-        return existing_companies[0]['name']
-
-    frappe.throw("No company found in system. Please create a company first.")
+    return default_company
 
 
 def _get_or_create_test_item():
     """Get existing test item that belongs to the default company."""
-    company = _get_or_create_test_company()
+    company = _get_default_company()
 
     existing_items = frappe.db.sql("""
         SELECT i.item_code

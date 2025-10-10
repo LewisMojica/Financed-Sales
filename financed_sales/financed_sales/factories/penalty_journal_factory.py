@@ -1,6 +1,7 @@
 import frappe
 import uuid
 from ..api import create_finance_application
+from .helpers import _get_default_company
 
 
 def create_test_payment_plan_for_penalty_journal():
@@ -24,7 +25,7 @@ def create_test_payment_plan_for_penalty_journal():
 
     # Step 2: Handle dependencies - create customer, company, and item
     customer = _get_or_create_test_customer()
-    company = _get_or_create_test_company()
+    company = _get_default_company()
     item = _get_or_create_test_item()
 
     # Step 3: Get company currency to avoid exchange rate issues
@@ -113,7 +114,7 @@ def _ensure_financed_sales_settings():
     settings = frappe.get_single("Financed Sales Settings")
 
     # Get the existing company to ensure account compatibility
-    company = _get_or_create_test_company()
+    company = _get_default_company()
 
     # Always update accounts to match the current company - don't check if they exist
     penalty_account = _get_or_create_penalty_income_account(company)
@@ -149,25 +150,9 @@ def _get_or_create_test_customer():
     return customer.name
 
 
-def _get_or_create_test_company():
-    """Get the default company that has existing accounts and warehouses"""
-    # Look for the company that owns the "Stores - S-C" warehouse
-    company_with_stores = frappe.db.get_value('Warehouse', 'Stores - S-C', 'company')
-    if company_with_stores:
-        return company_with_stores
-
-    # Fallback to any existing company
-    existing_companies = frappe.db.get_list('Company', fields=['name'], limit=1)
-    if existing_companies:
-        return existing_companies[0]['name']
-
-    # If no company exists at all, this is a setup issue
-    frappe.throw("No company found in system. Please create a company first.")
-
-
 def _get_or_create_test_item():
     """Get existing test item that belongs to the default company"""
-    company = _get_or_create_test_company()
+    company = _get_default_company()
 
     # Try to find an existing service item that works with this company
     existing_items = frappe.db.sql("""
