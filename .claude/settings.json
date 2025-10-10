@@ -91,34 +91,5 @@
       "Write(~/.ssh/*)"
     ]
   },
-  "model": "sonnet",
-  "statusLine": {
-    "type": "command",
-    "command": "./Context/Scripts/CustomStatusline.sh --plan Pro",
-    "padding": 0
-  },
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Edit|Write|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "./Context/Scripts/AutoFormat.sh"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": ".*",
-        "hooks": [
-          {
-            "type": "command", 
-            "command": "./Context/Scripts/VersionStatus.sh"
-          }
-        ]
-      }
-    ]
-  }
+  "model": "sonnet"
 }
