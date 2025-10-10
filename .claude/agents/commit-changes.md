@@ -8,13 +8,6 @@ color: green
 
 # Agent: commit-changes
 
-> [!WARNING]
-> **👩‍💻 FOR DEVELOPERS**: Do not edit the content above the developer customization section - changes will be overwritten during ContextKit updates.
->
-> For project-specific customizations, use the designated section at the bottom of this file.
->
-> Found a bug or improvement for everyone? Please report it: https://github.com/FlineDev/ContextKit/issues
-
 ## Purpose
 Analyze current git changes comprehensively, understand both the 'what' and 'why' of modifications, generate intelligent commit messages following strict format requirements, execute the commit, and provide a clear summary of the committed changes.
 
