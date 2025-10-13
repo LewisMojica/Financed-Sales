@@ -6,6 +6,18 @@
  "engine": "InnoDB",
  "field_order": [
   "fecha",
+  "articulos_section",
+  "cantidad",
+  "articulo",
+  "codigo",
+  "column_break_articulos",
+  "a_credito",
+  "inicial",
+  "avance_inicial",
+  "column_break_credito",
+  "pagares",
+  "cuotas",
+  "dias",
   "datos_personales_section",
   "customer",
   "pasaporte_cedula",
@@ -87,6 +99,67 @@
    "fieldtype": "Date",
    "label": "Fecha",
    "reqd": 1
+  },
+  {
+   "fieldname": "articulos_section",
+   "fieldtype": "Section Break",
+   "label": "ART\u00cdCULOS Y CR\u00c9DITO"
+  },
+  {
+   "fieldname": "cantidad",
+   "fieldtype": "Int",
+   "label": "Cantidad",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "articulo",
+   "fieldtype": "Data",
+   "label": "Art\u00edculo"
+  },
+  {
+   "fieldname": "codigo",
+   "fieldtype": "Data",
+   "label": "C\u00f3digo"
+  },
+  {
+   "fieldname": "column_break_articulos",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "a_credito",
+   "fieldtype": "Currency",
+   "label": "A Cr\u00e9dito"
+  },
+  {
+   "fieldname": "inicial",
+   "fieldtype": "Currency",
+   "label": "Inicial"
+  },
+  {
+   "fieldname": "avance_inicial",
+   "fieldtype": "Currency",
+   "label": "Avance Inicial"
+  },
+  {
+   "fieldname": "column_break_credito",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pagares",
+   "fieldtype": "Int",
+   "label": "Pagar\u00e9s",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "cuotas",
+   "fieldtype": "Currency",
+   "label": "Cuotas"
+  },
+  {
+   "fieldname": "dias",
+   "fieldtype": "Int",
+   "label": "D\u00edas",
+   "non_negative": 1
   },
   {
    "fieldname": "datos_personales_section",

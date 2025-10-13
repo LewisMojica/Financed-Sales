@@ -15,15 +15,20 @@ class FinanceApplicationForm(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
+		a_credito: DF.Currency
 		amistad_barrio: DF.Data | None
 		amistad_lugar_trabajo: DF.Data | None
 		amistad_nombres: DF.Data | None
 		amistad_parentesco: DF.Data | None
 		amistad_referencia: DF.Data | None
 		amistad_telefonos: DF.Data | None
+		articulo: DF.Data | None
+		avance_inicial: DF.Currency
 		barrio: DF.Data | None
 		calle: DF.Data | None
+		cantidad: DF.Int
 		casa_propia: DF.Check
+		codigo: DF.Data | None
 		codeudor_casa_propia: DF.Check
 		codeudor_calle: DF.Data | None
 		codeudor_cedula: DF.Data | None
@@ -44,7 +49,9 @@ class FinanceApplicationForm(Document):
 		comercial2_incautado: DF.Data | None
 		comercial2_razon: DF.SmallText | None
 		comercial2_telefono: DF.Data | None
+		cuotas: DF.Currency
 		customer: DF.Link
+		dias: DF.Int
 		esposo_hijos: DF.Int
 		esposo_nombres: DF.Data | None
 		esposo_telefonos: DF.Data | None
@@ -63,8 +70,10 @@ class FinanceApplicationForm(Document):
 		familiar2_telefonos: DF.Data | None
 		fecha: DF.Date
 		hijos: DF.Int
+		inicial: DF.Currency
 		jefe_inmediato: DF.Data | None
 		lugar_de_trabajo: DF.Data | None
+		pagares: DF.Int
 		pasaporte_cedula: DF.Data | None
 		prestamo_balance: DF.Currency
 		prestamo_cuotas: DF.Currency
