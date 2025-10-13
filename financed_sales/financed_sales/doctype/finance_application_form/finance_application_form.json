@@ -1,0 +1,485 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:FAF-{YYYY}-{#####}",
+ "creation": "2025-10-13 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "fecha",
+  "datos_personales_section",
+  "nombres",
+  "pasaporte_cedula",
+  "calle",
+  "sector",
+  "column_break_personal",
+  "barrio",
+  "casa_propia",
+  "lugar_de_trabajo",
+  "profesion_o_puesto",
+  "column_break_personal2",
+  "hijos",
+  "jefe_inmediato",
+  "datos_esposo_section",
+  "esposo_nombres",
+  "esposo_telefonos",
+  "esposo_hijos",
+  "referencias_familiar_section",
+  "familiar1_nombres",
+  "familiar1_telefonos",
+  "familiar1_barrio",
+  "familiar1_parentesco",
+  "column_break_fam1",
+  "familiar1_referencia",
+  "familiar1_lugar_trabajo",
+  "familiar1_telefono_trabajo",
+  "section_break_fam2",
+  "familiar2_nombres",
+  "familiar2_telefonos",
+  "familiar2_barrio",
+  "familiar2_parentesco",
+  "column_break_fam2",
+  "familiar2_referencia",
+  "familiar2_lugar_trabajo",
+  "amistad_section",
+  "amistad_nombres",
+  "amistad_telefonos",
+  "amistad_barrio",
+  "amistad_parentesco",
+  "column_break_amistad",
+  "amistad_referencia",
+  "amistad_lugar_trabajo",
+  "referencia_comerciales_section",
+  "comercial1_empresa",
+  "comercial1_telefono",
+  "comercial1_incautado",
+  "comercial1_donde",
+  "column_break_comercial1",
+  "comercial1_cuando",
+  "comercial1_razon",
+  "section_break_comercial2",
+  "comercial2_empresa",
+  "comercial2_telefono",
+  "comercial2_incautado",
+  "comercial2_donde",
+  "column_break_comercial2",
+  "comercial2_cuando",
+  "comercial2_razon",
+  "prestamos_section",
+  "prestamo_fecha",
+  "prestamo_monto",
+  "prestamo_cuotas",
+  "prestamo_balance",
+  "codeudor_section",
+  "codeudor_nombres",
+  "codeudor_cedula",
+  "codeudor_calle",
+  "codeudor_sector",
+  "column_break_codeudor",
+  "codeudor_casa_propia",
+  "codeudor_lugar_trabajo",
+  "codeudor_profesion",
+  "codeudor_hijos"
+ ],
+ "fields": [
+  {
+   "default": "Today",
+   "fieldname": "fecha",
+   "fieldtype": "Date",
+   "label": "Fecha",
+   "reqd": 1
+  },
+  {
+   "fieldname": "datos_personales_section",
+   "fieldtype": "Section Break",
+   "label": "DATOS PERSONALES DEL SOLICITANTE"
+  },
+  {
+   "fieldname": "nombres",
+   "fieldtype": "Data",
+   "label": "Nombre(s)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "pasaporte_cedula",
+   "fieldtype": "Data",
+   "label": "Pasaporte/C\u00e9dula"
+  },
+  {
+   "fieldname": "calle",
+   "fieldtype": "Data",
+   "label": "Calle"
+  },
+  {
+   "fieldname": "sector",
+   "fieldtype": "Data",
+   "label": "Sector"
+  },
+  {
+   "fieldname": "barrio",
+   "fieldtype": "Data",
+   "label": "Barrio"
+  },
+  {
+   "default": "0",
+   "fieldname": "casa_propia",
+   "fieldtype": "Check",
+   "label": "Casa propia"
+  },
+  {
+   "fieldname": "lugar_de_trabajo",
+   "fieldtype": "Data",
+   "label": "Lugar de trabajo"
+  },
+  {
+   "fieldname": "profesion_o_puesto",
+   "fieldtype": "Data",
+   "label": "Profesi\u00f3n o puesto"
+  },
+  {
+   "fieldname": "hijos",
+   "fieldtype": "Int",
+   "label": "Hijos",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "jefe_inmediato",
+   "fieldtype": "Data",
+   "label": "Jefe inmediato"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "datos_esposo_section",
+   "fieldtype": "Section Break",
+   "label": "DATOS ESPOSO(A) (SI APLICA)"
+  },
+  {
+   "fieldname": "esposo_nombres",
+   "fieldtype": "Data",
+   "label": "Nombre(s)"
+  },
+  {
+   "fieldname": "esposo_telefonos",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono(s)"
+  },
+  {
+   "fieldname": "esposo_hijos",
+   "fieldtype": "Int",
+   "label": "Hijos",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "referencias_familiar_section",
+   "fieldtype": "Section Break",
+   "label": "REFERENCIAS FAMILIAR - FAMILIAR 1"
+  },
+  {
+   "fieldname": "familiar1_nombres",
+   "fieldtype": "Data",
+   "label": "Nombre(s)"
+  },
+  {
+   "fieldname": "familiar1_telefonos",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono(s)"
+  },
+  {
+   "fieldname": "familiar1_barrio",
+   "fieldtype": "Data",
+   "label": "Barrio"
+  },
+  {
+   "fieldname": "familiar1_parentesco",
+   "fieldtype": "Data",
+   "label": "Parentesco"
+  },
+  {
+   "fieldname": "familiar1_referencia",
+   "fieldtype": "Data",
+   "label": "Referencia"
+  },
+  {
+   "fieldname": "familiar1_lugar_trabajo",
+   "fieldtype": "Data",
+   "label": "Lugar de trabajo"
+  },
+  {
+   "fieldname": "familiar1_telefono_trabajo",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono del trabajo"
+  },
+  {
+   "fieldname": "section_break_fam2",
+   "fieldtype": "Section Break",
+   "label": "FAMILIAR 2"
+  },
+  {
+   "fieldname": "familiar2_nombres",
+   "fieldtype": "Data",
+   "label": "Nombre(s)"
+  },
+  {
+   "fieldname": "familiar2_telefonos",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono(s)"
+  },
+  {
+   "fieldname": "familiar2_barrio",
+   "fieldtype": "Data",
+   "label": "Barrio"
+  },
+  {
+   "fieldname": "familiar2_parentesco",
+   "fieldtype": "Data",
+   "label": "Parentesco"
+  },
+  {
+   "fieldname": "familiar2_referencia",
+   "fieldtype": "Data",
+   "label": "Referencia"
+  },
+  {
+   "fieldname": "familiar2_lugar_trabajo",
+   "fieldtype": "Data",
+   "label": "Lugar de trabajo"
+  },
+  {
+   "fieldname": "amistad_section",
+   "fieldtype": "Section Break",
+   "label": "UN (1) AMISTAD QUE NO VIVA CON USTED"
+  },
+  {
+   "fieldname": "amistad_nombres",
+   "fieldtype": "Data",
+   "label": "Nombre(s)"
+  },
+  {
+   "fieldname": "amistad_telefonos",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono(s)"
+  },
+  {
+   "fieldname": "amistad_barrio",
+   "fieldtype": "Data",
+   "label": "Barrio"
+  },
+  {
+   "fieldname": "amistad_parentesco",
+   "fieldtype": "Data",
+   "label": "Parentesco"
+  },
+  {
+   "fieldname": "amistad_referencia",
+   "fieldtype": "Data",
+   "label": "Referencia"
+  },
+  {
+   "fieldname": "amistad_lugar_trabajo",
+   "fieldtype": "Data",
+   "label": "Lugar de trabajo"
+  },
+  {
+   "fieldname": "referencia_comerciales_section",
+   "fieldtype": "Section Break",
+   "label": "REFERENCIA COMERCIALES - EMPRESA 1"
+  },
+  {
+   "fieldname": "comercial1_empresa",
+   "fieldtype": "Data",
+   "label": "Empresa"
+  },
+  {
+   "fieldname": "comercial1_telefono",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono"
+  },
+  {
+   "fieldname": "comercial1_incautado",
+   "fieldtype": "Data",
+   "label": "Le han incautado alguna"
+  },
+  {
+   "fieldname": "comercial1_donde",
+   "fieldtype": "Data",
+   "label": "Donde"
+  },
+  {
+   "fieldname": "comercial1_cuando",
+   "fieldtype": "Data",
+   "label": "Cuando"
+  },
+  {
+   "fieldname": "comercial1_razon",
+   "fieldtype": "Small Text",
+   "label": "Raz\u00f3n"
+  },
+  {
+   "fieldname": "section_break_comercial2",
+   "fieldtype": "Section Break",
+   "label": "EMPRESA 2"
+  },
+  {
+   "fieldname": "comercial2_empresa",
+   "fieldtype": "Data",
+   "label": "Empresa"
+  },
+  {
+   "fieldname": "comercial2_telefono",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono"
+  },
+  {
+   "fieldname": "comercial2_incautado",
+   "fieldtype": "Data",
+   "label": "Le han incautado alguna"
+  },
+  {
+   "fieldname": "comercial2_donde",
+   "fieldtype": "Data",
+   "label": "Donde"
+  },
+  {
+   "fieldname": "comercial2_cuando",
+   "fieldtype": "Data",
+   "label": "Cuando"
+  },
+  {
+   "fieldname": "comercial2_razon",
+   "fieldtype": "Small Text",
+   "label": "Raz\u00f3n"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "prestamos_section",
+   "fieldtype": "Section Break",
+   "label": "TIENE PRESTAMOS CON ALGUN GRUPO FINANCIERO O BANCO"
+  },
+  {
+   "fieldname": "prestamo_fecha",
+   "fieldtype": "Date",
+   "label": "Fecha"
+  },
+  {
+   "fieldname": "prestamo_monto",
+   "fieldtype": "Currency",
+   "label": "Monto RD$"
+  },
+  {
+   "fieldname": "prestamo_cuotas",
+   "fieldtype": "Currency",
+   "label": "Cuotas de RD$"
+  },
+  {
+   "fieldname": "prestamo_balance",
+   "fieldtype": "Currency",
+   "label": "Balance RD$"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "codeudor_section",
+   "fieldtype": "Section Break",
+   "label": "CO-DEUDOR (A)-1"
+  },
+  {
+   "fieldname": "codeudor_nombres",
+   "fieldtype": "Data",
+   "label": "Nombre(s)"
+  },
+  {
+   "fieldname": "codeudor_cedula",
+   "fieldtype": "Data",
+   "label": "C\u00e9dula"
+  },
+  {
+   "fieldname": "codeudor_calle",
+   "fieldtype": "Data",
+   "label": "Calle"
+  },
+  {
+   "fieldname": "codeudor_sector",
+   "fieldtype": "Data",
+   "label": "Sector"
+  },
+  {
+   "default": "0",
+   "fieldname": "codeudor_casa_propia",
+   "fieldtype": "Check",
+   "label": "Casa propia"
+  },
+  {
+   "fieldname": "codeudor_lugar_trabajo",
+   "fieldtype": "Data",
+   "label": "Lugar de trabajo"
+  },
+  {
+   "fieldname": "codeudor_profesion",
+   "fieldtype": "Data",
+   "label": "Profesi\u00f3n o puesto"
+  },
+  {
+   "fieldname": "codeudor_hijos",
+   "fieldtype": "Int",
+   "label": "Hijos",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "column_break_personal",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_personal2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_fam1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_fam2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_amistad",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_comercial1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_comercial2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_codeudor",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-10-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Financed Sales",
+ "name": "Finance Application Form",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
