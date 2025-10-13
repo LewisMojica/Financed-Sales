@@ -122,17 +122,6 @@ class FinanceApplication(Document):
 		form = frappe.new_doc('Finance Application Form')
 		form.customer = self.customer
 
-		# Get customer details to pre-fill the form
-		customer_doc = frappe.get_doc('Customer', self.customer)
-
-		# Pre-fill customer data if available
-		if hasattr(customer_doc, 'customer_primary_address'):
-			address = frappe.get_doc('Address', customer_doc.customer_primary_address)
-			if address:
-				form.calle = address.address_line1 or ''
-				form.sector = address.address_line2 or ''
-				form.barrio = address.city or ''
-
 		# Save the form
 		form.insert()
 
