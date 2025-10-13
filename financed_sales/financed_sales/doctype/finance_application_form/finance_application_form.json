@@ -113,8 +113,9 @@
   },
   {
    "fieldname": "articulo",
-   "fieldtype": "Data",
-   "label": "Art\u00edculo"
+   "fieldtype": "Link",
+   "label": "Art\u00edculo",
+   "options": "Item"
   },
   {
    "fieldname": "codigo",
