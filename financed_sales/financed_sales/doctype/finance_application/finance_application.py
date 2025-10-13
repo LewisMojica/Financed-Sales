@@ -126,7 +126,14 @@ class FinanceApplication(Document):
 		form.inicial = self.down_payment_amount or 0
 		form.pagares = self.repayment_term or 0
 		form.cuotas = self.installment or 0
-		form.dias = 30  # Default to 30 days between payments
+
+		# Get the day of the month from first_installment date (día que le toca pagar cada mes)
+		if self.first_installment:
+			from frappe.utils import getdate
+			first_installment_date = getdate(self.first_installment)
+			form.dias = first_installment_date.day
+		else:
+			form.dias = 30  # Default if no first installment date
 
 		# Get quotation data to pre-fill item information
 		if self.quotation:
