@@ -7,6 +7,8 @@
  "field_order": [
   "links_section",
   "customer",
+  "finance_application_form",
+  "create_application_form",
   "paid_down_payment_percent",
   "paid_down_payment_amount",
   "pending_down_payment_amount",
@@ -55,6 +57,18 @@
    "label": "Customer",
    "options": "Customer",
    "reqd": 1
+  },
+  {
+   "fieldname": "finance_application_form",
+   "fieldtype": "Link",
+   "label": "Finance Application Form",
+   "options": "Finance Application Form"
+  },
+  {
+   "depends_on": "eval:!doc.finance_application_form",
+   "fieldname": "create_application_form",
+   "fieldtype": "Button",
+   "label": "Create Application Form"
   },
   {
    "fieldname": "section_break_ntsh",

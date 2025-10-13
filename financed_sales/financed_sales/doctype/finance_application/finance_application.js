@@ -7,6 +7,35 @@
 // 	},
 // });
 frappe.ui.form.on('Finance Application', {
+    create_application_form: function(frm) {
+        if (!frm.doc.customer) {
+            frappe.msgprint(__('Please select a customer first'));
+            return;
+        }
+
+        frappe.call({
+            method: 'create_application_form',
+            doc: frm.doc,
+            callback: function(response) {
+                if (response.message) {
+                    frappe.show_alert({
+                        message: __('Finance Application Form created successfully'),
+                        indicator: 'green'
+                    });
+                    frm.reload_doc();
+                    frappe.set_route('Form', 'Finance Application Form', response.message);
+                }
+            },
+            error: function(r) {
+                frappe.msgprint({
+                    title: __('Error'),
+                    message: r.message || __('Failed to create Finance Application Form'),
+                    indicator: 'red'
+                });
+            }
+        });
+    },
+
     gen_down_payment: function(frm) {
 		dialog = get_payment_dialog(frm.doc.name)
 		dialog.show()
