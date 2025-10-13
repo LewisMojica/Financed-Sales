@@ -44,6 +44,7 @@ class FinanceApplicationForm(Document):
 		comercial2_incautado: DF.Data | None
 		comercial2_razon: DF.SmallText | None
 		comercial2_telefono: DF.Data | None
+		customer: DF.Link
 		esposo_hijos: DF.Int
 		esposo_nombres: DF.Data | None
 		esposo_telefonos: DF.Data | None
@@ -64,7 +65,6 @@ class FinanceApplicationForm(Document):
 		hijos: DF.Int
 		jefe_inmediato: DF.Data | None
 		lugar_de_trabajo: DF.Data | None
-		nombres: DF.Data
 		pasaporte_cedula: DF.Data | None
 		prestamo_balance: DF.Currency
 		prestamo_cuotas: DF.Currency

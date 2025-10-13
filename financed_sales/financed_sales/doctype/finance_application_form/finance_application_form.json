@@ -8,7 +8,7 @@
  "field_order": [
   "fecha",
   "datos_personales_section",
-  "nombres",
+  "customer",
   "pasaporte_cedula",
   "calle",
   "sector",
@@ -95,9 +95,11 @@
    "label": "DATOS PERSONALES DEL SOLICITANTE"
   },
   {
-   "fieldname": "nombres",
-   "fieldtype": "Data",
-   "label": "Nombre(s)",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Cliente",
+   "options": "Customer",
    "reqd": 1
   },
   {
