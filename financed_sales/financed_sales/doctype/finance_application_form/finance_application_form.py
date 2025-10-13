@@ -1,4 +1,4 @@
-# Copyright (c) 2025, Aakvatech and contributors
+# Copyright (c) 2025, Lewis Mojica and contributors
 # For license information, please see license.txt
 
 import frappe

@@ -1,6 +1,5 @@
 {
  "actions": [],
- "allow_rename": 1,
  "autoname": "format:FAF-{YYYY}-{#####}",
  "creation": "2025-10-13 10:00:00.000000",
  "doctype": "DocType",
@@ -482,6 +481,5 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+ "states": []
 }
