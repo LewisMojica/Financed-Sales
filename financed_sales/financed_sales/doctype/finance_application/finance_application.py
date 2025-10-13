@@ -122,6 +122,24 @@ class FinanceApplication(Document):
 		form = frappe.new_doc('Finance Application Form')
 		form.customer = self.customer
 
+		# Pre-fill credit fields from Finance Application
+		form.inicial = self.down_payment_amount or 0
+		form.pagares = self.repayment_term or 0
+		form.cuotas = self.installment or 0
+		form.dias = 30  # Default to 30 days between payments
+
+		# Get quotation data to pre-fill item information
+		if self.quotation:
+			quotation = frappe.get_doc('Quotation', self.quotation)
+			form.a_credito = quotation.grand_total or 0
+
+			# Get first item from quotation (simplified - just taking the first item)
+			if quotation.items and len(quotation.items) > 0:
+				first_item = quotation.items[0]
+				form.cantidad = int(first_item.qty) if first_item.qty else 1
+				form.articulo = first_item.item_code
+				form.codigo = first_item.item_code or ''
+
 		# Save the form
 		form.insert()
 

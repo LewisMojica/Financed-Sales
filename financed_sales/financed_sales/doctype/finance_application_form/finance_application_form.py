@@ -22,7 +22,7 @@ class FinanceApplicationForm(Document):
 		amistad_parentesco: DF.Data | None
 		amistad_referencia: DF.Data | None
 		amistad_telefonos: DF.Data | None
-		articulo: DF.Data | None
+		articulo: DF.Link | None
 		avance_inicial: DF.Currency
 		barrio: DF.Data | None
 		calle: DF.Data | None
