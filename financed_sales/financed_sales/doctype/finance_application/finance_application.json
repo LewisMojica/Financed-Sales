@@ -68,7 +68,7 @@
    "depends_on": "eval:!doc.finance_application_form",
    "fieldname": "create_application_form",
    "fieldtype": "Button",
-   "label": "Create Application Form"
+   "label": "Fill Application Form"
   },
   {
    "fieldname": "section_break_ntsh",
@@ -260,7 +260,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-09-05 10:18:27.775254",
+ "modified": "2025-10-14 16:18:12.403907",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
