@@ -62,6 +62,7 @@
    "fieldname": "finance_application_form",
    "fieldtype": "Link",
    "label": "Finance Application Form",
+   "link_filters": "[[\"Finance Application Form\",\"customer\",\"=\",\"eval:doc.customer\"]]",
    "options": "Finance Application Form"
   },
   {
@@ -260,7 +261,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-10-14 16:18:12.403907",
+ "modified": "2025-10-16 18:13:42.406273",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
