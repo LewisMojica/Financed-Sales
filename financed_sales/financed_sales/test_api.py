@@ -4,7 +4,7 @@ import unittest
 import frappe
 
 from .api import create_finance_app_from_pos_cart, create_finance_application
-from .factories import create_test_quotation_for_financing
+from .factories.quotation import create_quotation
 
 
 class TestAPI(unittest.TestCase):
@@ -43,7 +43,7 @@ class TestAPI(unittest.TestCase):
         """Test that create_finance_application successfully creates finance application from quotation"""
 
         # Use data factory to create test quotation
-        test_data = create_test_quotation_for_financing()
+        test_data = create_quotation()
         quotation_name = test_data['quotation']
 
         # Execute function under test
