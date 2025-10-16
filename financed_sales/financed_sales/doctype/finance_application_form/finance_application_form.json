@@ -1,23 +1,11 @@
 {
  "actions": [],
  "autoname": "format:FAF-{YYYY}-{#####}",
- "creation": "2025-10-13 10:00:00.000000",
+ "creation": "2025-10-13 10:00:00",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "fecha",
-  "articulos_section",
-  "cantidad",
-  "articulo",
-  "codigo",
-  "column_break_articulos",
-  "a_credito",
-  "inicial",
-  "avance_inicial",
-  "column_break_credito",
-  "pagares",
-  "cuotas",
-  "dias",
   "datos_personales_section",
   "customer",
   "pasaporte_cedula",
@@ -90,7 +78,8 @@
   "codeudor_casa_propia",
   "codeudor_lugar_trabajo",
   "codeudor_profesion",
-  "codeudor_hijos"
+  "codeudor_hijos",
+  "amended_from"
  ],
  "fields": [
   {
@@ -99,68 +88,6 @@
    "fieldtype": "Date",
    "label": "Fecha",
    "reqd": 1
-  },
-  {
-   "fieldname": "articulos_section",
-   "fieldtype": "Section Break",
-   "label": "ART\u00cdCULOS Y CR\u00c9DITO"
-  },
-  {
-   "fieldname": "cantidad",
-   "fieldtype": "Int",
-   "label": "Cantidad",
-   "non_negative": 1
-  },
-  {
-   "fieldname": "articulo",
-   "fieldtype": "Link",
-   "label": "Art\u00edculo",
-   "options": "Item"
-  },
-  {
-   "fieldname": "codigo",
-   "fieldtype": "Data",
-   "label": "C\u00f3digo"
-  },
-  {
-   "fieldname": "column_break_articulos",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "a_credito",
-   "fieldtype": "Currency",
-   "label": "A Cr\u00e9dito"
-  },
-  {
-   "fieldname": "inicial",
-   "fieldtype": "Currency",
-   "label": "Inicial"
-  },
-  {
-   "fieldname": "avance_inicial",
-   "fieldtype": "Currency",
-   "label": "Avance Inicial"
-  },
-  {
-   "fieldname": "column_break_credito",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "pagares",
-   "fieldtype": "Int",
-   "label": "Pagar\u00e9s",
-   "non_negative": 1
-  },
-  {
-   "fieldname": "cuotas",
-   "fieldtype": "Currency",
-   "label": "Cuotas"
-  },
-  {
-   "fieldname": "dias",
-   "fieldtype": "Int",
-   "label": "D\u00edas",
-   "non_negative": 1
   },
   {
    "fieldname": "datos_personales_section",
@@ -529,12 +456,22 @@
   {
    "fieldname": "column_break_codeudor",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Finance Application Form",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-10-13 10:00:00.000000",
+ "modified": "2025-10-16 17:35:20.104193",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application Form",
@@ -555,6 +492,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
