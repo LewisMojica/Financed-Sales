@@ -8,6 +8,17 @@ from financed_sales.financed_sales.utils import distribute_interest_to_items
 
 
 class FinanceApplication(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+
+		finance_application_form: DF.Link | None
+	# end: auto-generated types
+
 	def validate(self):
 		if len(self.installments) <= 0 and self.docstatus == 1:
 			frappe.throw(_('Not enough data to compute installments'))
@@ -100,6 +111,51 @@ class FinanceApplication(Document):
 		if self.workflow_state == 'Pending':
 			frappe.db.set_value(self.doctype, self.name, 'workflow_state', 'Rejected')
 		# For Approved applications cancelled via Payment Plan, keep the state as is
+
+	@frappe.whitelist()
+	def create_application_form(self):
+		"""Create and populate a Finance Application Form from this Finance Application."""
+		if self.finance_application_form:
+			frappe.throw(_('Finance Application Form already exists for this application'))
+
+		# Create new Finance Application Form
+		form = frappe.new_doc('Finance Application Form')
+		form.customer = self.customer
+
+		# Pre-fill credit fields from Finance Application
+		form.inicial = self.down_payment_amount or 0
+		form.pagares = self.repayment_term or 0
+		form.cuotas = self.installment or 0
+
+		# Get the day of the month from first_installment date (día que le toca pagar cada mes)
+		if self.first_installment:
+			from frappe.utils import getdate
+			first_installment_date = getdate(self.first_installment)
+			form.dias = first_installment_date.day
+		else:
+			form.dias = 30  # Default if no first installment date
+
+		# Get quotation data to pre-fill item information
+		if self.quotation:
+			quotation = frappe.get_doc('Quotation', self.quotation)
+			form.a_credito = quotation.grand_total or 0
+
+			# Get first item from quotation (simplified - just taking the first item)
+			if quotation.items and len(quotation.items) > 0:
+				first_item = quotation.items[0]
+				form.cantidad = int(first_item.qty) if first_item.qty else 1
+				form.articulo = first_item.item_code
+				form.codigo = first_item.item_code or ''
+
+		# Save the form
+		form.insert()
+
+		# Link the form to this Finance Application
+		self.finance_application_form = form.name
+		self.save()
+
+		return form.name
+
 	@frappe.whitelist()
 	def create_factura_proforma(self):
 		sub_total = 0

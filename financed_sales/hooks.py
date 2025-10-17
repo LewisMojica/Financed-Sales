@@ -23,7 +23,7 @@ fixtures = [
 	},
 	{
 		"doctype": "Print Format",
-		"filters": { "name": 'Factura Proforma' }
+		"filters": { "module": 'Financed Sales'}
 	},
 	{
 		"doctype": "Role",
