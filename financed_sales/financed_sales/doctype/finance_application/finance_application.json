@@ -7,6 +7,8 @@
  "field_order": [
   "links_section",
   "customer",
+  "finance_application_form",
+  "create_application_form",
   "paid_down_payment_percent",
   "paid_down_payment_amount",
   "pending_down_payment_amount",
@@ -55,6 +57,19 @@
    "label": "Customer",
    "options": "Customer",
    "reqd": 1
+  },
+  {
+   "fieldname": "finance_application_form",
+   "fieldtype": "Link",
+   "label": "Finance Application Form",
+   "link_filters": "[[\"Finance Application Form\",\"customer\",\"=\",\"eval:doc.customer\"]]",
+   "options": "Finance Application Form"
+  },
+  {
+   "depends_on": "eval:!doc.finance_application_form",
+   "fieldname": "create_application_form",
+   "fieldtype": "Button",
+   "label": "Fill Application Form"
   },
   {
    "fieldname": "section_break_ntsh",
@@ -246,7 +261,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-09-05 10:18:27.775254",
+ "modified": "2025-10-16 20:32:24.087489",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application",
@@ -262,6 +277,32 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Financed Sales Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Financed Sales User",
    "share": 1,
    "submit": 1,
    "write": 1
