@@ -86,10 +86,10 @@ def validate_financed_items_total(financed_items, original_total, interest_amoun
 
 def validate_financed_sales_document(doc):
 	"""Validate financed sales document has required financed items table.
-	
+
 	Args:
 		doc: Document object (Sales Order or Sales Invoice) to validate.
-	
+
 	Raises:
 		frappe.ValidationError: If financed items missing for financed sales.
 	"""
