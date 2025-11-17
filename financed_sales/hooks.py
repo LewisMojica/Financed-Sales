@@ -42,6 +42,9 @@ doc_events = {
 	"Payment Entry": {
 		"on_submit": ["financed_sales.financed_sales.update_payments.main"],
 	},
+	"Sales Invoice": {
+		"validate": ["financed_sales.financed_sales.validate_sales_invoice.validate_sales_invoice_from_financed_order"],
+	},
 }
 scheduler_events = {
 	"daily": [
