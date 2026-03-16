@@ -1,7 +1,7 @@
 {
  "actions": [],
  "autoname": "format:FAF-{YYYY}-{#####}",
- "creation": "2025-10-13 10:00:00",
+ "creation": "2026-03-16 14:18:58.705100",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -397,7 +397,7 @@
   },
   {
    "fieldname": "comercial1_cuando",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "label": "\u00bfCu\u00e1ndo?"
   },
   {
@@ -556,11 +556,11 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-03-16 14:01:00.000000",
+ "modified": "2026-03-16 14:20:18.685494",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application Form",
- "naming_rule": "Expression",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
