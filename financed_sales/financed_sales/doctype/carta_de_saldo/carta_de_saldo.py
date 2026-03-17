@@ -117,3 +117,11 @@ class CartadeSaldo(Document):
 			self.finance_application = plan.finance_application
 		if not self.credit_invoice:
 			self.credit_invoice = plan.credit_invoice
+
+		# Pull Cedula (pasaporte_cedula) from Finance Application Form if available
+		if plan.finance_application:
+			fin_app = frappe.get_doc("Finance Application", plan.finance_application)
+			if fin_app.finance_application_form:
+				cedula = frappe.db.get_value("Finance Application Form", fin_app.finance_application_form, "pasaporte_cedula")
+				if cedula:
+					self.customer_id = cedula
