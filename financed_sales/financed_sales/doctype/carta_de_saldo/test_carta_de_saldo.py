@@ -150,6 +150,33 @@ class TestCartaDeSaldo(FrappeTestCase):
 		with self.assertRaises(frappe.ValidationError):
 			carta.insert(ignore_permissions=True)
 
+	def test_carta_de_saldo_snapshots_items(self):
+		"""
+		Creating a Carta de Saldo should copy items from the Sales Invoice.
+		"""
+		plan_name, _, _ = self._create_completed_payment_plan()
+		plan = frappe.get_doc("Payment Plan", plan_name)
+		invoice = frappe.get_doc("Sales Invoice", plan.credit_invoice)
+
+		carta = frappe.get_doc({
+			"doctype": "Carta de Saldo",
+			"payment_plan": plan_name,
+			"issue_date": today(),
+		})
+		# Trigger snapshot
+		carta.before_insert()
+		carta.insert(ignore_permissions=True)
+
+		self.assertEqual(
+			len(carta.items),
+			len(invoice.items),
+			"Carta de Saldo items count should match Sales Invoice items count",
+		)
+		for i, item in enumerate(invoice.items):
+			self.assertEqual(carta.items[i].item_code, item.item_code)
+			self.assertEqual(carta.items[i].qty, item.qty)
+			self.assertEqual(carta.items[i].rate, item.rate)
+
 	def test_carta_de_saldo_is_submittable(self):
 		"""
 		A Carta de Saldo should be submittable (docstatus 1) and once submitted
