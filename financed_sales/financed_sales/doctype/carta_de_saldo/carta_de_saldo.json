@@ -18,7 +18,9 @@
   "section_break_summary",
   "total_financed_amount",
   "total_paid",
-  "section_break_installments",
+   "section_break_items",
+   "items",
+   "section_break_installments",
   "installments",
   "section_break_payments",
   "payment_history"
@@ -110,8 +112,20 @@
    "label": "Total Pagado",
    "read_only": 1
   },
-  {
-   "fieldname": "section_break_installments",
+   {
+    "fieldname": "section_break_items",
+    "fieldtype": "Section Break",
+    "label": "Art\u00edculos Financiados"
+   },
+   {
+    "fieldname": "items",
+    "fieldtype": "Table",
+    "label": "Art\u00edculos",
+    "options": "Carta de Saldo Item",
+    "read_only": 1
+   },
+   {
+    "fieldname": "section_break_installments",
    "fieldtype": "Section Break",
    "label": "Cuotas"
   },
