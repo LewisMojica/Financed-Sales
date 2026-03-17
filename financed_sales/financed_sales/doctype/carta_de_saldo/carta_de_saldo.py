@@ -45,10 +45,11 @@ class CartadeSaldo(Document):
 		status = frappe.db.get_value("Payment Plan", self.payment_plan, "status")
 		if status != "Completed":
 			frappe.throw(
-				_("Cannot create a Carta de Saldo for Payment Plan {0}. The plan status is '{1}', but must be 'Completed'.").format(
+				_("No se puede crear una Carta de Saldo para Plan de Pago {0}. El estado del Plan
+	  es '{1}', pero debe ser 'Completado'.").format(
 					self.payment_plan, status
 				),
-				title=_("Plan Not Completed")
+				title=_("Plan No Completado")
 			)
 
 	def snapshot_from_payment_plan(self):
