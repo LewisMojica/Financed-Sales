@@ -223,3 +223,34 @@ def create_payment_entry(
 	if submit:
 		pe.submit()
 	return pe.name
+
+
+@frappe.whitelist()
+def get_or_create_carta_de_saldo(payment_plan_name):
+	"""
+	Check for an existing Carta de Saldo for this payment plan.
+	Priority: Submitted > Draft > Create New.
+	"""
+	# 1. Check for submitted
+	submitted = frappe.db.get_value(
+		"Carta de Saldo", {"payment_plan": payment_plan_name, "docstatus": 1}, "name"
+	)
+	if submitted:
+		return submitted
+
+	# 2. Check for draft
+	draft = frappe.db.get_value(
+		"Carta de Saldo", {"payment_plan": payment_plan_name, "docstatus": 0}, "name"
+	)
+	if draft:
+		return draft
+
+	# 3. Create new
+	status = frappe.db.get_value("Payment Plan", payment_plan_name, "status")
+	if status != "Completed":
+		frappe.throw(_("La Carta de Saldo solo puede ser creada para Planes de Pago completados."))
+
+	doc = frappe.new_doc("Carta de Saldo")
+	doc.payment_plan = payment_plan_name
+	doc.insert()
+	return doc.name

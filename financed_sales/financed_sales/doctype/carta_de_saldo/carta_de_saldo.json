@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "format:CDS-{YYYY}-{#####}",
- "creation": "2026-03-16 23:18:00.000000",
+ "creation": "2026-03-16 23:18:00",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -10,6 +10,7 @@
   "payment_plan",
   "customer",
   "customer_name",
+  "customer_id",
   "column_break_header",
   "finance_application",
   "credit_invoice",
@@ -18,6 +19,8 @@
   "section_break_summary",
   "total_financed_amount",
   "total_paid",
+  "section_break_items",
+  "items",
   "section_break_installments",
   "installments",
   "section_break_payments",
@@ -72,7 +75,7 @@
    "fetch_from": "payment_plan.credit_invoice",
    "fieldname": "credit_invoice",
    "fieldtype": "Link",
-   "label": "Factura de Crédito",
+   "label": "Factura de Cr\u00e9dito",
    "options": "Sales Invoice",
    "read_only": 1
   },
@@ -80,7 +83,7 @@
    "default": "Today",
    "fieldname": "issue_date",
    "fieldtype": "Date",
-   "label": "Fecha de Emisión",
+   "label": "Fecha de Emisi\u00f3n",
    "reqd": 1
   },
   {
@@ -111,6 +114,18 @@
    "read_only": 1
   },
   {
+   "fieldname": "section_break_items",
+   "fieldtype": "Section Break",
+   "label": "Art\u00edculos Financiados"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Art\u00edculos",
+   "options": "Carta de Saldo Item",
+   "read_only": 1
+  },
+  {
    "fieldname": "section_break_installments",
    "fieldtype": "Section Break",
    "label": "Cuotas"
@@ -133,18 +148,22 @@
    "label": "Historial de Pagos",
    "options": "Carta de Saldo Payment",
    "read_only": 1
+  },
+  {
+   "fieldname": "customer_id",
+   "fieldtype": "Data",
+   "label": "C\u00e9dula"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "is_virtual": 0,
  "links": [],
- "modified": "2026-03-16 23:18:00.000000",
+ "modified": "2026-03-17 12:49:29.662419",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Carta de Saldo",
- "naming_rule": "Expression",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
