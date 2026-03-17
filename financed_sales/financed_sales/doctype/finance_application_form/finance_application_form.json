@@ -1,7 +1,7 @@
 {
  "actions": [],
  "autoname": "format:FAF-{YYYY}-{#####}",
- "creation": "2025-10-13 10:00:00",
+ "creation": "2026-03-16 14:18:58.705100",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -11,23 +11,31 @@
   "pasaporte_cedula",
   "calle",
   "sector",
+  "link_mapa_solicitante",
   "column_break_personal",
   "barrio",
   "casa_propia",
+  "tiempo_en_direccion",
   "lugar_de_trabajo",
   "profesion_o_puesto",
   "column_break_personal2",
   "hijos",
   "jefe_inmediato",
+  "telefono_jefe",
+  "telefono_trabajo",
+  "anos_trabajando",
+  "salario",
   "datos_esposo_section",
   "esposo_nombres",
   "esposo_telefonos",
   "esposo_hijos",
+  "esposo_salario",
   "referencias_familiar_section",
   "familiar1_nombres",
   "familiar1_telefonos",
   "familiar1_barrio",
   "familiar1_parentesco",
+  "familiar1_link_mapa",
   "column_break_fam1",
   "familiar1_referencia",
   "familiar1_lugar_trabajo",
@@ -37,33 +45,29 @@
   "familiar2_telefonos",
   "familiar2_barrio",
   "familiar2_parentesco",
+  "familiar2_link_mapa",
   "column_break_fam2",
   "familiar2_referencia",
   "familiar2_lugar_trabajo",
+  "familiar2_telefono_trabajo",
   "amistad_section",
   "amistad_nombres",
   "amistad_telefonos",
   "amistad_barrio",
   "amistad_parentesco",
+  "amistad_link_mapa",
   "column_break_amistad",
   "amistad_referencia",
   "amistad_lugar_trabajo",
+  "amistad_telefono_trabajo",
   "referencia_comerciales_section",
   "comercial1_empresa",
   "comercial1_telefono",
-  "comercial1_incautado",
-  "comercial1_donde",
-  "column_break_comercial1",
+  "comercial1_articulos",
   "comercial1_cuando",
+  "comercial1_direccion",
+  "column_break_comercial1",
   "comercial1_razon",
-  "section_break_comercial2",
-  "comercial2_empresa",
-  "comercial2_telefono",
-  "comercial2_incautado",
-  "comercial2_donde",
-  "column_break_comercial2",
-  "comercial2_cuando",
-  "comercial2_razon",
   "prestamos_section",
   "prestamo_fecha",
   "prestamo_monto",
@@ -74,11 +78,21 @@
   "codeudor_cedula",
   "codeudor_calle",
   "codeudor_sector",
+  "codeudor_link_mapa",
   "column_break_codeudor",
   "codeudor_casa_propia",
   "codeudor_lugar_trabajo",
   "codeudor_profesion",
   "codeudor_hijos",
+  "codeudor_jefe_inmediato",
+  "codeudor_telefono_jefe",
+  "codeudor_telefono_trabajo",
+  "codeudor_tiempo_en_direccion",
+  "codeudor_anos_trabajando",
+  "codeudor_salario",
+  "tab_direccion_fotos",
+  "enlace_direccion",
+  "fotos_casa",
   "amended_from"
  ],
  "fields": [
@@ -118,6 +132,15 @@
    "label": "Sector"
   },
   {
+   "fieldname": "link_mapa_solicitante",
+   "fieldtype": "Data",
+   "label": "Link de mapa / referencia de direcci\u00f3n"
+  },
+  {
+   "fieldname": "column_break_personal",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "barrio",
    "fieldtype": "Data",
    "label": "Barrio"
@@ -127,6 +150,11 @@
    "fieldname": "casa_propia",
    "fieldtype": "Check",
    "label": "Casa propia"
+  },
+  {
+   "fieldname": "tiempo_en_direccion",
+   "fieldtype": "Data",
+   "label": "Tiempo en la direcci\u00f3n donde vive"
   },
   {
    "fieldname": "lugar_de_trabajo",
@@ -139,6 +167,10 @@
    "label": "Profesi\u00f3n o puesto"
   },
   {
+   "fieldname": "column_break_personal2",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "hijos",
    "fieldtype": "Int",
    "label": "Hijos",
@@ -148,6 +180,26 @@
    "fieldname": "jefe_inmediato",
    "fieldtype": "Data",
    "label": "Jefe inmediato"
+  },
+  {
+   "fieldname": "telefono_jefe",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono del jefe"
+  },
+  {
+   "fieldname": "telefono_trabajo",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono del lugar de trabajo"
+  },
+  {
+   "fieldname": "anos_trabajando",
+   "fieldtype": "Data",
+   "label": "A\u00f1os trabajando"
+  },
+  {
+   "fieldname": "salario",
+   "fieldtype": "Currency",
+   "label": "Salario RD$"
   },
   {
    "collapsible": 1,
@@ -170,6 +222,11 @@
    "fieldtype": "Int",
    "label": "Hijos",
    "non_negative": 1
+  },
+  {
+   "fieldname": "esposo_salario",
+   "fieldtype": "Currency",
+   "label": "Salario RD$"
   },
   {
    "fieldname": "referencias_familiar_section",
@@ -195,6 +252,15 @@
    "fieldname": "familiar1_parentesco",
    "fieldtype": "Data",
    "label": "Parentesco"
+  },
+  {
+   "fieldname": "familiar1_link_mapa",
+   "fieldtype": "Data",
+   "label": "Link de mapa / referencia de direcci\u00f3n"
+  },
+  {
+   "fieldname": "column_break_fam1",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "familiar1_referencia",
@@ -237,6 +303,15 @@
    "label": "Parentesco"
   },
   {
+   "fieldname": "familiar2_link_mapa",
+   "fieldtype": "Data",
+   "label": "Link de mapa / referencia de direcci\u00f3n"
+  },
+  {
+   "fieldname": "column_break_fam2",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "familiar2_referencia",
    "fieldtype": "Data",
    "label": "Referencia"
@@ -245,6 +320,11 @@
    "fieldname": "familiar2_lugar_trabajo",
    "fieldtype": "Data",
    "label": "Lugar de trabajo"
+  },
+  {
+   "fieldname": "familiar2_telefono_trabajo",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono del trabajo"
   },
   {
    "fieldname": "amistad_section",
@@ -272,6 +352,15 @@
    "label": "Parentesco"
   },
   {
+   "fieldname": "amistad_link_mapa",
+   "fieldtype": "Data",
+   "label": "Link de mapa / referencia de direcci\u00f3n"
+  },
+  {
+   "fieldname": "column_break_amistad",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "amistad_referencia",
    "fieldtype": "Data",
    "label": "Referencia"
@@ -280,6 +369,11 @@
    "fieldname": "amistad_lugar_trabajo",
    "fieldtype": "Data",
    "label": "Lugar de trabajo"
+  },
+  {
+   "fieldname": "amistad_telefono_trabajo",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono del trabajo"
   },
   {
    "fieldname": "referencia_comerciales_section",
@@ -297,57 +391,26 @@
    "label": "Tel\u00e9fono"
   },
   {
-   "fieldname": "comercial1_incautado",
+   "fieldname": "comercial1_articulos",
    "fieldtype": "Data",
-   "label": "Le han incautado alguna"
-  },
-  {
-   "fieldname": "comercial1_donde",
-   "fieldtype": "Data",
-   "label": "Donde"
+   "label": "\u00bfQu\u00e9 art\u00edculos?"
   },
   {
    "fieldname": "comercial1_cuando",
+   "fieldtype": "Date",
+   "label": "\u00bfCu\u00e1ndo?"
+  },
+  {
+   "fieldname": "comercial1_direccion",
    "fieldtype": "Data",
-   "label": "Cuando"
+   "label": "Direcci\u00f3n del comercio donde tom\u00f3 el art\u00edculo"
+  },
+  {
+   "fieldname": "column_break_comercial1",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "comercial1_razon",
-   "fieldtype": "Small Text",
-   "label": "Raz\u00f3n"
-  },
-  {
-   "fieldname": "section_break_comercial2",
-   "fieldtype": "Section Break",
-   "label": "EMPRESA 2"
-  },
-  {
-   "fieldname": "comercial2_empresa",
-   "fieldtype": "Data",
-   "label": "Empresa"
-  },
-  {
-   "fieldname": "comercial2_telefono",
-   "fieldtype": "Data",
-   "label": "Tel\u00e9fono"
-  },
-  {
-   "fieldname": "comercial2_incautado",
-   "fieldtype": "Data",
-   "label": "Le han incautado alguna"
-  },
-  {
-   "fieldname": "comercial2_donde",
-   "fieldtype": "Data",
-   "label": "Donde"
-  },
-  {
-   "fieldname": "comercial2_cuando",
-   "fieldtype": "Data",
-   "label": "Cuando"
-  },
-  {
-   "fieldname": "comercial2_razon",
    "fieldtype": "Small Text",
    "label": "Raz\u00f3n"
   },
@@ -404,6 +467,15 @@
    "label": "Sector"
   },
   {
+   "fieldname": "codeudor_link_mapa",
+   "fieldtype": "Data",
+   "label": "Link de mapa / referencia de direcci\u00f3n"
+  },
+  {
+   "fieldname": "column_break_codeudor",
+   "fieldtype": "Column Break"
+  },
+  {
    "default": "0",
    "fieldname": "codeudor_casa_propia",
    "fieldtype": "Check",
@@ -426,36 +498,49 @@
    "non_negative": 1
   },
   {
-   "fieldname": "column_break_personal",
-   "fieldtype": "Column Break"
+   "fieldname": "codeudor_jefe_inmediato",
+   "fieldtype": "Data",
+   "label": "Jefe inmediato"
   },
   {
-   "fieldname": "column_break_personal2",
-   "fieldtype": "Column Break"
+   "fieldname": "codeudor_telefono_jefe",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono del jefe"
   },
   {
-   "fieldname": "column_break_fam1",
-   "fieldtype": "Column Break"
+   "fieldname": "codeudor_telefono_trabajo",
+   "fieldtype": "Data",
+   "label": "Tel\u00e9fono del lugar de trabajo"
   },
   {
-   "fieldname": "column_break_fam2",
-   "fieldtype": "Column Break"
+   "fieldname": "codeudor_tiempo_en_direccion",
+   "fieldtype": "Data",
+   "label": "Tiempo en la direcci\u00f3n donde vive"
   },
   {
-   "fieldname": "column_break_amistad",
-   "fieldtype": "Column Break"
+   "fieldname": "codeudor_anos_trabajando",
+   "fieldtype": "Data",
+   "label": "A\u00f1os trabajando"
   },
   {
-   "fieldname": "column_break_comercial1",
-   "fieldtype": "Column Break"
+   "fieldname": "codeudor_salario",
+   "fieldtype": "Currency",
+   "label": "Salario RD$"
   },
   {
-   "fieldname": "column_break_comercial2",
-   "fieldtype": "Column Break"
+   "fieldname": "tab_direccion_fotos",
+   "fieldtype": "Tab Break",
+   "label": "DIRECCI\u00d3N Y FOTOS"
   },
   {
-   "fieldname": "column_break_codeudor",
-   "fieldtype": "Column Break"
+   "fieldname": "enlace_direccion",
+   "fieldtype": "Data",
+   "label": "Enlace de la direcci\u00f3n (mapa)"
+  },
+  {
+   "fieldname": "fotos_casa",
+   "fieldtype": "Attach Image",
+   "label": "Fotos de la casa"
   },
   {
    "fieldname": "amended_from",
@@ -469,13 +554,12 @@
   }
  ],
  "index_web_pages_for_search": 1,
- "is_submittable": 1,
  "links": [],
- "modified": "2025-10-16 20:32:24.087489",
+ "modified": "2026-03-16 14:28:26.483864",
  "modified_by": "Administrator",
  "module": "Financed Sales",
  "name": "Finance Application Form",
- "naming_rule": "Expression",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -488,11 +572,9 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
-   "submit": 1,
    "write": 1
   },
   {
-   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -502,7 +584,6 @@
    "report": 1,
    "role": "Financed Sales Manager",
    "share": 1,
-   "submit": 1,
    "write": 1
   },
   {
@@ -514,7 +595,6 @@
    "report": 1,
    "role": "Financed Sales User",
    "share": 1,
-   "submit": 1,
    "write": 1
   }
  ],
