@@ -248,7 +248,7 @@ def get_or_create_carta_de_saldo(payment_plan_name):
 	# 3. Create new
 	status = frappe.db.get_value("Payment Plan", payment_plan_name, "status")
 	if status != "Completed":
-		frappe.throw(_("Carta de Saldo can only be created for completed Payment Plans."))
+		frappe.throw(_("La Carta de Saldo solo puede ser creada para Planes de Pago completados."))
 
 	doc = frappe.new_doc("Carta de Saldo")
 	doc.payment_plan = payment_plan_name
