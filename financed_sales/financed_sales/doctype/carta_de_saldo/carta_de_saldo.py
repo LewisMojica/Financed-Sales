@@ -16,6 +16,7 @@ class CartadeSaldo(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 		from financed_sales.financed_sales.doctype.carta_de_saldo_installment.carta_de_saldo_installment import CartadeSaldoInstallment
+		from financed_sales.financed_sales.doctype.carta_de_saldo_item.carta_de_saldo_item import CartadeSaldoItem
 		from financed_sales.financed_sales.doctype.carta_de_saldo_payment.carta_de_saldo_payment import CartadeSaldoPayment
 
 		amended_from: DF.Link | None
@@ -24,6 +25,7 @@ class CartadeSaldo(Document):
 		customer_name: DF.Data | None
 		finance_application: DF.Link | None
 		installments: DF.Table[CartadeSaldoInstallment]
+		items: DF.Table[CartadeSaldoItem]
 		issue_date: DF.Date
 		payment_history: DF.Table[CartadeSaldoPayment]
 		payment_plan: DF.Link
@@ -60,6 +62,21 @@ class CartadeSaldo(Document):
 		# Clear any existing rows
 		self.installments = []
 		self.payment_history = []
+		self.items = []
+
+		# Snapshot items from Sales Invoice
+		if plan.credit_invoice:
+			invoice = frappe.get_doc("Sales Invoice", plan.credit_invoice)
+			for item in invoice.items:
+				self.append("items", {
+					"item_code": item.item_code,
+					"item_name": item.item_name,
+					"description": item.description,
+					"qty": item.qty,
+					"uom": item.uom,
+					"rate": item.rate,
+					"amount": item.amount
+				})
 
 		# Snapshot installments
 		for row in plan.installments:
@@ -100,3 +117,11 @@ class CartadeSaldo(Document):
 			self.finance_application = plan.finance_application
 		if not self.credit_invoice:
 			self.credit_invoice = plan.credit_invoice
+
+		# Pull Cedula (pasaporte_cedula) from Finance Application Form if available
+		if plan.finance_application:
+			fin_app = frappe.get_doc("Finance Application", plan.finance_application)
+			if fin_app.finance_application_form:
+				cedula = frappe.db.get_value("Finance Application Form", fin_app.finance_application_form, "pasaporte_cedula")
+				if cedula:
+					self.customer_id = cedula
