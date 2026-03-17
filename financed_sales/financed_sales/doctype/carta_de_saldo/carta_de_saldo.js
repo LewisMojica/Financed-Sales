@@ -22,29 +22,13 @@ frappe.ui.form.on("Carta de Saldo", {
 						title: __("Plan Not Completed"),
 						indicator: "orange",
 						message: __(
-							"The selected Payment Plan has status <b>{0}</b>. " +
-							"A Carta de Saldo should only be issued for <b>Completed</b> plans.",
+							"El Plan de Pago seleccionado tiene estado <b>{0}</b>. " +
+							"Una Carta de Saldo solo debe ser emitida para Plan es<b>Completados</b>.",
 							[values.status]
 						),
 					});
 				}
 			}
 		);
-	},
-
-	refresh: function (frm) {
-		if (frm.doc.docstatus === 1) {
-			// Submitted — add a shortcut to print
-			frm.add_custom_button(__("Print Carta de Saldo"), () => {
-				const w = window.open(
-					frappe.urllib.get_full_url(
-						`/printview?doctype=Carta%20de%20Saldo&name=${frm.doc.name}&format=Standard`
-					)
-				);
-				if (!w) {
-					frappe.msgprint(__("Please allow pop-ups to print this document."));
-				}
-			});
-		}
 	},
 });
