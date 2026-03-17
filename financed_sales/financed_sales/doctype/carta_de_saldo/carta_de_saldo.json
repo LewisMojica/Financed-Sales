@@ -27,13 +27,13 @@
   {
    "fieldname": "section_break_header",
    "fieldtype": "Section Break",
-   "label": "Reference"
+   "label": "Referencia"
   },
   {
    "fieldname": "payment_plan",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Payment Plan",
+   "label": "Plan de Pago",
    "options": "Payment Plan",
    "reqd": 1,
    "search_index": 1
@@ -44,7 +44,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Customer",
+   "label": "Cliente",
    "options": "Customer",
    "read_only": 1
   },
@@ -53,7 +53,7 @@
    "fieldname": "customer_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Customer Name",
+   "label": "Nombre del Cliente",
    "read_only": 1
   },
   {
@@ -64,7 +64,7 @@
    "fetch_from": "payment_plan.finance_application",
    "fieldname": "finance_application",
    "fieldtype": "Link",
-   "label": "Finance Application",
+   "label": "Solicitud de Financiamiento",
    "options": "Finance Application",
    "read_only": 1
   },
@@ -72,7 +72,7 @@
    "fetch_from": "payment_plan.credit_invoice",
    "fieldname": "credit_invoice",
    "fieldtype": "Link",
-   "label": "Credit Invoice",
+   "label": "Factura de Crédito",
    "options": "Sales Invoice",
    "read_only": 1
   },
@@ -80,13 +80,13 @@
    "default": "Today",
    "fieldname": "issue_date",
    "fieldtype": "Date",
-   "label": "Issue Date",
+   "label": "Fecha de Emisión",
    "reqd": 1
   },
   {
    "fieldname": "amended_from",
    "fieldtype": "Link",
-   "label": "Amended From",
+   "label": "Enmendado desde",
    "no_copy": 1,
    "options": "Carta de Saldo",
    "print_hide": 1,
@@ -96,41 +96,41 @@
   {
    "fieldname": "section_break_summary",
    "fieldtype": "Section Break",
-   "label": "Summary"
+   "label": "Resumen"
   },
   {
    "fieldname": "total_financed_amount",
    "fieldtype": "Currency",
-   "label": "Total Financed Amount",
+   "label": "Monto Total Financiado",
    "read_only": 1
   },
   {
    "fieldname": "total_paid",
    "fieldtype": "Currency",
-   "label": "Total Paid",
+   "label": "Total Pagado",
    "read_only": 1
   },
   {
    "fieldname": "section_break_installments",
    "fieldtype": "Section Break",
-   "label": "Installments"
+   "label": "Cuotas"
   },
   {
    "fieldname": "installments",
    "fieldtype": "Table",
-   "label": "Installments",
+   "label": "Cuotas",
    "options": "Carta de Saldo Installment",
    "read_only": 1
   },
   {
    "fieldname": "section_break_payments",
    "fieldtype": "Section Break",
-   "label": "Payment History"
+   "label": "Historial de Pagos"
   },
   {
    "fieldname": "payment_history",
    "fieldtype": "Table",
-   "label": "Payment History",
+   "label": "Historial de Pagos",
    "options": "Carta de Saldo Payment",
    "read_only": 1
   }

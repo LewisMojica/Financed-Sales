@@ -19,28 +19,28 @@
    "fieldname": "due_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Due Date",
+   "label": "Fecha de Vencimiento",
    "read_only": 1
   },
   {
    "fieldname": "amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Installment Amount",
+   "label": "Monto de Cuota",
    "read_only": 1
   },
   {
    "fieldname": "paid_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Paid Amount",
+   "label": "Monto Pagado",
    "read_only": 1
   },
   {
    "fieldname": "pending_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Pending Amount",
+   "label": "Monto Pendiente",
    "read_only": 1
   },
   {
@@ -48,14 +48,14 @@
    "fieldname": "payment_ref",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Payment Reference",
+   "label": "Referencia de Pago",
    "read_only": 1
   },
   {
    "fieldname": "penalty_amount",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Penalty Amount",
+   "label": "Monto de Penalidad",
    "read_only": 1
   }
  ],
