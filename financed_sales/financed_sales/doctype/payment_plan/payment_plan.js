@@ -16,7 +16,7 @@ frappe.ui.form.on('Payment Plan', {
 		frm.ignore_doctypes_on_cancel_all = ["Finance Application", "Sales Invoice", "Sales Order"];
 
 		if (frm.doc.docstatus === 1 && frm.doc.status === 'Completed') {
-			frm.add_custom_button(__('Create Carta de Saldo'), function() {
+			frm.add_custom_button(__('Crear Carta de Saldo'), function() {
 				frappe.call({
 					method: "financed_sales.financed_sales.api.get_or_create_carta_de_saldo",
 					args: {
@@ -28,7 +28,7 @@ frappe.ui.form.on('Payment Plan', {
 						}
 					}
 				});
-			}, __('Actions'));
+			});
 		}
 	},
 	
