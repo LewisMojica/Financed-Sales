@@ -1,4 +1,6 @@
 import json
+import math
+from datetime import date
 from types import SimpleNamespace
 
 import frappe
@@ -7,6 +9,100 @@ from frappe import _
 
 from .allocation_wrapper import analyze_payment_allocation
 from .penalty_journal import create_penalty_journal_entry
+
+
+def calculate_penalty_for_date(due_date, installment_amount, paid_amount, reference_date):
+	"""
+	Calculate penalty for an installment based on a specific date.
+	
+	Args:
+		due_date: The due date of the installment
+		installment_amount: The original installment amount
+		paid_amount: Amount already paid toward the installment
+		reference_date: The date to calculate penalty for (typically payment date)
+	
+	Returns:
+		float: Calculated penalty amount (0 if not overdue or in grace period)
+	"""
+	if not due_date:
+		return 0
+	
+	ref_date = reference_date if isinstance(reference_date, date) else frappe.utils.getdate(reference_date)
+	due = due_date if isinstance(due_date, date) else frappe.utils.getdate(due_date)
+	
+	if due >= ref_date:
+		return 0  # Not overdue
+	
+	days_overdue = (ref_date - due).days
+	
+	if days_overdue <= 5:
+		return 0  # Grace period
+	
+	# Calculate 30-day periods overdue after grace period
+	days_after_grace = days_overdue - 5
+	periods_overdue = math.ceil(days_after_grace / 30.0)
+	penalty_rate = periods_overdue * 0.05  # 5% per 30-day period
+	
+	# Calculate penalty on unpaid installment amount
+	unpaid_installment = installment_amount - paid_amount
+	return round(unpaid_installment * penalty_rate, 2)
+
+
+def recalculate_installment_penalties_for_date(payment_plan_doc, reference_date):
+	"""
+	Recalculate penalty amounts for overdue installments in a payment plan based on a specific date.
+	Only updates installments that ARE overdue on the reference date.
+	For installments not yet due, preserves existing penalty amounts.
+	
+	Args:
+		payment_plan_doc: Payment Plan document
+		reference_date: The date to calculate penalties for
+	
+	Returns:
+		list: Names of installments that were updated
+	"""
+	from datetime import date as date_type
+	
+	updated_installments = []
+	ref_date = reference_date if isinstance(reference_date, (date, str)) else frappe.utils.getdate(reference_date)
+	if isinstance(ref_date, str):
+		ref_date = frappe.utils.getdate(ref_date)
+	
+	for installment in payment_plan_doc.installments:
+		# Skip fully paid installments
+		if installment.paid_amount >= installment.amount:
+			continue
+		
+		# Only recalculate for installments that ARE overdue on the reference date
+		due_date = installment.due_date
+		if isinstance(due_date, str):
+			due_date = frappe.utils.getdate(due_date)
+		
+		# If not overdue on reference date, preserve existing penalty
+		if not due_date or due_date >= ref_date:
+			continue
+		
+		new_penalty = calculate_penalty_for_date(
+			installment.due_date,
+			installment.amount,
+			installment.paid_amount,
+			reference_date
+		)
+		
+		if installment.penalty_amount != new_penalty:
+			# Update the penalty amount in the database
+			frappe.db.set_value(
+				"Payment Plan Installment",
+				installment.name,
+				"penalty_amount",
+				new_penalty
+			)
+			updated_installments.append(installment.name)
+	
+	if updated_installments:
+		frappe.db.commit()
+	
+	return updated_installments
 
 
 def validate_payment_date(payment_plan_name, posting_date):
@@ -137,6 +233,14 @@ def create_payment_entry_from_payment_plan(
 	# Get payment plan document for allocation analysis
 	payment_plan = frappe.get_doc("Payment Plan", payment_plan_name)
 
+	# Recalculate penalties based on payment date (not today)
+	# This ensures penalty reflects the date being recorded
+	reference_date = posting_date if posting_date else frappe.utils.today()
+	recalculate_installment_penalties_for_date(payment_plan, reference_date)
+	
+	# Reload payment plan to get updated penalty amounts
+	payment_plan.reload()
+
 	# Use allocation analysis to determine if penalty payment is needed
 	allocation_result = analyze_payment_allocation(payment_plan, paid_amount)
 
@@ -148,6 +252,7 @@ def create_payment_entry_from_payment_plan(
 			penalty_amount=allocation_result["penalty_amount"],
 			customer=payment_plan.customer,
 			payment_plan_name=payment_plan_name,
+			posting_date=posting_date,
 		)
 
 	# Create payment entry with appropriate references
