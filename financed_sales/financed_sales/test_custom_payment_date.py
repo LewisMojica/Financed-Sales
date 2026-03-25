@@ -104,38 +104,78 @@ class TestCustomPaymentDate(unittest.TestCase):
 		journal_entry = frappe.get_doc("Journal Entry", journal_entry_ref.reference_name)
 		self.assertEqual(str(journal_entry.posting_date), custom_date)
 
-	def test_payment_resyncs_penalties_to_today(self):
-		"""Test that penalties are recalculated to today after payment is created"""
+	def test_payment_with_past_date_uses_correct_penalty_calculation(self):
+		"""Test that payment with past date uses penalty calculated for that date,
+		and that penalties are resynced to today after payment."""
 		test_data = create_test_payment_plan_for_payment_entry()
 		payment_plan = frappe.get_doc("Payment Plan", test_data["payment_plan"])
 
-		second_installment = payment_plan.installments[1]
-		custom_date_str = frappe.utils.add_days(frappe.utils.today(), -20)
+		past_payment_date = frappe.utils.add_days(frappe.utils.today(), -20)
+
+		installment_1 = payment_plan.installments[0]
+		installment_2 = payment_plan.installments[1]
 
 		frappe.db.set_value(
 			"Payment Plan Installment",
-			second_installment.name,
-			{
-				"due_date": frappe.utils.add_days(custom_date_str, -50),
-				"penalty_amount": 250
-			}
+			installment_1.name,
+			{"due_date": frappe.utils.add_days(past_payment_date, -50)}
+		)
+		frappe.db.set_value(
+			"Payment Plan Installment",
+			installment_2.name,
+			{"due_date": frappe.utils.add_days(past_payment_date, -25)}
 		)
 
-		down_payment = payment_plan.down_payment_amount
-		first_installment_amount = payment_plan.installments[0].amount
-		second_installment_total = second_installment.amount + 250
+		installment_1_amount = installment_1.amount
+		installment_2_amount = installment_2.amount
+		down_payment_amount = payment_plan.down_payment_amount
 
-		total_payment = down_payment + first_installment_amount + second_installment_total
+		penalty_at_past_date_1 = round(installment_1_amount * 0.10, 2)
+		penalty_at_past_date_2 = round(installment_2_amount * 0.05, 2)
 
-		create_payment_entry_from_payment_plan(
+		payment_amount = down_payment_amount + installment_1_amount + penalty_at_past_date_1
+
+		payment_entry_name = create_payment_entry_from_payment_plan(
 			payment_plan_name=test_data["payment_plan"],
-			paid_amount=total_payment,
+			paid_amount=payment_amount,
 			mode_of_payment=test_data["mode_of_payment"],
 			submit=True,
-			posting_date=custom_date_str,
+			posting_date=past_payment_date,
+		)
+
+		payment_entry = frappe.get_doc("Payment Entry", payment_entry_name)
+		self.assertEqual(str(payment_entry.posting_date), past_payment_date)
+
+		journal_entry_ref = None
+		for ref in payment_entry.references:
+			if ref.reference_doctype == "Journal Entry":
+				journal_entry_ref = ref
+				break
+
+		self.assertIsNotNone(journal_entry_ref, "Should have Journal Entry reference")
+		journal_entry = frappe.get_doc("Journal Entry", journal_entry_ref.reference_name)
+		total_debit = sum(entry.debit_in_account_currency for entry in journal_entry.accounts)
+		self.assertEqual(
+			total_debit,
+			penalty_at_past_date_1,
+			f"JE should use penalty calculated at past date ({penalty_at_past_date_1}), not current penalty"
 		)
 
 		payment_plan.reload()
-		second_installment.reload()
+		installment_1.reload()
+		installment_2.reload()
 
-		self.assertGreaterEqual(second_installment.paid_amount, 0)
+		penalty_at_today_1 = round(installment_1_amount * 0.15, 2)
+		penalty_at_today_2 = round(installment_2_amount * 0.10, 2)
+
+		self.assertEqual(
+			installment_1.penalty_amount,
+			penalty_at_today_1,
+			"Installment 1 penalty should be resynced to today's calculation"
+		)
+
+		self.assertEqual(
+			installment_2.penalty_amount,
+			penalty_at_today_2,
+			"Installment 2 penalty should be resynced to today's calculation (not affected by payment but still resynced)"
+		)
