@@ -140,6 +140,9 @@ class PaymentPlan(Document):
 						"penalty_amount": new_penalty,
 						"pending_amount": expected_pending_amount
 					})
+					# Also update in-memory object so reload() isn't needed
+					installment.penalty_amount = new_penalty
+					installment.pending_amount = expected_pending_amount
 					updated_count += 1
 		
 		if updated_count > 0:
