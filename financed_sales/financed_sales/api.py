@@ -141,9 +141,6 @@ def create_payment_entry_from_payment_plan(
 	# This ensures penalty reflects the date being recorded
 	calc_date = posting_date if posting_date else frappe.utils.today()
 	payment_plan.calculate_overdue_penalties(calc_date)
-	
-	# Reload payment plan to get updated penalty amounts
-	payment_plan.reload()
 
 	# Use allocation analysis to determine if penalty payment is needed
 	allocation_result = analyze_payment_allocation(payment_plan, paid_amount)
@@ -176,6 +173,8 @@ def create_payment_entry_from_payment_plan(
 	)
 
 	# Resync penalties to today after payment
+	# Reload to get updated paid_amount from update_payments() hook
+	payment_plan.reload()
 	payment_plan.calculate_overdue_penalties()
 
 	return pe_name
