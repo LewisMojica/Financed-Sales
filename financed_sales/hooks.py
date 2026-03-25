@@ -40,6 +40,7 @@ doc_events = {
 		"on_update_after_submit": [ "financed_sales.financed_sales.create_docs_on_approval.main"],
 	},
 	"Payment Entry": {
+		"validate": ["financed_sales.financed_sales.validate_payment_entry.validate_payment_entry_references"],
 		"on_submit": ["financed_sales.financed_sales.update_payments.main"],
 	},
 	"Sales Invoice": {
