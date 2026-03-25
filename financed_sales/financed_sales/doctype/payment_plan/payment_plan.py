@@ -75,7 +75,7 @@ class PaymentPlan(Document):
 			frappe.log_error(f"Failed to update Payment Plan {self.name} status: {str(e)}")
 			# Don't raise exception to avoid breaking payment processing
 	
-	def calculate_overdue_penalties(self):
+	def calculate_overdue_penalties(self, calc_date=None):
 		"""Calculate progressive penalties for overdue installments using 30-day periods.
 		
 		Penalty structure:
@@ -88,6 +88,9 @@ class PaymentPlan(Document):
 		Uses fixed 30-day periods as requested by client.
 		Formula: penalty_amount = installment_amount × periods_overdue × 5%
 		
+		Args:
+			calc_date: Date to calculate penalties for. Can be date object or string (YYYY-MM-DD). Defaults to today.
+		
 		Returns:
 			int: Number of installments that had penalties updated.
 		"""
@@ -96,17 +99,21 @@ class PaymentPlan(Document):
 		if not self.installments:
 			return 0
 		
-		today = date.today()
+		if calc_date is None:
+			calc_date = date.today()
+		elif isinstance(calc_date, str):
+			calc_date = frappe.utils.getdate(calc_date)
+		
 		updated_count = 0
 		
 		for installment in self.installments:
 			# Check if installment is overdue and has pending amount
 			if (installment.due_date and 
-				installment.due_date < today and 
+				installment.due_date < calc_date and 
 				installment.pending_amount > 0):
 				
 				# Calculate days overdue
-				days_overdue = (today - installment.due_date).days
+				days_overdue = (calc_date - installment.due_date).days
 				
 				# Calculate penalty based on 30-day periods with grace period
 				if days_overdue <= 5:
