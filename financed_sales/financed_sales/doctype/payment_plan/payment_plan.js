@@ -101,6 +101,23 @@ return new frappe.ui.Dialog({
 				default: frappe.datetime.get_today(),
 				hidden: 1,
 			},
+			{
+				label: 'Set custom date',
+				fieldname: 'set_custom_date',
+				fieldtype: 'Check',
+				default: 0,
+				onchange: function() {
+					const dialog = window.cur_dialog;
+					dialog.set_df_property('posting_date', 'read_only', !this.get_value());
+				}
+			},
+			{
+				label: 'Payment date',
+				fieldname: 'posting_date',
+				fieldtype: 'Date',
+				default: frappe.datetime.get_today(),
+				read_only: 1,
+			},
 	],
 	size: 'small', // small, large, extra-large 
 	primary_action_label: 'Submit payment',
@@ -169,6 +186,7 @@ function submit_payment(payment_values, source_name, source_type) {
 		args.finance_application_name = source_name;
 	} else {
 		args.payment_plan_name = source_name;
+		args.posting_date = payment_values.posting_date;
 	}
 	
 	// Check payment method type to determine if reference fields are needed
