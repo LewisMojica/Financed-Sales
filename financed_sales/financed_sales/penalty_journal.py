@@ -5,7 +5,7 @@ import frappe
 from erpnext.accounts.party import get_party_account
 
 
-def create_penalty_journal_entry(penalty_amount, customer, payment_plan_name):
+def create_penalty_journal_entry(penalty_amount, customer, payment_plan_name, posting_date=None):
 	"""
 	Create Journal Entry document for penalty amounts with proper accounting entries.
 
@@ -17,6 +17,7 @@ def create_penalty_journal_entry(penalty_amount, customer, payment_plan_name):
 	    penalty_amount (float): Amount of penalty to be recorded
 	    customer (str): Customer name
 	    payment_plan_name (str): Payment Plan name for reference
+	    posting_date (str, optional): Date for the journal entry. Defaults to today.
 
 	Returns:
 	    str: Journal Entry name for referencing in payment entry
@@ -61,7 +62,7 @@ def create_penalty_journal_entry(penalty_amount, customer, payment_plan_name):
 	# Create Journal Entry
 	je = frappe.new_doc("Journal Entry")
 	je.voucher_type = "Journal Entry"
-	je.posting_date = frappe.utils.today()
+	je.posting_date = posting_date if posting_date else frappe.utils.today()
 	je.company = company
 	je.remark = f"Penalty entry for Payment Plan {payment_plan_name} - Customer: {customer}"
 
