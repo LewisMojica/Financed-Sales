@@ -9,6 +9,24 @@ from .allocation_wrapper import analyze_payment_allocation
 from .penalty_journal import create_penalty_journal_entry
 
 
+def validate_payment_date(payment_plan_name, posting_date):
+	if not posting_date:
+		return
+	result = frappe.db.sql(
+		"SELECT MAX(date) as max_date FROM `tabFinanced Payment Ref` WHERE parent = %s",
+		payment_plan_name,
+	)
+	last_date = result[0][0] if result and result[0] else None
+	if last_date:
+		if isinstance(posting_date, str):
+			posting_date = frappe.utils.getdate(posting_date)
+		if posting_date < last_date:
+			frappe.throw(
+				_(f"Payment date cannot be before {frappe.format(last_date, 'Date')}. "
+				  "Payments must be recorded in chronological order.")
+			)
+
+
 @frappe.whitelist()
 def create_finance_app_from_pos_cart(customer, items):
 	"""
@@ -102,7 +120,7 @@ def create_down_payment_from_fin_app(fin_app_name):
 
 @frappe.whitelist()
 def create_payment_entry_from_payment_plan(
-	payment_plan_name, paid_amount, mode_of_payment, submit=False, reference_number=None, reference_date=None
+	payment_plan_name, paid_amount, mode_of_payment, submit=False, reference_number=None, reference_date=None, posting_date=None
 ):
 	# Validate required parameters
 	if not mode_of_payment:
@@ -112,8 +130,17 @@ def create_payment_entry_from_payment_plan(
 
 	paid_amount = float(paid_amount)
 
+	# Validate payment date is not before last payment
+	if posting_date:
+		validate_payment_date(payment_plan_name, posting_date)
+
 	# Get payment plan document for allocation analysis
 	payment_plan = frappe.get_doc("Payment Plan", payment_plan_name)
+
+	# Recalculate penalties based on payment date
+	# This ensures penalty reflects the date being recorded
+	calc_date = posting_date if posting_date else frappe.utils.today()
+	payment_plan.calculate_overdue_penalties(calc_date)
 
 	# Use allocation analysis to determine if penalty payment is needed
 	allocation_result = analyze_payment_allocation(payment_plan, paid_amount)
@@ -126,13 +153,14 @@ def create_payment_entry_from_payment_plan(
 			penalty_amount=allocation_result["penalty_amount"],
 			customer=payment_plan.customer,
 			payment_plan_name=payment_plan_name,
+			posting_date=posting_date,
 		)
 
 	# Create payment entry with appropriate references
 	si_name = frappe.db.get_value("Payment Plan", payment_plan_name, "credit_invoice")
 	si = SimpleNamespace(doctype="Sales Invoice", name=si_name)
 
-	return create_payment_entry(
+	pe_name = create_payment_entry(
 		si,
 		paid_amount,
 		mode_of_payment,
@@ -141,7 +169,15 @@ def create_payment_entry_from_payment_plan(
 		reference_date,
 		journal_entry_name,
 		allocation_result["penalty_amount"],
+		posting_date,
 	)
+
+	# Resync penalties to today after payment
+	# Reload to get updated paid_amount from update_payments() hook
+	payment_plan.reload()
+	payment_plan.calculate_overdue_penalties()
+
+	return pe_name
 
 
 @frappe.whitelist()
@@ -174,6 +210,7 @@ def create_payment_entry(
 	reference_date=None,
 	journal_entry_reference=None,
 	penalty_amount=0,
+	posting_date=None,
 ):
 	pe = get_payment_entry(doc.doctype, doc.name, party_amount=paid_amount)
 	pe.mode_of_payment = mode_of_payment
@@ -192,6 +229,9 @@ def create_payment_entry(
 
 	pe.paid_to = account
 	pe.custom_is_finance_payment = 1
+
+	if posting_date:
+		pe.posting_date = posting_date
 
 	# Set reference number and date for Bank type payments
 	mode_of_payment_type = frappe.db.get_value("Mode of Payment", mode_of_payment, "type")
