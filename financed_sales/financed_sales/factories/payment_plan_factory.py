@@ -177,6 +177,7 @@ def _create_test_credit_invoice(finance_app):
         'due_date': frappe.utils.add_days(frappe.utils.today(), 30),
         'custom_is_credit_invoice': True,
         'custom_finance_application': finance_app.name,
+        'update_stock': 0,
         'items': [{
             'doctype': 'Sales Invoice Item',
             'item_code': 'Test Credit Item',
@@ -478,6 +479,7 @@ def _create_test_credit_invoice_fixed(finance_app, company):
         'due_date': frappe.utils.add_days(frappe.utils.today(), 30),
         'custom_is_credit_invoice': False,
         'custom_finance_application': finance_app.name,
+        'update_stock': 0,
         'items': [{
             'doctype': 'Sales Invoice Item',
             'item_code': 'Test Credit Item',

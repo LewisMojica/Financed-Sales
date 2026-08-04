@@ -74,6 +74,7 @@ def create_credit_inv(doc, submit = True):
 	invoice.due_date = doc.installments[-1].due_date
 	invoice.allocate_advances_automatically = 1
 	invoice.only_include_allocated_payments = 1
+	invoice.update_stock = 0
 
 	# Calculate financed total from existing financed items
 	financed_total = 0
